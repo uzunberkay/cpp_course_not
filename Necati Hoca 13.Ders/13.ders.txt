@@ -1,0 +1,240 @@
+13. ders
+
+default ctor.
+
+special member functions
+
+default ctor
+destructor
+
+copy ctor
+move ctor
+copy assignment
+move assignment
+
+Diðerlerinden ayýran ne ? 
+Bazý koþullar saðlandýðý zaman derleyici tarafýndan otomatik oluþturulurlar.
+
+- derleyici bunlarýn kodlarýný yazabiliyor.
+implicitly declare ==> default
+
+user declared
+
+default ctor 
+move ctor 
+move assignment  olmayabiliyor.
+
+
+	move ctor
+	move assignment  
+Move members of a class (move ctor / move assignment)
+copy members of a class (copy ctor / copy assignment)
+
+constructor initializer list
+member initializer list
+
+T is a type 
+
+class Myclass{
+
+	T1 x;
+	T2 y;
+	T3 z;
+
+};
+
+
+class MyClass
+{
+public:
+	MyClass() : x_(0), d_(3.4)
+	{
+
+	}
+private:
+	int x_;
+	double d_;
+
+};
+
+
+Böyle init edebiliyorum. 
+
+int g{};
+class MyClass
+{
+public:
+	MyClass() :r{g}
+	{
+		
+	}
+private:
+	int &r;
+	double d_;
+
+};
+
+
+class Point {
+	public:
+		Point() : x_(0), y_(0) {}
+		Point(double x, double y) : x_(x), y_(y) {}
+private:
+	double x_;  
+	double y_;
+};
+
+
+Burada  hayata geliþ sýrasý 	int mx_;
+	int my_; buradaki sýraya göre. Yani mx_ my_den önce init edilecek.
+	Ve mx_ my_ kullanýlarak init edildiði için my_ hayata gelmediði için hata vermez fakat
+	UB (undefined behavior) oluþur.) çünkü my_ init edilmeden kullanýlmýþ olur.
+	my_ garbage deðer alýr.
+class Nec {
+public:
+	Nec(int x, int y) :my_(x), mx_(my_*x) {}
+private:
+	int mx_;
+	int my_;
+};
+
+
+C-like C++
+Dil cpp ama alýþkanlýk c.
+
+
+
+class MyClass
+{
+public:
+
+/*
+Burada  iki farklý yazýlýmcý var.
+Birincisi initializer list kullanmýþ.
+Ýkincisi ise constructor body içinde atama yapmýþ.
+Ýkincisi istemediðimiz bir yazýlýmcý yani C-like C++ yazýlýmcýsý.
+
+*/
+	MyClass() : ax(exp1),bx(exp2)
+	{
+	}
+	MyClass()
+	{
+	// Öncelikle default init etmiþ oluyosun. Ardýndan atama yapýyosun ???
+		ax=exp1;
+		bx=exp2;
+	}
+
+private:
+	A ax;
+	B bx;
+
+};
+
+
+class MyClass
+{
+public:
+	Myclass() :mx(5) {}
+private:
+default member init.
+	int mx = 5;  böyle tanýmlayýnca derleyici ctoru default olarak yukarýdaki gibi tanýmlar.
+}
+
+
+class MyClass
+{
+public:
+	Myclass() :mx(5) {}
+private:
+default member init.
+	int mx{4} ; geçerli
+	int mx = 4; geçerli
+	int mx(4); geçersiz
+
+
+
+	class Point {
+public:
+	Point() = default;  // derleyici default ctoru senin yazmaný istiyorum.
+private:
+	double mx{ .0 }, my{ .0 };
+
+};
+
+
+class Counter {
+
+};
+
+// zero-const abstraction
+
+int main()
+{
+	Counter cnt;
+}
+
+RAII 
+Resource Acquisition Is Initialization (Kaynak edinimi ilk deðer verme yoluyla olur)
+
+
+special member functions
+
+default ctor
+destructor
+
+move ctor
+move assignment
+
+copy ctor
+copy assignment
+
+Myclass(int) bu türden ctorlar user declared special member function deðildir.
+yani derleyici tarafýndan oluþturulamaz.
+yani
+Myclass(int) = default;  bu geçersizdir. !!!!!!!!!!!!!!!!!!!
+
+
+
+class Myclass {
+public:
+	Myclass(); // default constructor
+	~Myclass(); // destructor
+	Myclass(Myclass& other); // copy constructor
+	Myclass(Myclass&& other); // move constructor
+	Myclass& operator=(Myclass& other); // copy assignment operator
+	Myclass& operator=(Myclass&& other); // move assignment operator
+};
+
+
+
+
+COPY CTOR
+
+Myclass m1; default ctor
+Myclass m2 = m1; copy ctor
+Myclass m3(m1); copy ctor
+Myclass m4{m1}; copy ctor
+
+Bir sýnýfýn copy ctoru bildirilmiþ olmak zorunda 
+
+not-declared (special member function yok)
+user-declared (programcý tarafýndan bildirilmiþ)
+
+
+//user declared
+
+class Myclass {
+public:
+	Myclass();  // user - declared
+	Myclass() = default; // user - declared
+	Myclass() = delete; // user - declared
+};
+
+Derleyicinin bir sýnýfýn bir special member function'ý nasýl
+default edeceði yani onun kodunu nasýl yazacaðý belirlidir.
+(dilin kurallarý var)
+
+Bu kurallara göre derleyici bir sýnýfýn sp.mem.func.'ýný
+default ederken dilin kurallarýný çiðneyen bir durum oluþursa
+	derleyici defaul etmesi gereken fonksiyonu deleted oalrak bildirir.

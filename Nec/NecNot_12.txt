@@ -1,0 +1,101 @@
+C++ NOT
+
+
+Constructor (Kurucu fonksiyon) (ctor)
+   free function olamaaz
+   static member function olamaz (non-static member)
+   ctor ismi sýnýf ismi ile ayný olmalý
+   const member function olamaz
+   geri dönüþ deüeri kavramý yok (void function olamaz.)
+   sýnýfýn public/private/protecteec fonksiyonu olabilir.
+   Bir sýnýfýn birden fazla ctor'ý olabilir
+   Yani ctor overload edilebilir. 
+   ctor nitelenmiþ isimle yani x.Myclass() ptr->Myclass() þeklinde çaðrýlamaz.
+
+
+   Destructor (Yýkýcý fonksiyon) (dtor)
+   lifespan
+      free function olamaaz
+   static member function olamaz (non-static member)
+   const member function olamaz
+   geri dönüþ deüeri kavramý yok (void function olamaz.)
+   dtopr sýnýf ismiyle ayný isim taþýýmalý ama baþýnda ~ iþareti olmalý
+   bir sýnýfýn sadece bir dtor'ý olabilir. Parametre deðiþkeni olmayacak.
+   ~Myclass() { } 
+
+
+   class Myclass {
+public:
+    Myclass() {
+        std::cout << "Myclass constructor called!" << std::endl;
+	}
+};
+
+special member functions
+    default ctor
+    destructor
+   copy constructor
+   move constructor
+   copy assignment operator
+   move assignment operator
+
+
+   
+class Myclass {
+public:
+	// user - declared constructor
+	// default constructor üretilmez
+    Myclass() {
+        std::cout << "Myclass constructor called!" << std::endl;
+		
+	}
+
+};
+};
+
+
+Modern C++ ile birlikte herhangi bir fonk.
+için delete bildirimi yapýlabilir.
+void foo(int) = delete;
+
+
+/*
+* MULAKAT SORUSU
+* Dongu kullanmadan 1-100 arasý yazdýrýn.
+*/
+
+class Myclass {
+public:
+	Myclass()
+	{
+		static int mx = 0;
+		std::cout << mx++ << std::endl;
+	}
+};
+int main()
+{
+	Myclass ar[100];
+	
+}
+
+	Myclass m1;		// default initialization
+	Myclass m2{};  value init
+	Myclass m3(); // function prototype
+	Myclass m4(4);	// direct initialization
+	Myclass m5{ 5 }; // direct list initialization
+	Myclass m6 = 6; // copy initialization
+
+ctor'ýnýn sýnýfýn non-static veri elemanlarýný
+init. etmesi özel bir sentaks ile belirtilir.
+
+
+ctor init list.
+member initializer list deniliyordu.  (mil syntax)
+
+class Myclass {
+	int mx, my;
+};
+Myclass::Myclass(): mx(5), my(8)
+{
+	std::cout << "mx= " << mx << " my=" << my << std::endl;
+}
