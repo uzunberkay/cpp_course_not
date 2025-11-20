@@ -1,0 +1,77 @@
+14. Ders
+
+
+class Nec{
+public:
+	Nex():ax(),bx(),cx(){}
+	~Nec : {cx.~Nec(), bx.~Nec() , ax.~Nec()}
+	Nec(const Nec& other);  / /Fighter f1 ;  Fighter f2 = f1; copy ctor.
+
+private:
+	A ax;
+	B bx;
+	C cx;
+
+}
+
+class Myclass {
+
+public:
+	Myclass() = default;
+	Myclass(const Myclass& other)
+	{
+		std::cout << "this = " << this << " Other = " << &other << std::endl;
+	}
+};
+
+
+int main()																					
+{		
+	
+	Myclass m1;
+	Myclass m2 = m1;
+	Myclass m2(m1);
+	Myclass m2{m1};
+
+	m2 = m1 copy assignment
+
+}	
+==
+Bir sýnýfýn her zaman copy ctor vardýr.
+	imlicitly declared
+	user declared
+
+
+	====
+	class Myclass {
+
+public:
+	Myclass(int x = 0, int y = 0, int z = 0) :mx(x), my(y), mz(z){}
+	void print()
+	{
+		std::cout << "x : " << mx << " y : " << my << " mz : " << mz << '\n';
+	}
+private:
+	int mx, my, mz;
+};
+
+
+int main()																					
+{		
+	
+	Myclass m1(2,3,4);
+	Myclass m2 = m1;
+
+	m2.print();
+
+}
+
+sen hiç copy ctor yazmasan da derleyici senin için yazýyor ayný parametreleri birbirine
+kopyalýyor. (Vay amk)
+Nec(const Nec& oth):mx(oth.mx),my(oth.my),mz(oth.mz){} 
+böyle yazýyo gibi düþün.
+
+Rule of zero  (sýfýr kuralý)
+	default ctor
+
+	30. dk da kaldým
