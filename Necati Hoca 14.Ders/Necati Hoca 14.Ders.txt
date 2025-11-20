@@ -74,4 +74,68 @@ böyle yazýyo gibi düþün.
 Rule of zero  (sýfýr kuralý)
 	default ctor
 
-	30. dk da kaldým
+
+	öyle sýnýflar var ki (olacak kþ)
+	kopyalanmasý istenmeyecek
+
+
+	class Myclass {
+    Myclass() = default;
+    Myclass(const Myclass&) = delete;
+    Myclass& operator=(const Myclass&) = delete;
+};
+
+handle
+String str = "Ramazan Kasim Arikan"
+,
+value type
+x=y
+memberwise copy
+shallow copy
+
+Örneðin bir string deðer için copy ctor 
+tamamen nesneyi kopyalarsa
+addreside yani this ide kopyalar
+bu durumda dinamik olarak olusturulan ilk nesne destructor
+çalýþtýðýnda kopyalanmýþ nesne de dangling pointer olacaktý.
+Bu sebeple copy ctor daha farklý þekilde yapýlmalý. 
+
+deep copy...
+
+
+====
+
+class String {
+public:
+    String():mp{nullptr}, mlen(0){}
+    String(const char* p) :mlen(std::strlen(p)), mp(static_cast<char*>(std::malloc(mlen + 1)))
+    {
+        std::strcpy(mp,p);
+    }
+    void print()const {
+        std::cout << mp << "\n"
+            ;
+    }
+    ~String()
+    {
+        if (mp)
+        {
+            std::free(mp);
+        }
+    }
+private:
+    size_t mlen;
+    char* mp;
+   
+};
+
+
+int main()
+{
+    String s1{ "Hakan Eryaman" };
+    s1.print();
+
+} 
+
+
+1:10 da kaldým
