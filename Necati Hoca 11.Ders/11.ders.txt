@@ -1,0 +1,327 @@
+11.DERS
+
+
+class Myclass
+{
+public:
+	void foo(); // Myclass*
+	void bar() const; // const Myclass*
+};
+
+class Myclass
+{
+public:
+	void foo(); // Myclass*
+	void bar() const // const Myclass*
+	{
+		mx = 23;  // parametre geçerken aslýnda const Myclass* oluyor. O yüzden mx deðiþkenini deðiþtiremeyiz.
+
+	}
+
+private:
+	int mx_;
+};
+
+
+class Myclass
+{
+public:
+	void foo(); // Myclass*
+	void bar() const // const Myclass*
+	{
+		foo();
+		/*
+		*  Eðer const bir üye fonksiyon içindeysek, this iþaretçisi const Myclass* türündedir.
+		* o sebeple const olmayan bir üye fonksiyonu çaðýrmak istediðimizde derleyici hata verir.
+		*/
+
+	}
+
+private:
+	int mx_;
+};
+
+
+	const Myclass obj; // const Myclass
+	obj.bar();
+	obj.foo(); // Hata verir çünkü obj const
+
+	Myclass* foo()
+	{
+
+		// bu fonk hangi nesne için çaðrýldý ise
+		// o nesnenin addresini döndürebilir.
+		return this;
+	}
+
+
+	==
+		Myclass* bar() const
+	{
+		/*
+		* Bu fonksiyon çaðrýlan nesnenin addresini döndüremez.
+		* Sebebi const ile iþaretlenmiþ olmasýdýr.
+		* Myclass* ' dan  const Myclass* ' a dönüþüm mümkün deðildir.s
+		* 
+		*/
+	}
+	==
+		void func();
+	// ben bu fonksiyonu const mý yoksa non-const mý yapmalýyým?
+!! ONEMLI SORU	
+    ==
+class Myclass
+{
+public:
+	void func()const
+	{
+				m_debug_call_count++;
+				std::cout << "Debug call count: " << m_debug_call_count << std::endl;
+	}
+
+private:
+	mutable int m_debug_call_count;
+	// mutable anahtar kelimesi, const üye fonksiyonlarý içinde bile deðiþtirilebilecek veri üyelerini tanýmlamak için kullanýlýr.
+};
+
+====
+
+class Myclass{};
+;
+// non-const overload
+void foo(Myclass*)
+{
+	std::cout << "Myclass* called" << std::endl;
+}
+// const overload
+void foo(const Myclass*)
+{
+	std::cout << "const Myclass* called" << std::endl;
+}
+int main()																					
+{		
+	const Myclass obj;
+	Myclass obj2;
+	foo(&obj);
+	foo(&obj2);
+
+}
+
+// ÇIKTI
+const Myclass* called
+Myclass* called
+
+===
+
+
+class Myclass 
+{
+public:
+	void foo();
+	void foo()const;
+};
+Burada da bir overload durumu söz konusudur.
+
+===
+
+class Myclass 
+{
+public:
+	void foo()
+	{
+		std::cout << "non-const foo() called" << std::endl;
+	}
+	void foo()const
+	{
+		std::cout << "const foo() called" << std::endl;
+	}
+};
+
+int main()																					
+{		
+	const Myclass obj;  // const nesne
+	obj.foo();
+
+	Myclass obj2; // non-const nesne
+	obj2.foo();
+
+}	
+
+const foo() called
+non-const foo() called
+
+
+!! this pointer !!
+
+this-> keyword
+// this pointer, bir üye fonksiyonun çaðrýldýðý nesnenin adresini tutan özel bir iþaretçidir.
+
+this pointerinin olusturdugu ifadenin deðer kategorisi 
+PR value'dur.
+
+Bu da this pointeri atama operatörünün sol tarafýnda kullanamayacaðýmýz anlamýna gelir.
+
+
+class Myclass 
+{
+public:
+	void foo()  // gizli parametre
+	{
+		this
+			// bu fonksiyon hangi nesne için
+			// çaðrýldý ise o nesnenin adresi
+
+		
+	}
+
+};
+
+
+void Myclass::foo()
+{
+	/*
+	* Ýkiside ayný fakat gerekmedikçe this pointer ý kullanmak gereksizdir.
+	*/
+	mx = 5;
+	this->mx = 10;
+}
+
+
+/*
+* Bu fonksiyon hangi nesne için çaðrýldý ise 
+* o nesnenin addresini bir free/global fonksiyona göndermek için
+*/
+
+
+
+This kullanýmý...
+
+
+1
+void gfunc(Myclass*);
+
+void Myclass::foo()
+{
+	gfunc(this);
+}
+
+2
+void gfunc(Myclass&);
+
+void Myclass::foo()
+{
+	gfunc(*this);
+}
+
+3
+
+fluent API
+f.foo().bar();
+
+Dikkat bazý özel durumlarda
+bir üye fonksiyon hangi nesne için çaðrýlmýþ ise
+o üye fonksiyonun o nesnenin addresini döndürmesini isteriz.
+
+==
+	/*
+	* Buranýn hata olmasýnýn sebebi : 
+	* fonksiyon Myclass* döndürüyor fakat
+	* this const Myclass* 
+	*/
+	Myclass* foo() const
+	{
+		return this;
+	}
+
+	==
+	/*
+	* Bu geçerli const Myclass* 
+	* dönen const Myclass*
+	*/
+	const Myclass* foo() const
+	{
+		return this;
+	}
+	==
+
+	referans döndüren fonksiyonlar için de geçerlidir.
+	==
+
+ODR ( One Definition Rule ) - Tek Taným Kuralý)
+Bir programda her sýnýf, fonksiyon, deðiþken veya þablonun yalnýzca bir tanýmý olmalýdýr.
+// Eðer birden fazla taným varsa, derleyici hata verir.
+class Myclass
+{
+public:
+	void foo();
+};
+!! Declaration deðil definition !!
+yani 
+int x; 
+int x; 
+hata verir.
+
+int foo();
+int foo();
+hata vermez. redeclaration.
+
+extern int x;
+extern int x; // declaration
+==
+
+
+gümüþ 0,9796   Yani gümüþ alýrsan senden 1 - 0,9796 = 0,0204 kesiyor.
+altýn 0,9782	Altýn alýrsan senden 1- 0,9782 = 0,0218 kesiyor.
+
+Bu da  10 bin liralýk alýmda gümüþte 204 tl. altýnda 218 tl fark demek.
+Yani gümüþ alýrsan 14 tl daha karlý çýkýyorsun. :EWQEWQEQWEQ
+
+
+ODR Vialotion
+
+Dikkat 
+bazý istisnai drumlar söz konusu oldugudnda
+ODR violotion olmaz.
+
+token-by-token olursa 
+birden fazla kaynakta ayný olursa odr vialotion olmaz.
+
+
+inline fonksiyonlar
+inline function ne demek
+inline expansion is a compiler optimization
+
+as - if - rule
+observable behavior
+
+1) derleyici fonksiyon çaðrýsýnýn oldugu noktada
+çaðrýalan fonksiyonun tanýmýný görmek zorunda
+
+2) Derleyicinin yapacaðý analizde i.e yapmanýn bir fayda saðlayacaðýný
+görmesi gerekiyor. Yani basit iþlemler olmasý gerekiyor.
+
+int Myclass::getX()
+{
+	return mx; gibi... çok kýsa bir iþlem yapacak.
+}
+
+3) derleyici yapabilecek yetenekte olmalý
+
+inline fonksiyonlar
+ODR vioalotiona neden olmazlar.
+
+
+bir sýnýfýn içinde bir fonksiyonun tanýmýnýn 
+yapýlmasý halinde o fonksiyon inline fonksiyon olur. (Sen inline yazmasan bile)
+
+void Myclass::func()
+ diye altta tanýmlarsan ODR violotion var.
+
+ constepr fonksiyonlar implict inline 
+ örtülü inline ...
+
+
+
+
+neco.h						neco.cpp
+int foo(int);				
