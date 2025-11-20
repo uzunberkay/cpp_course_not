@@ -1,7 +1,0 @@
-<Solution>
-  <Configurations>
-    <Platform Name="x64" />
-    <Platform Name="x86" />
-  </Configurations>
-  <Project Path="Nec/Nec.vcxproj" Id="a38e85cb-b281-4e34-aa0b-a943066bd59f" />
-</Solution>
