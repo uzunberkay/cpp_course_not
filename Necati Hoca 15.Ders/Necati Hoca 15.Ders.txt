@@ -1,0 +1,155 @@
+15. DERS
+=========
+
+
+
+Move members 
+- move ctor
+- move assignment
+
+Bu fonklar copy ctor ve copy assignmentin bir overloadi.
+
+class Myclass{
+
+public:
+    Myclass(const Myclass& other); // copy ctor
+    Myclass(Myclass&&);  // move ctor
+
+    Myclass& operator=(const Myclass& other); // copy assignment
+    Myclass& operator=(Myclass&& other);      // move assignment
+
+}
+
+======
+
+Dikkat
+std::move fonksiyonu misnomer yanlýþ isimlendirilmiþ.
+
+aldýðý argümaný 
+L value de olsa R value da olsa
+R value ya dönüþtürüyor.
+
+move(expr)   X value 
+static_cast<T&&>(expr)
+
+move doesn't move...
+
+Myclass x;
+
+x -> l value
+move(x) -> X value ==> R value
+
+===
+
+
+
+
+class Myclass {
+
+public:
+    Myclass() = default;
+    Myclass(const Myclass&) {
+        std::cout << "copy ctor\n";
+    }
+    Myclass(Myclass&&)
+    {
+        std::cout << "move ctor\n";
+    }
+};
+
+void foo(const Myclass&)
+{
+    std::cout << "foo(const Myclass&)\n";
+}
+void foo(const Myclass&&)
+{
+    std::cout << "foo(const Myclass&&)\n";
+}
+
+int main()
+{
+
+    Myclass m;
+    foo(m);
+    foo(std::move(m));
+
+}
+
+foo(const Myclass&)
+foo(const Myclass&&)
+Çýktý bu þekilde.
+
+foo(static_cast<Myclass&&>(m)); foo(const Myclass&&)
+bu þekilde de yazabilirim . 
+
+==
+
+class Myclass {
+
+public:
+    Myclass() = default;
+    Myclass(const Myclass&) {
+        std::cout << "copy ctor\n";
+    }
+    Myclass(Myclass&&)
+    {
+        std::cout << "move ctor\n";
+    }
+    Myclass& operator=(const Myclass&)
+    {
+        std::cout << "copy assignment\n";
+        return *this;
+    }
+    Myclass& operator=(Myclass&&)
+    {
+        std::cout << "move assignment\n";
+        return *this;
+    }
+};
+
+void foo(const Myclass&)
+{
+    std::cout << "foo(const Myclass&)\n";
+}
+void foo(const Myclass&&)
+{
+    std::cout << "foo(const Myclass&&)\n";
+}
+
+int main()
+{
+
+    Myclass m1, m2;
+    m1 = m2;
+    m1 = std::move(m2);
+}
+====
+copy assignment
+move assignment
+
+çýktýsýný verir.
+=================
+
+class Myclass {
+public:
+	Myclass() = default;
+	Myclass(const Myclass&)
+	{
+		std::cout << "copy ctor\n";
+	}
+};
+
+int main()
+{	
+	Myclass m1;
+	Myclass m2 = std::move(m1);
+
+
+}
+
+burada const' a r ve l value de baðlanabildiði için problem olmuyor.
+
+movedan copye düimek fallback deniyor
+=====
+
+1:0:0 da kaldým.

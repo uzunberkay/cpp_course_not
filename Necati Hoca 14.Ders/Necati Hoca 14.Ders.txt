@@ -137,5 +137,109 @@ int main()
 
 } 
 
+Eðer copy ctoru derleyiciye býrakýrsam yukarýdaki kodda sýkýntý (ub) çýkýyor.
 
-1:10 da kaldým
+    void makeupper()
+    {
+        for (int i = 0; mp[i] != '\0'; ++i)
+        {
+            mp[i] = static_cast<char>(std::toupper(mp[i]));
+        }
+    }
+private:
+    size_t mlen;
+    char* mp;
+
+};
+
+void foo(String s)
+{
+    s.print();
+}
+
+
+int main()
+{
+    String s1{ "Hakan Eryaman" };
+    String s2 = s1;
+    s1.print();
+    s1.makeupper();
+    s2.print();
+
+}
+
+Burada s1 'i büyütüyorum sonra s2yi bastýrýyorum. 
+
+Hakan Eryaman
+HAKAN ERYAMAN
+
+
+s2 copy ctor ile olusunca direkt addres kopyalandý yanii s1 i deðiþtirirken s2 de deðiþmiþ oldu
+iþte bu yüzden ben copy ctoru derleyiciye býrakamam.
+
+String(const String& other) :mlen(other.mlen),mp(other.mp) derleyici böyle yazýyor copy ctoru
+
+===
+    String(const String& other) :mlen(other.mlen) ,mp(static_cast<char*>(std::malloc(mlen+1))){
+        std::strcpy(mp, other.mp);
+    }
+    === Ben böyle tanýmlamam gerekli.
+=============================================
+
+Copy assignment
+class Myclass {
+
+public:
+	Myclass& operator=(const Myclass& other);
+};
+
+	Myclass m1, m2;
+	m1 = m2;
+    Bu durumda kullanýlýr.
+ya user-declared olacak
+ya da implicit declared olacak.
+
+
+	Myclass& operator=(const Myclass& other)
+	{
+		ax = other.ax;
+		bx = other.bx;
+		cx = other.cx;
+
+		return *this;
+	}
+
+	derleyici böyle yazýyor.
+	Ayný sebeplerden copy assignmentide kendimiz yazýcaz.
+
+    String& operator=(const String& other)
+    {
+        mlen = other.mlen;
+        free(mp);
+        mp = static_cast<char*>(std::malloc(mlen + 1));
+        std::strcpy(mp, other.mp);
+
+        return *this;
+
+
+    }
+    böyle yazmak gerekecek.
+
+    destructor
+        free resources
+    copy ctor
+        deep copy
+    copy assignment
+        free resourves
+        deep copy
+
+============================================================
+Myclass(const Myclass&)-> copy ctor
+Myclass(Myclass&&)     -> move ctor
+
+overload...
+
+Myclass& operator=(const Myclass&)  -> copy assignment
+Myclass& operator=(Myclass&&)       -> move assignments
+============================================================
+
