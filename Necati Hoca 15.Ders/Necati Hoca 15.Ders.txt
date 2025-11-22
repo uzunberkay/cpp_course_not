@@ -152,4 +152,257 @@ burada const' a r ve l value de baðlanabildiði için problem olmuyor.
 movedan copye düimek fallback deniyor
 =====
 
-1:0:0 da kaldým.
+
+class String {
+public:
+    String() :mp{ nullptr }, mlen(0) {}
+    String(const char* p) :mlen(std::strlen(p)), mp(static_cast<char*>(std::malloc(mlen + 1)))
+    {
+        std::strcpy(mp, p);
+    }
+    String(const String& other) :mlen(other.mlen), mp(static_cast<char*>(std::malloc(mlen+1)))
+    {
+        std::cout << "Copy ctor\n";
+        std::strcpy(mp, other.mp);
+    }
+    String& operator=(const String& other)
+    {
+        std::cout << "Copy assignment \n";
+          if (this != &other)
+        {
+            mlen = other.mlen;
+            free(mp);
+            mp = static_cast<char*>(std::malloc(mlen + 1));
+            std::strcpy(mp, other.mp);
+
+        }
+        return *this;
+    }
+
+    String (String&& other) : mp(other.mp),mlen(other.mlen) { 
+        std::cout << "Move ctor \n";
+        other.mp = nullptr;
+        other.mlen = 0;   // yani kaynak çaldýðým için.
+        /*
+        * Yani önce other'i thise kopyaladým sonra
+        * otheri nullptr ve 0 a çektim ki...
+        * Destructor edeceði zaman proplem çýkmasýn.
+        * 
+        */
+
+    }
+    String& operator=(String&& other)
+    {
+        std::cout << "Move assignment\n";
+        if (this == &other)
+            return *this;
+
+        /*
+        *   Kaynak çalýyoruz yine.
+        * Burada neden mp free ettik ? 
+        * Move ctor da neden etmedik ? 
+        * Çünkü move ctor da hayata yeni geliyor ve bi alan alýnmamýþ
+        * Burada ise hayata geldikten sonra move copy yapýyorýuz.
+        * Yani dinamik olarak alýnan bir bellek alaný var.
+        * Bunu free ederek mp ye other.mp atýyoruz.
+        * Yani mp addresi artýk other.mp addresini tutuyor.
+        */
+        std::free(mp);
+        mp = other.mp;
+        mlen = other.mlen;
+
+        other.mp = nullptr;
+        other.mlen = 0;
+
+        return *this;
+    }
+    ~String()
+    {
+        if (mp)
+        {
+            std::free(mp);
+        }
+    }
+    void makeupper()
+    {
+        for (int i = 0; mp[i] != '\0'; ++i)
+        {
+            mp[i] = static_cast<char>(std::toupper(mp[i]));
+        }
+    }
+
+
+    void print()const {
+        if (!mp)
+        {
+            std::cout << "()\n";
+        }
+            
+        else
+        {
+            std::cout << mp << "\n";
+        }
+        
+    }
+    std::size_t length() const
+    {
+        return mlen;
+    }
+private:
+    size_t mlen;
+    char* mp;
+
+};
+
+
+int main()
+{
+    String s1{ "Necati ergin c++ anlatiyor.\n" };
+    String s2 = std::move(s1);
+
+    s2.print();
+    std::cout<<s2.length()<<'\n';
+    std::cout<<s1.length()<<'\n';
+    s1.print();
+ 
+
+}
+
+
+=============================
+
+    // temporary  object   PR value
+    //String();
+    //  String{};
+ 
+
+     String str;
+    str = String{ "Bugun hava guzel" };  Mesela burada move assignment çalýþýyor.
+
+    çünkü PR value.
+
+    m1=m2  copy assignment
+    m1 = Myclass{"Alicam"}  move assignment
+    Myclass foo();
+    Myclass& bar();
+    Myclass&& baz();
+
+    m1 = foo();         move assignment
+    m2 = bar();         copy assignment
+    m3 = baz();         move assignment
+Myclass foo()
+
+std::move(myobject)
+Myclass{}
+foo()    
+Move assignmöent yapmak için seçenekler.
+
+
+L value 
+R value    (Pr value X value)
+
+
+    String s1{ "Furkan kizilkoca" };
+    String s2;
+
+    String s3 = std::move(s1);
+    s2 = std::move(s1);
+ 
+    /*
+    * moved-from state deniyor.
+    */
+
+    ===============
+    standart kütüphane
+        kendi türleri için 
+            taþýnmýþ durumdaki nesneler için
+            // valid state
+
+void Swap(std::string& s1, std::string& s2)
+{
+    std::string temp = s1;
+    s1 = s2;
+    s2 = temp;
+}
+
+Yukarýdaki swap maliyet açýsýndan korkunç olurdu. 
+Çünkü her yer için tekrar tekrar bellekten yer alloced et 
+kopyala vs .
+
+
+
+Bu swqpta ise direkt kaynak çaldýgý için çok daha hýzlý olacak.
+void Swap(std::string& s1, std::string& s2)
+{
+    std::string temp = std::move(s1);
+    s1 = std::move(s2);
+    s2 = std::move(temp);
+}
+
+
+===============
+
+Moved-from-state
+geçerli fakat deðeri ne belli deðil.
+    (ideali deðerin belli olmnasý / default ctor edilmiþ)
+    kendisine atamaa yapýlabilir
+    kendisine ya da kendisinden taþýma yapýlabilir.
+
+/*
+* En sýk karþýmýza çýakcak idiyomatik yapýlardan biri
+* bir foýnksiyonun kendisine gönderilen argümanýn
+* R value olmasý durumunda onun kaynaðýný çalmasý
+* ancak L value olmasý durumunda onun kaynaðýný çalmasý
+* 
+*/
+
+
+class Myclass {
+public:
+    Myclass() = default;
+    Myclass(const Myclass&)
+    {
+        std::cout << "Copy ctor\n";
+    }
+    Myclass(Myclass&&)
+    {
+        std::cout << "Move ctor\n";
+    }
+    Myclass operator=(const Myclass&)
+    {
+        std::cout << "Copy assignment\n";
+    }
+    Myclass operator=(Myclass&&)
+    {
+        std::cout << "Move assignment\n";
+    }
+};
+
+void foo(const Myclass& r)
+{
+    Myclass m = r;  //
+}
+void foo(Myclass&& r)
+{
+    Myclass m = std::move(r);  //
+}
+
+
+    Myclass m;
+    foo(m);
+    foo(Myclass{});
+
+    Copy ctor
+Move ctor
+
+========================
+
+                    default ctor    dtor    copy ctor   copy ass.   move ctor   move ass.   
+no spm                  e             e          e         e            e           e
+Nec(int)                h             e          e         e            e           e
+Nec()                   user d.       e          e         e            e           e
+~Nec()                  e             user dec. e(!)       e(!)         not d.      not d.
+Nec(const Nec&)         not d.        e         user d.     e(!)        not d.      not d.
+operator=(const Nec&)   e             e         e(!)        user dec.   not d.      not d.
+Nec(&&)                 not d.        e         deleted.    deleted     user d.     not d.
+operator=(Nec&&)        e             e         deleted     deleted     not d.      user dec.
