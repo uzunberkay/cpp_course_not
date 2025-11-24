@@ -1,0 +1,89 @@
+18. DERS
+=========
+
+Containers
+
+vector
+deque
+list
+forward_list
+array
+string
+
+
+set
+multiset
+map
+multi map
+
+
+unordered_set
+unordered_multiset
+unordered_map
+unordered_multi map
+
+
+range-based for loop
+
+
+class Fighter {
+public:
+	Fighter(const std::string& name):name_(name)
+	{
+		fighters.push_back(this);
+	}
+	~Fighter()
+	{
+		/*std::erase(fighters, this);*/
+		if (auto iter = std::find(fighters.begin(), fighters.end(), this); iter != fighters.end())
+		{
+			fighters.erase(iter);
+		}
+	}
+	Fighter(const Fighter&) = delete;
+	Fighter& operator=(const Fighter&) = delete;
+	void ask_help()
+	{
+		std::cout << "Arkadaslar ben savasci " << name_ << '\n';
+		for (auto p : fighters)
+		{
+			if (p != this)
+			{
+				std::cout << p->name_ << " ";
+			}
+		}
+		std::cout << "Yetisin\n";
+	}
+private:
+	std::string name_;
+	inline static std::vector<Fighter*> fighters;
+
+};
+
+int main()
+{	
+	Fighter f1("necati");
+	Fighter f2("furkan");
+	Fighter f3("gizem");
+	Fighter f4("ogulcan");
+
+	Fighter* p1 = new Fighter("Osman");
+	Fighter* p2 = new Fighter("Aysegul");
+	Fighter* p3 = new Fighter("Nihat");
+
+	f3.ask_help();
+
+	delete p1;
+	delete p2;
+
+	f1.ask_help();
+
+}
+
+Arkadaslar ben savasci gizem
+necati furkan ogulcan Osman Aysegul Nihat Yetisin
+Arkadaslar ben savasci necati
+furkan gizem ogulcan Nihat Yetisin
+===============================
+
+40.dkda kaldým.
