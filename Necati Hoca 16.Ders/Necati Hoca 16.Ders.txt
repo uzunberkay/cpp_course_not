@@ -1,0 +1,121 @@
+16. DERS
+===============
+
+
+move - only
+
+
+class Myclass
+{
+	public:
+		Myclass(Myclass&&);
+		Myclass& operator=(Myclass&&);
+}
+
+veya 
+
+
+class Myclass
+{
+	public:
+		Myclass(const Myclass&) = delete;
+		Myclass& operator=(const Myclass&) = delete;
+		Myclass(Myclass&&);
+		Myclass& operator=(Myclass&&);
+}
+
+
+Conversion Ctor
+	Dönüþtüren kurucu iþlev.
+explicit ctor.
+copy elision
+mandatory copy elision
+temporary materialization
+delegating ctor
+Prvalue class objects
+
+
+CONVERSION CTOR
+	Tipik olarak tek parametreli 
+		sýnýf türünden olmayan bir ifadeyi 
+			bir geçici nesne olustururaak (PR value)
+				sýnýf türüne dönüþtüren bir fonksiyon.
+================
+
+
+class Myclass {
+public:
+	Myclass() = default;
+	Myclass(int x) :mx(x) {
+		std::cout << "Myclass(int x)  = " << x << '\n';
+		std::cout << "This = " << this << '\n';
+	}
+	Myclass& operator=(const Myclass& other) {
+		std::cout << "Myclass::operator=(const Myclass&)\n";
+		std::cout << "&other = " << &other << '\n';
+		mx = other.mx;
+		return *this;
+
+	}
+
+
+private:
+	int mx;
+};
+
+int main()
+{	
+	Myclass m;
+	m = 12;
+
+
+}
+
+Burada geçici bir nesne olusutuyor 12 için.
+Aslýnda  m = Myclass(12) ; gibi. 
+Yani asþýnda (int x ) 'li ctor çalýþýyor. Ardýndan copy assig. çalýþýyor.
+
+
+Myclass(int x)  = 12
+This = 00000040FED3F884
+Myclass::operator=(const Myclass&)
+&other = 00000040FED3F884
+
+Çoðunlukla istenmez.
+=============================
+
+
+temporary objects
+=========
+
+Myclass m ;
+
+Myclass foo();
+
+Eðer bir sýnýf türünden bir  nesneye ihtiyacýmýz varsa 
+
+// C++17 standardýna göre PR value olan sýnýf ifadelleri
+artýk doðrudan bir nesne deðil
+temporary materialization
+
+temporary materialization olusmasý zorunlu olan durumlar.
+
+
+Myclass m = Myclass(Myclass(Myclass()));
+
+
+Bir fonksiyonun parametresi bir sýnýf türündense ve fonksiyonu bir PR value
+argüman ile çaðýrýrsam burada kopyalama yapýlmadan  derleyici PR exp.
+doðrudan fonksiyonun parametre deðiþkenine olusturmak içn kullanýcak. Yani bu 
+PR value fonksiyonun parametre deðiþkenini init etmek için kullanýlacak.
+Sadece bir kere ctor çaðýracak.
+
+
+Dikkat otomatik ömürlü bir nesne
+bir fonk.un return ifadesi oluursa
+derleyici burada
+L value to X value
+dçnüþümü yapmak zorunda.
+
+
+Bu ders silindi sistemden ? 2:0:0 da falan kalmýþtým.

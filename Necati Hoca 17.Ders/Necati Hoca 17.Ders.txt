@@ -1,0 +1,147 @@
+17. DERS
+==========
+
+
+Delegating ctor
+
+birden fazla ctor var ve bu ctor'larin ortak bir kodu var.
+
+
+Sinýflarýn static veri elemanlari  ve static üye fonksiyonlari
+=================================================================
+//myclass.h
+class Myclass {
+
+	static int mx;
+};
+
+
+// myclass.c
+int Myclass::mx = 10;
+
+//myclass.h
+class Myclass {
+	int mx{};
+	static int x;
+	static int y;
+	static int z;
+};
+
+
+// myclass.c
+
+
+
+int main()
+{	
+	
+	using namespace std;
+
+	constexpr auto sz = sizeof(Myclass);
+
+	cout << sz;
+
+
+
+}
+
+Cevap : 4 ;
+
+global deðiþkenler yerþne
+sýnýflarýn static veri elemanlarý kullanýyoruz (bazen)
+
+
+
+class Myclass {
+public:
+	static int s;
+};
+
+int Myclass::s;
+
+int main()
+{	
+	
+	Myclass m1, m2, m3;
+	m1.s = 5;
+	m2.s++;
+	m3.s *= 2;
+	std::cout << "  S  =  " << Myclass::s << '\n';
+
+
+
+}
+  S  =  12
+Yani Myclass sýnýfýnýn elemanlarýnýn ortak bir global deðiþkeniymiþ gibi...
+=============================================================================
+class Myclass {
+
+public:
+	static int ms;
+	static int g;
+};
+int Myclass::g = 21;
+int g = 10;
+
+int Myclass::ms = g;
+
+int main()
+{	
+	/*
+	* !!! BU BIR MULAKAT SORUSU !!!
+	* MS ÇIKTISI NEDÝR ? 
+	* Cevap : 21. 
+	* Ýsim aramasý ilk class scope'da yapýlýyormus.
+	* o yüzden classdaki g yi alýyor.
+	* int Myclass::ms = ::g; yapsaydýk , :: ile global g yi alacaktýk.
+	*/
+	std::cout << "MS = " << Myclass::ms << '\n';
+}
+
+=============================================================================
+
+Sýnýflarýn static üye fonksiyonlari
+
+Sýnýfýn genel fonksiyonudur. Yani this falan kullanýlamaz.
+
+
+1) ctor/dtor static üye fonk. olamaz
+2) operator fonksiyonlarý (special / non special) static üye fonksiyon olamaz.
+3) Sanal fonksiyonlar static olamazlar.
+
+
+
+[
+		class Fighter {
+	public:
+		Fighter(const std::string& name):name_(name)
+		{
+			fighters.push_back(this);
+		}
+		~Fighter()
+		{
+			std::erase(fighters, this);
+		}
+		void ask_help();
+	private:
+		std::string name_;
+		inline static std::vector<Fighter*> fighters;
+
+	};
+
+	int main()
+	{	
+		Fighter f1("necati");
+		Fighter f2("furkan");
+		Fighter f3("gizem");
+		Fighter f4("ogulcan");
+
+		f3.ask_help();
+
+	}
+	]
+
+scope leakage (kapsam sýzýntýsý) idientiifiers
+
+bir isim yalnýzca o ismin kullanýldýðý kod alanýnda bilinsin dýþýnda bilinmesin.
+
