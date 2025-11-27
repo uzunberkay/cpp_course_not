@@ -270,13 +270,6 @@ extern int x; // declaration
 ==
 
 
-gümüþ 0,9796   Yani gümüþ alýrsan senden 1 - 0,9796 = 0,0204 kesiyor.
-altýn 0,9782	Altýn alýrsan senden 1- 0,9782 = 0,0218 kesiyor.
-
-Bu da  10 bin liralýk alýmda gümüþte 204 tl. altýnda 218 tl fark demek.
-Yani gümüþ alýrsan 14 tl daha karlý çýkýyorsun. :EWQEWQEQWEQ
-
-
 ODR Vialotion
 
 Dikkat 

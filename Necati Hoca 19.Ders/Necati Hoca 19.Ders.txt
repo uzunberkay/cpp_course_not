@@ -1,0 +1,260 @@
+19. DERS
+OPERATOR OVERLOADING
+============================
+
+Friend declarations
+
+Myclass bir sýnýf olsun.
+Anahtar sözcük.
+Normalde diðer kodlar sýnýfýmýzdaki sadece public bölümündeki
+isimleri kullanabiliyolar.
+Sýnýfýn private ve protected bölümlerine eriþim yok.(Eriþim kontrolüne tabii.)
+Fakat friend bildirimiyle bir sýnýf bazý kodlara private bölüme
+eriþim hakký veriyor.
+Belirli kodlar ?
+
+i)Bir global fonksiyon için friend bildirimi yapmak. (en çok kullanýlan)
+ii) Bir baþka sýnýfýn bir üye fonksiyonu için friend bildirimi yapmak (çok seyrek)
+iii) bir sýnýfýn tüm kodlarý için friend bildirimi yapmak. (2. en cok kull.)
+
+
+neler yok ?
+
+A sýnýfý B sýnýfýna friendlik vermiþ olsun
+
+class A{
+	friend class B;
+}
+
+B A ya eriþir fakat . A B ye ulaþamaz.
+
+
+
+class A{
+	friend class B;
+}
+class B{
+	friend class C
+}
+class C{
+	
+}
+
+Arkadaþlýk bildirimi geçirgen deðil.  B - C ye A - B ye friendlik verdi diye
+dolayýsýyla C - A ya ulaþabilir denmez. Ulaþamaz.
+(Babanýýzýn ya da dedeinizin arkadaþlarý sizin arkadaþýnýz mýdýr ?)
+
+
+class Base
+{
+	friend class Nec;
+};
+
+class Der:public Base
+{
+
+};
+
+
+class Myclass
+{
+public:
+	friend void gfunc(Myclass);
+private:
+	void foo();
+	int x_{};
+};
+
+===
+
+class Nec
+{
+public :
+	void bar(int);
+};
+
+class Myclass
+{
+public:
+	friend void Nec::bar(int);
+private:
+	void foo();
+	int x_{};
+};
+
+void Nec::bar(int x)
+{
+	Myclass m;
+	m.x_ = x;
+	m.foo();
+}
+
+====
+public:
+	friend class Nec;
+
+	burada Nec classý için geçerli oluyor.
+
+
+
+OPERATOR Overloading
+nedir ve ne iþe yarar ? 
+neden var ? 
+
+struct Nec{
+
+};
+
+m1+m2
+!m
+++m
+
+operator functions
+
+i1 + i2 
+i > k 
+m1*m2
+
+runtime cost
+
+
+	using namespace std;
+
+	string str{ "Berkay" };
+	str += " uzun";
+
+	+= overloading
+
+	Date mydate{ 12,5,1998 };
+	Date mydate2{ 12,5,1998 };
+
+	if (mydate == mydate2)
+
+	== overloading
+
+
+pointer - like classes
+
+bir operatör fonksiyonu
+	global bir fonksiyon
+	bir sýnýfýn non-static üye fonksiyonu olacak
+	bir operatör fonksiyonu bir sýnýfýn static üye fonksiyonu olamaz.
+
+
+
+operandlardan en az birinin bir sýnýfý türünden ya da bir enum türden olmasý gerekiyor.
+olmayan bir operatörüm yüklemesi olmaz
+
+overload edilemeyen operatörler var
+	scope resolution operator		::
+	member selection dot			.
+	sizeof operator
+	ternary operator				? :
+	pointer to memnber func			.*
+	typeid
+	alignof
+	static_cast
+	const_cast
+	reinterpet_cast
+	dynamic_cast
+
+bazý operatörler için yalnýzca üye operatör fonksiyonu olusturulabilir.
+(global operatör fonksiyonu olamaz)
+
+	atama operatör fonksiyonlarý
+	[] operatör fonksiyonu
+	-> operatör fonksiyonu
+	() operatör fonksiyonu
+	type-cast operator functions;
+
+- operatör fonksiyonlarý  isimlendirilmesi - 
+	operator+ 
+	operator<
+	operator=
+	operator==
+	operator!=
+	operator->
+	operator()
+
+	isimleriyle çaðrýlabilirler ; 
+
+		string s1{ "ali" }, s2{ "can" };
+	if (s1 == s2)
+	{
+		cout << "evet esit \n";
+	}
+	else
+	{
+		cout << "hayir esit degil!\n";
+	}
+
+	if (operator==(s1, s2))
+	{
+		cout << "evet esit \n";
+	}
+	else
+	{
+		cout << "hayir esit degil!\n";
+
+	}
+
+	ayný þey.
+	cout << "hello world!\n";
+	operator<<(cout, "hello world!\n");
+	ayný þey.
+
+	-------------
+	biri haricinde varsayýlan argüman alamazlar.
+	(/function call op) 
+	bu mekanizmada operatorlerin "arity"si deðiþtirilemez.
+unary operatorler un op. olarak
+binary operatorler binary op. olarak
+overload edilmek zorunda
+
+Myclass m1,m2;
+m1 < m2 
+operator<(m1,m2)
+
+
+	Myclass m1, m2, m3, m4, m5;
+
+	auto b = m2 * m3 + m4 * m5 > m1;
+	auto b2 = ((m2 * m3) + (m4 * m5)) > m1;
+	auto b3 = m2.operator*(m3).operator+(m4.operator*(m5)).operator>(m1);
+	
+
+	üçü de ayný...
+
+	dilin tanýmladýðý operatör önceliði deðiþtirilemez.
+
+
+	operator fonksiyonlarý da overload edilebilir (function overloading)
+
+----------------
+
+class Myclass
+{
+public:
+	Myclass operator*(const Myclass&)const;
+	Myclass operator+(Myclass&&)const;
+	Myclass operator+(int)const;
+	Myclass operator+(double)const;
+	Myclass operator+(const char*)const;
+};
+
+
+
+using namespace std;
+
+int main()
+{	
+	Myclass m1, m2;
+
+	auto r1 = m1 + m2; // 1.
+	auto r2 = m1 + Myclass{}; // 2
+	auto r3 = m1 + 12; // 3
+	auto r4 = m1 + 1.2; // 4
+	auto r5 = m1 + "nec"; // 5
+
+}
+--------------------------------------------------------------------

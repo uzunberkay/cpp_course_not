@@ -67,7 +67,7 @@ int main()
 }
 
 sen hiç copy ctor yazmasan da derleyici senin için yazýyor ayný parametreleri birbirine
-kopyalýyor. (Vay amk)
+kopyalýyor.
 Nec(const Nec& oth):mx(oth.mx),my(oth.my),mz(oth.mz){} 
 böyle yazýyo gibi düþün.
 
@@ -75,7 +75,7 @@ Rule of zero  (sýfýr kuralý)
 	default ctor
 
 
-	öyle sýnýflar var ki (olacak kþ)
+	öyle sýnýflar var ki (olacak ki)
 	kopyalanmasý istenmeyecek
 
 
@@ -95,7 +95,7 @@ shallow copy
 
 Örneðin bir string deðer için copy ctor 
 tamamen nesneyi kopyalarsa
-addreside yani this ide kopyalar
+addreside yani this'ide kopyalar
 bu durumda dinamik olarak olusturulan ilk nesne destructor
 çalýþtýðýnda kopyalanmýþ nesne de dangling pointer olacaktý.
 Bu sebeple copy ctor daha farklý þekilde yapýlmalý. 
