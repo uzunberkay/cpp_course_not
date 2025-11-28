@@ -8,6 +8,9 @@ public:
 	void bar() const; // const Myclass*
 };
 
+	int getX()const { return mx; }  
+	// c-> int getX(const Myclass* this) {return this->mx};
+
 class Myclass
 {
 public:

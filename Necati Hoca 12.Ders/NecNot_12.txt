@@ -6,7 +6,7 @@ Constructor (Kurucu fonksiyon) (ctor)
    static member function olamaz (non-static member)
    ctor ismi sýnýf ismi ile ayný olmalý
    const member function olamaz
-   geri dönüþ deüeri kavramý yok (void function olamaz.)
+   geri dönüþ deðeri kavramý yok (void function olamaz.)
    sýnýfýn public/private/protecteec fonksiyonu olabilir.
    Bir sýnýfýn birden fazla ctor'ý olabilir
    Yani ctor overload edilebilir. 
@@ -18,8 +18,8 @@ Constructor (Kurucu fonksiyon) (ctor)
       free function olamaaz
    static member function olamaz (non-static member)
    const member function olamaz
-   geri dönüþ deüeri kavramý yok (void function olamaz.)
-   dtopr sýnýf ismiyle ayný isim taþýýmalý ama baþýnda ~ iþareti olmalý
+   geri dönüþ deðeri kavramý yok (void function olamaz.)
+   dtor sýnýf ismiyle ayný isim taþýmalý ama baþýnda ~ iþareti olmalý
    bir sýnýfýn sadece bir dtor'ý olabilir. Parametre deðiþkeni olmayacak.
    ~Myclass() { } 
 

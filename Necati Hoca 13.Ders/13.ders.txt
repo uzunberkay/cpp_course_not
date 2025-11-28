@@ -237,4 +237,4 @@ default edeceði yani onun kodunu nasýl yazacaðý belirlidir.
 
 Bu kurallara göre derleyici bir sýnýfýn sp.mem.func.'ýný
 default ederken dilin kurallarýný çiðneyen bir durum oluþursa
-	derleyici defaul etmesi gereken fonksiyonu deleted oalrak bildirir.
+	derleyici default etmesi gereken fonksiyonu deleted oalrak bildirir.

@@ -3,7 +3,7 @@
 
 class Nec{
 public:
-	Nex():ax(),bx(),cx(){}
+	Nec():ax(),bx(),cx(){}
 	~Nec : {cx.~Nec(), bx.~Nec() , ax.~Nec()}
 	Nec(const Nec& other);  / /Fighter f1 ;  Fighter f2 = f1; copy ctor.
 

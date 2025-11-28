@@ -1,0 +1,172 @@
+21.DERS|
+--------
+
+	vector vec{ 2,5,7,9,3 };
+
+	for (size_t i = 0; i < vec.size(); ++i)
+	{
+		cout << vec.operator[](i) << vec[i] << '\n';
+	}
+
+	Ýki gösterimde ayný aslýnda.
+
+	std::vector
+	std::string
+	std::deque
+	map
+	array
+
+
+	class Darray
+{
+public:
+	Darray(std::size_t size) :msize(size),mp(new int[size])
+	{
+		std::memset(mp, 0, size * sizeof(int));
+	}
+	Darray(std::size_t size, int val) :msize(size), mp(new int[size])
+	{
+		for (size_t i = 0; i < size; i++)
+		{
+			mp[i] = val;
+		}
+	}
+	~Darray()
+	{
+		if (mp)
+		{
+			std::cout << "Destructor\n";
+			delete[] mp;
+			msize = 0;
+		}
+	}
+	int& operator[](std::size_t idx)
+	{
+		return mp[idx];
+	}
+	const int& operator[](std::size_t idx)const
+	{
+		return mp[idx];
+	}
+	std::size_t size()const {
+		return msize;
+	}
+
+private:
+	std::size_t msize;
+	int* mp;
+};
+
+
+	Darray x(10,3);
+	const Darray cx(10, 20);
+
+	x[3] = 23;  // non - const veri atanabilir
+	cx[2] = 11; // cost veri atanamaz.
+
+	Bunu da 
+		int& operator[](std::size_t idx)
+	{
+		return mp[idx];
+	}
+	const int& operator[](std::size_t idx)const
+	{
+		return mp[idx];
+	}
+
+	const overloading ile yapýyorum.
+
+	----------------------------
+
+
+	dereferencing
+	*
+
+	member selection arrow
+	-> 
+
+	overload edilmesi var.
+
+	öyle bir sýnýf olsun ki
+	nesneleri std::string sýnýfý türünden
+	dinamik ömürlü nesnelerin hayatlarýný kontrol
+	edecek pointer'lar gibi davransýn.
+	sýnýfýmýzýn ismi string_ptr olsun.
+
+	ptr-> b    (*ptr).b
+
+	Dikkat!
+	ok operatörü 2 operand alan bir operator olmasýna karþýn
+	unary operator olarak overload edilir.
+
+	ptr->foo()
+	ptr.operator->()->foo()
+
+	template <typename T>
+class smartptr
+{
+public:
+	smartptr() = default;
+	smartptr(T* p) :mp(p) {}
+	~smartptr()
+	{
+		if (mp)
+			delete mp;
+
+	}
+	smartptr(smartptr&& other) :mp(other.mp)
+	{
+		other.mp = nullptr;
+	}
+	smartptr& operator=(smartptr&& other)
+	{
+		delete mp;
+		mp = other.mp;
+		other.mp = nullptr;
+		return *this;
+	}
+
+	bool has_object()const {
+		return mp != nullptr;
+	}
+	T& operator*()
+	{
+		return *mp;
+	}
+	T* operator->()
+	{
+		return mp;
+	}
+
+private:
+	T* mp{ nullptr };
+
+};
+
+
+int main()
+{	
+	using namespace std;
+	{
+
+
+		smartptr<string> p1(new string{ "selami karakelli" });
+		cout << *p1 << '\n';
+		smartptr<Mint> p2(new Mint{ 345 });
+		cout << *p2 << '\n';
+		smartptr<int> p3(new int{ 7564 });
+	}
+
+	
+
+
+
+
+}
+
+C++ generic programlama ile verilene  cpp sonsuz adet bu templateden bizim için
+olusturabilir.
+
+
+-----------------------------------------------------------------------------
+21.ders 1:20 de kaldým.
