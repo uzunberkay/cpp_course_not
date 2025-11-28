@@ -275,3 +275,17 @@ private:
 
 
 
+inserter(s)  cout << mydate
+extractors cin >> mydate;
+aritmetik operatorler
+compound assignment op's
+comparison
+sign operators
+increment / decrement
+
+subscript operator function
+a[b]
+
+
+*ptr (deref)
+ptr->foo()s
