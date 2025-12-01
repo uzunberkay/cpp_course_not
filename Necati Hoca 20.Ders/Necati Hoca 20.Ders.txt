@@ -289,3 +289,60 @@ a[b]
 
 *ptr (deref)
 ptr->foo()s
+
+
+-----------------------------------------------------------
+Dersi tekrar izliyorum.
+
+	explicit Mint(int ival) :mval(ival)
+	{
+		/*
+		* explicit yapýlmasý implicit dönüþüm yapýlmamasý için.
+		*  Örneðin ;
+		* void foo(Mint x)   foo(5) olarak çaðrýlamýyor artýk.
+		* Eðer explicit yapmasaydýk çaðýrabilecektik.
+		*/
+	} 
+
+std::ostream& operator<<(std::ostream& os, const Mint& m)
+{
+	
+	return os << m.getX();
+}
+Örneðin  artýk std::cout << m1; gibi Mint cinsinden direkt yaz-
+dýrabiliyorum.
+Bu sanýrým class içinde tanýmlayamyýnca böyle oluyor.
+
+
+	friend std::ostream& operator<<(std::ostream& os,const Mint& m)
+	{
+		return os << m.mval;
+	}
+	Sýnýf içinde tanýmlarsam da böyle.
+
+	friend std::istream& operator>>(std::istream& is, Mint& r)
+	{
+		return is >> r.mval;
+	}
+	giriþ iþlemi yapan da bu.
+
+
+		Mint operator+( const Mint& rhs)
+	{
+		return Mint(*this) += rhs;
+	}
+
+		friend Mint operator+( const Mint& lhs,const Mint& rhs)
+	{
+		return Mint(lhs) += rhs;
+	}
+
+	iki þekilde de yazýlabilir fakat non-member function olan
+	2. tercih edilir.
+	1.de sol operand her zaman Mint türünden olmalýdýr.
+	2.de öyle deðildir.
+	Zaten member functionlar 1 parametre alýr.Diðer parametre this'dir.
+	m1.operator+(m2) ...
+	operator+(m1,m2) ikisinin farký aslýnda ? 
+
+	1:33:56
