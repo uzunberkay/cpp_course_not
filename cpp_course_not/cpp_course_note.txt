@@ -1,0 +1,1207 @@
+CPP COURSE NOTE
+===================
+
+
+	const int ival = 5;
+	auto x = ival;
+	/*
+	* Auto tür çýkarýmý, deðiþkenin türünü saðdaki ifadenin türüne göre belirler.
+	* Burada constluk düþüyor. auto -> int geliyor.
+	*/
+	
+int foo(int a); // int(int) ==> int(*)(int)
+
+
+
+int main()
+{
+	auto fp = &foo;
+
+}
+
+==========================
+    double d[3]{};
+	double(*
+	auto r = d;  // burada & olmadýðý için array decay oluyor ve auto r 'nin tipi double* oluyor
+
+	===
+	    double d[3]{};
+
+	auto& r = d;  // burada & olduðu için r bir referans ve dizinin kendisi oluyor.
+	// r'nin türü double(&)[3] oluyor.
+	===========================
+
+	auto r = foo;  // Burada function pointer'a decay oluyor. int(*r)(int) oluyor.
+	auto& r2 = foo; // Burada ise function reference oluyor. int(&r2)(int) oluyor.
+	===========================
+
+6. Ders --------------------------------
+move semantics
+-----------------------------
+perfect forwarding
+
+
+R value reference
+
+
+Myclass& r = obj; // l value reference
+Myclass&& r2 = Myclass(); // r value reference
+auto && ur = Myclass();  Universal reference
+
+
+    int x = 23;
+    int&& r = x;
+	geçersiz. Çünkü r value referansa sadece r value atanabilir. L value atanamaz.
+
+	int&& r2 = 23; // geçerli. Çünkü 23 bir r value'dur.
+
+	Dikkat! 
+	bir deðiþkeninn data type'ý ile
+	o deðiþkenin oluþturduðu ifadenin
+	value categorisi 
+	farklý kavramlardýr.
+
+	deðiþken isimlerinin oluþturduðu ifadeler her zaman l value exp.
+
+
+	// fonksiyon çaðrý ifadelerinin value kategorileri
+
+int foo();
+
+int main()
+{
+	foo() // ifadesinin value cat. PR value 
+}
+
+// fonksiyon çaðrý ifadelerinin value kategorileri
+
+int foo();
+int& bar();
+
+int main()
+{
+	foo(); // ifadesinin value cat. PR value 
+	bar(); // ifadesinin value cat. L value
+}
+
+Buradaki ayýran þey referans döndüren fonksiyonun çaðrýsý olmasýdýr.
+
+==
+#include <iostream>
+
+
+class Myclass {};
+Myclass foo();
+Myclass& bar();
+Myclass&& baz();
+
+int main()
+{
+	foo(); // ifadesini value cat. PR value
+	bar(); // ifadesini lvalue cat. L lvalue
+	baz(); // ifadesini xvalue cat. X value
+
+}
+
+Fonksiyonlarýn varsayýlan argüman almasý
+
+default arguments 
+
+
+
+#include <iostream>
+
+
+void foo(int x, int y);
+
+
+int main()
+{
+
+	foo(1, 2);
+	// call parameter 
+
+}
+
+nden böyle bir araç var = 
+bunu kullanmanýn çalýþma zamanýna ilave bir maliyeti var mý ?  yok.
+
+foo(x,y);
+foo(x,y,0);
+
+
+
+
+
+#include <iostream>
+
+
+
+int foo(int x = 1 , int y = 2, int z = 3)
+{
+	std::cout << x << " " << y << " " << z << std::endl;
+	return 0;
+}
+
+
+int main()
+{
+	foo(20,40, 60);
+	foo(20, 40);
+
+}
+
+
+20 40 60
+20 40 3
+
+
+foo();  = 1 , 2, 3
+
+foo(1,,4) ;  bu kesinlikle olmaz.
+
+#include <iostream>
+
+
+int g = 56;
+int foo(int* =&g);
+
+
+int main()
+{
+	foo();
+	int x = 23;
+	foo(&x);
+
+}
+
+int foo(int* p)
+{
+	std::cout << *p << std::endl;
+	return 0;
+}
+
+
+foo(); // 56
+foo(&x); // 23 çýktýsýný veriyor.
+
+
+int foo(int = 0 , int = 0);
+int bar(int = foo());
+int baz(int = bar());
+
+Böyle kullanabiliyorum.
+
+
+#include <iostream>
+
+int g = 56;
+
+void foo(int = ++g);
+
+
+int main()
+{
+
+	foo();
+	foo();
+	foo();
+
+
+}
+
+void foo(int x )
+{
+	std::cout << x << std::endl;
+}	
+
+
+
+57
+58
+59
+
+
+
+// eren.h 
+void foo(int, int, int = 0);
+
+
+// necati.c
+// #include "eren.h"
+
+void foo(int, int = 0, int);
+
+
+// Kümülatif olarak birleþiyor.
+
+
+type conversion (tür dönüþümü)
+=================================
+
+implicit conversion  -> örtülü tür dönüþümü
+explicit conversion  -> açýk tür dönüþümü
+
+type cast
+
+(target-type)
+(int)dval
+(double)ival
+(char*)&ival
+
+
+
+1) static_cast<target-type>(expression)
+	const_cast
+		const T* ==> T*
+	
+				reinterpret_cast
+dynamic_cast
+
+
+standard - conversions
+----------------------
+
+int ==> double
+enum ==> int
+int* ==> void*
+
+user -defined conversions
+----------------------
+Dilde olmayan tür dönüþümleri ama kullanýcý tanýmlý tür dönüþümleri
+
+#include <iostream>
+
+
+struct Nec {
+	int x, y, z;
+	Nec(int);
+	operator int()const;
+};
+
+int main()
+{
+
+	Nec mynec{};
+	int x = mynec;
+	mynec = 3;
+
+
+
+}
+
+
+
+=========================================================================================
+
+
+	/*
+	*  Static cast örneði
+	* Static_cast ile tür dönüþümü yapýlýr.
+	* double ->int
+	* int -> double gibi.
+	*/
+	double dval{ 1.23 };
+	int ival{ static_cast<int>(dval) };
+
+	/*
+	* const_cast örneði
+	* const_cast ile const - nonconst  ve
+	* nonconst const dönüþümleri yapýlýr.
+	* 
+	*/
+	const int* cptr{ &ival };
+	int* iptr{ const_cast<int*>(cptr) };
+
+	/*
+	*	reinterpret_cast örneði
+	*	reinterpret_cast ile farklý addres türlerinde dönüþümler yapýlýr
+	*  const int* -> int* gibi.
+	*	const double* -> double*
+	*/
+	int* nptr = nullptr;
+	double* pdval{ reinterpret_cast<double*>(nptr) };
+
+	/*
+	* örneðin double* -> int e çevirmek için önce int* e ardýndan
+	* int e çevirmek gerekiyor.
+	*/
+
+	int sval{ reinterpret_cast<int>(reinterpret_cast<int*>(pdval)) };
+
+
+	std::cout << sval;  // çýktý 0 çünkü nptr nullptr nullptr inte dönüþünce 0 olur 
+
+
+
+
+	int i1 = 5, i2 = 3;
+	(double)i1 / i2;  //  c de böyle
+
+	static_cast<double>(i1) / i2; // c++ ta böyle
+
+
+		// const cast  const T*  ====> T*
+
+	int x = 10;
+	const int* ptr = &x;
+	std::cout << *ptr << std::endl;
+	int* p = const_cast<int*>(ptr);
+	*p = 20;
+	std::cout << *ptr << std::endl;
+
+
+char *   unsigned char *  ==>  signed char *  dönüþebiliyo
+unsigned int* == > int* dönüþebiliyo
+
+
+
+	int x = 10;
+	char* p = reinterpret_cast<char*>(&x);
+
+(target type)
+static_cast<double>(x)  ; // x i T türünden double a çeviriyor.
+
+T herhangi bir tür  olmak üzere;
+const T*  ==> T* dönüþümü const cast ile yapýlýr.
+const char * x = &a;
+char* p = const_cast<char*>(x);
+++*p;
+
+!!! FARKLI IKI ADDRES TURU ARASINDAKI DONUSUMLERDE REINTERPRET CAST KULLANILIR.
+
+Myclass * 
+char  *   
+BÝR DONUSUM OPERATORU KULLANARAK 2 DONUSUM YAPAMAZSIN.
+
+char*
+const Myclass mx ;  
+
+reinterpret_cast<char*>(const_cast<Myclass*>(&mx));
+
+const 
+constexpr C++ 11
+//consteval C++ 20
+
+Constant expression
+
+variables 
+functions
+
+
+Const bir ifadenin oluþturduðu ifade bir constant expression mýdýr?
+A evet 
+B hayýr
+C hiçbiri
+
+Cevap C hiçbiri. 
+Aþaðýda iki örnek var.
+
+
+
+int foo();
+
+int main()
+{
+
+	// const cast  const T*  ====> T*
+
+	const int x = foo();
+
+	int ar[x]{};
+	
+
+}
+Burada hata veriyor.
+
+
+	const int x = 5;
+
+	int ar[x]{};
+
+	burada hata yok.
+
+
+	const int x = 10;
+	const int y = 20;
+	const int z = x + y * 3;
+
+	int a[z]{};
+
+	X ve y sabit olduðu için z  bir constant expression oluyor.
+
+	Eðer bir deðileni constexpr anahtar sözcüüðü (specifier) ile tanýmlarsak.
+a) const bir deðiþken oluþturmuþ oluruz.
+b) constexpr bir tür deðildir.
+Örneðin constexpr int diye bir tür yoktur.
+Constexpr ile tanýmlanan deðiþkenin türü cons T dir. (T bir tür olmak üzere.)
+		(constexpr int y = 10;  // Y nin türü const int ' dir.)
+int foo();
+
+int main()
+{
+
+	// const cast  const T*  ====> T*
+
+	const int x = 10;
+	const int y = foo();
+
+const iken böyle tanýmlayabiliyorum. Yani foo çaðrýsý ile y nin deðeri belirleniyor.
+fakat foo deðeri bir const ifade deðil.
+
+
+constexpr int y = foo();
+
+Fakat böyle tanýmladýðýmda hata veriyor. Çünkü foo bir const expr deðil.
+Bildirim geçersiz olacak.
+Constexpr ile tanýmlanan deðiþkenin bir const expr olmasýný garanti altýna alýyor.
+
+constexpr int x = 10;   bu geçerli.  const int türü. Fakat artý olarak ilk deðer veren ifadenin
+const expr olmasýný da garanti altýna alýyor.
+
+
+ÖRneðin constexpr int diye bir tür yoktur.
+
+bir constexpr deðiþken örtülü olarak 'inline' deðiþkendir. // Þimdilik ilgilenmiyoruz.
+
+Bir baþlýk dosyasýnda tanýmlanmasý ODR'ý çiðnemez.
+
+ODR (One Definition Rule)
+
+
+
+
+constexpr olan bir fonksiyon constexpr olmayan bir fonksiyona göre ne fark ediyor ? 
+
+
+
+int square(int x) {
+	return x * x;
+}
+constexpr int cube(int x)
+{
+	return x * x * x;
+}
+
+Constexpr olmayan bir fonksiyonu 
+	int i = 5;
+	int ar[square(i)];
+	bu þekilde yani constexpr olmasý gereken yerde kullanamayýz.
+
+		const int i = 5;
+	int arr1[cube(i)];
+
+	bu þekilde kullanabiliyorum.
+
+	Bir constexpt fonksiyon
+	a) belirli koþullar saðlandýðýnda geri dönüþ deðeri derleme zamanýnda elde edilecek bir fonksiyondur.
+	b) eðer bir constexpr fonksiyona yapýlan çaðrýda fonksiyona gönderilen argümanlar
+		- sabit ifadesi olabilir 
+		- sabit ifadesi olmayabilir.
+	sama sabit ifadesi ise fonksiyonun geri dönüþ deðeri
+	eðer fonksiyon çaðrý ifadesi sabit ifadesi gereken baðlamda kullanýlmýþ ise 
+	- derleme zamanýnda elde edilebilir.
+!!! constexpr C++ 11 ile gelmiþti.
+
+
+
+--------------------------------------------------------------------------------------------
+#include <iostream>																			|
+																							|
+constexpr int factorial(int n)																|
+{																							|
+	return n < 2 ? 1 : n * factorial(n - 1);												|
+}																							|
+constexpr bool is_prime(int x)																|
+{																							|
+	if (x < 2) return false;																|
+	if (x % 2 == 0) return x == 2;															|
+	if (x % 3 == 0) return x == 3;															|
+	if (x % 5 == 0) return x == 5;															|
+																							|
+	for (int i = 7; i * i <= x; i += 2)														|
+	{																						|
+		if (x % i == 0) return false;														|
+	}																						|
+	return true;																			|
+}																							|
+int main()																					|
+{																							|
+																							|
+	constexpr bool b = is_prime(31);														|
+	std::cout << "19001 is prime: " << std::boolalpha << b << '\n';							|
+}																							|
+-------------------------------------------------------------------------------------------	|
+
+
+C++ 11 ile geldi.
+
+enum types
+
+unscoped enums (modern C++ öncesi vardý halen var)
+scoped enums (C++ 11)
+
+
+enum Color{
+
+
+
+};
+
+enum class Color
+{
+
+
+};
+
+enum class is not a class
+enum class is "scoped enums"
+
+
+/*
+* Complete type (tamamlanmýþ - eksi olmayan)
+* incomplete type (tamamlanmamýþ - eksik - )
+*/
+
+struct Nec;  // incomplete type
+
+struct Nec
+{
+	int x, y;   // complete type
+};
+
+
+struct Nec;
+typedef Nec Erg;
+Nec foo(Nec);
+Nec* bar(Nec*);
+
+
+int main()
+{
+
+	
+	Nec* p1 = nullptr;
+	Nec* p2 = bar(p1);
+	
+
+}
+
+Eðer incompletype 
+iþinizi görüyorsa 
+
+
+
+// forward declaration
+struct Nec; 
+
+
+// forward declaration
+struct Nec; 
+
+
+int main()
+{
+
+	/*
+	*  Eðer struct ile tanýmlazsam ptr ' yi . 
+	* Derleyici Nec ismini arayacak ve bulamayacak. 
+	* 2 seçenek var ya yukarýdaki gibi struct Nec; forward declaration yapacaðým ,
+	* ya da  struct Nec* ptr olarak tanýmlayacaðým.
+	*/
+	struct Nec* ptr = nullptr;
+
+
+Forwarding declarationun büyük 3 günahý xd --
+
+1) underlying type derleyeciye baðlý taþýnabilirlik
+forward declaration yeterli olmuyor.
+
+2) enum türlerinden aritmetik türlere 
+örtülü dönüþüm olmasý
+
+3) enumaratorlerin scope (kapsam)
+ona sahip olan enum türünün kapsamý ile 
+enum Nec{x,y,z};
+enum Erg{a,b,c};
+böyle problem yok.
+------
+enum Nec{x,y,z};
+enum Erg{a,b,x}; ama böyle tanýmlayamýyoruz. 
+('x': yeniden tanýmlama; önceki taným 'numaralandýrýcý' idi).
+
+
+enum class Color{White,Yellow,Red,Brown,Brown,Blue,Black};
+Eðer böyle tanýmlarsak 
+Color::Yellow; kullanabiliyoruz ve birden fazla ayný isimde enumarator kullanabiliriz.
+
+auto sc = Color::White;
+
+	using enum Color;
+	auto sc = Color::White;
+	auto sc2 = Brown;
+
+	nitelenmemiþ isim kullanabiliyorum.
+
+using enum Color;
+
+using Color::Red;
+
+auto
+decltype
+declaration type 
+
+Bir türün (type) kullanýldýðý
+tüm baðlamlarda 
+decltype specifier ile oluýþturulan bir tür kullanýlabilir.
+
+decltype ile oluþturulan yapý
+	hangi tür anlamýna gelecek
+1) operand olan ifadenimn bir isim formunda olmasý
+
+	decltype(x)
+	decltype(m.x)
+	decltype(p->a)
+	decltype(x)
+
+
+
+2) operand olan ifadenmin bir isim formunda olmamasý
+
+	decltype(x+ 5);
+	decltype(+i);
+	decltype(a*b);
+	decltype(foo());
+	decltype((x))
+---------------------------------------------------------------
+	int x = 5;
+	decltype(x) y = 10;  // y -> int
+
+	const int x = 5;
+	decltype(x) y = 10;  // y -> const int  ! ! ! CONST INT TURDUR.
+
+	int x = 5;
+	int& r1 = x;
+	int&& r2 = 96;
+
+	decltype(r1) a{ x };  // a --> int&
+
+	decltype(r2) a{ 23 };  // a --> int&&
+
+	=========================== BURADA KALDIM ===========================
+	decltype(expr)
+	diklkat!
+	decltype operandý eðer bir isim formunda olmayan bir ifade ise
+	decltype ile elde edilen türü ne olduðu
+	operandý olan ifadenin "value category"
+
+	Pr value	T
+	L value		T&
+	X value		T&&
+
+	int x = 5;
+	decltype(x + 3);  // x+3 'ün value cat. pr oldugu için int
+
+	int x = 5;
+	int* ptr = &x;
+
+	decltype(*ptr) // L value oldugu için.  int&;
+
+	int ar[20]{};
+
+
+	decltype(ar[47])  int&  lvalue oldugu için
+
+
+------------------------------	8.ders ------------------------------
+	int x = 10;
+
+	int* ptr = &x;
+	decltype(*ptr);  // int& 
+
+
+	//decltype(x);	// int
+	//decltype((x)); // int&
+
+
+	FUNCTION OVERLOADING 
+	---------------------
+Fonksiyonlarýn yüklenmesi
+
+1) birden fazla fonksiyonun ismi ayný olacak
+2) ayný isimli fonksiyonlar ayný scope'ta (kapsamda) olacak.
+3) Ayný isimli fonksiyonlarýn imzalarý (signature) farklý olacak.
+	fonkisyonun geri dönüþ türü haricindeki parametrik yapýsý
+	int foo(int,int);
+	double bar(int,int);
+
+int foo(int);
+
+
+
+
+int main()
+{
+	int foo(int, int);
+
+}
+Burada function overloadinng var mý ? 
+Cevap : Hayýr. Bu iki fonksiyonun kapsamlarý farklý.
+
+
+
+int foo(int);
+int foo(int);
+
+Ýki fonkun da imzasý aynýysa bu geçerlidir fakat function overloading deðildir.
+Bu duruma function redeclaration denir. (fonksiyonu yeniden belirtme)
+
+// redeclaration
+
+int foo(int);
+int foo(int);
+
+// geçersiz kod olur. Ýmza ayný dönüþ farklý
+
+int foo(int);
+double foo(int);
+
+typedef int Mint;
+
+void foo(int);
+void foo(Mint);
+FO mu ? Hayýr redeclaration.
+
+void foo(int);
+void foo(const int);
+Bu da redeclaration.
+
+
+void f(char);
+void f(signed char);
+void f(unsigned char);
+3 adet function overload var .   char -> signed char -> unsigned char farklý türler.
+
+
+void fo(int);
+void fo(int,int = 0); F.O var.
+
+
+void fo(int* p );
+void fo(int p[10]);
+void fo(int p[]);
+
+Burasý da redeclaration.
+
+---------------------------------------------------
+void foo(int(*p)[10]);
+void foo(int(*p)[11]);
+void foo(int(*p)[12]);
+3 adet FO var. Dizilere pointer oldugu için hepsinin addresi yani imzasý farklý. FO oluyor.
+
+
+int foo(int);
+int foo(int*);
+int foo(int&);
+int foo(int&&);
+4 farklý FO var.
+
+
+// const overloading
+void foo(int*);
+void foo(const int*);
+
+void foo(int(int));
+void foo(int(*)(int));  FO yok. redeclaration.
+
+Funciton typden functin pointer type decay oluyo.
+
+-
+function overload resolution
+===================================
+
+	- no match
+	- ambiguity
+
+a) derleme zamanýnda   (static binding - early binding)
+b) çalýþma zamanýnda.  (dynamic binding - late binding)
+
+
+
+FUNCTION OVERLOAD RESOLTION
+
+
+candiadate func.
+	viable function
+	Eðer bir tane viable fonk. varsa FOR (Function overload res.) bitti.
+	Hiç yoksa no match olacak.
+
+Peki Neco ?
+ya birden fazla viable func. varsa
+
+	best match
+	best viable  
+
+
+	Argümandan parametreye yapýlan dönüþümü derecelendiriyor.
+
+	variadic conversion		en kötüsü
+		user-defined conversion
+			standart conversion
+
+
+int => double
+double => int  
+int* ==> void*
+(unscoped) enum ===> int
+
+Bunlar standart conversion.
+
+
+class Nec
+{
+public:
+	operator int()const;
+
+};
+
+
+int main()																					
+{																							
+	Nec mynec;
+	int ival{};
+	ival = mynec;
+	
+**
+Normalde Nec'ten int e dönüþüm yok. standart olarak. fakat ,
+operator int()const; bu tanýmla dönüþüm yapmama olanak saðlýyo.
+Buna da 'user-defined conversion' deniyor.
+																**
+conversion constructor
+type-cast operator function
+
+peki Necati
+ya birden fazla viable funciyon için
+dçnüþümler std conv. ise ??????
+
+a) exact match (tam uyum)
+	T* => const T*
+	array decay ile 
+	function decay ile
+b) promotion 
+	integral promotion
+	float => double
+	m 
+c) conversion
+
+
+
+
+void foo(int);
+void foo(int&);
+
+
+int main()																					
+{		
+	int x = 4;
+	foo(x);
+	
+}
+
+Ambiguiti.
+
+
+
+void foo(int*)
+{
+	std::cout << "foo(int*)" << '\n';
+}
+void foo(const int*)
+{
+	std::cout << "foo(const int*)\n";
+}
+
+
+int main()																					
+{		
+	int x = 19;
+	foo(&x);
+	
+}
+
+Bu ambiguiti deðil. foo(int*) çalýþýyor.
+
+void foo(int&);  // l value ref
+void foo(int&&); // r value ref
+
+void foo(int&)
+{
+	std::cout << "int&\n";
+}
+void foo(int&&)
+{
+
+	std::cout << "int&&\n";
+}
+int&
+int&&  çýktýlar.
+
+
+void foo(const int&)
+{
+	std::cout << "int&\n";
+}
+void foo(int&&)
+{
+
+	std::cout << "int&&\n";
+}
+
+
+Böyle olsaydý da r ref i seçecekti. Hani const& a r val baðlanýyo ya normalde. Bu durumda da baðlanýyor ama 
+&& daha iyi bir ihtimal.
+
+
+
+class Myclass{};
+
+void foo(Myclass&)		// non const l value ref
+{
+	std::cout << "Myclass&\n";
+}
+void foo(const Myclass&)	// const l value ref
+{
+	std::cout << "const Myclass&\n";
+}
+void foo(Myclass&&)		// R value ref
+{
+	std::cout << "Myclass&&\n";
+}
+
+
+	Myclass x;
+	const Myclass y;
+	foo(x);
+	foo(y);
+	foo(std::move(x));
+
+	Çýktý : 
+	Myclass&
+	const Myclass&
+	Myclass&&
+
+void foo(int)
+{
+	std::cout << "int\n";
+}
+void foo(int&)
+{
+	std::cout << "int&\n";
+}
+
+
+int main()																					
+{		
+	foo(12);
+	int x{};
+
+	foo(x);  // ambiguity
+	
+	
+}
+
+
+bir overload seçilebilmesi için
+(ambiguity olmamasý için)
+
+en az bir parametrede diðerlerine üstünlük saðlamalý
+diðer parametrelerde diðer overloadlardan daha kötü olmayacak.
+
+
+auto&& için çýkarým kurallarý
+
+auto&& x = 10; // int&& x = 10;
+
+C++ dilinde refrence to reference yoktur.
+ancak öyle baðlamlar var ki 
+reference to reference
+
+reference collapsing
+
+T& &	T&
+T& &&	T&
+T&& &	T&
+T&& &&  T&&
+
+	int y = 22;
+	auto&& x = y; // int& x = y;
+
+
+C++ dilinde type alias declaration 
+
+	// typedef int Word;
+	using Word = int;
+
+	typedef  int inta10[10];
+	// b using inta10 = int[10];
+
+
+	typedef int& iref;
+	typedef int&& irefref;
+
+
+		--SINIFLAR--
+class Data {
+	// class members
+};
+// data members
+//		non-static data members
+//		static data members
+// member functions
+// member types / type members / nested type
+
+
+/*
+* free function
+* global func
+* stand-alone func.
+*/
+void foo();
+
+class Data {
+	void foo(int);  // non-static member function
+	static void bar(); // statiic member function
+};
+
+
+Dikkat!
+C++ dilinde C'de olmayan 
+ayrý bir kapsam kategorisi vardýr
+
+
+scope categories in C
+file scope
+block scope
+funcyion prototype scope
+function scope
+
+
+scope categories in C++
+namespace scope
+block scope
+funcyion prototype scope
+function scope
+class scope
+
+
+class scope'taki isimler
+	ancak 
+	aþaðýdaki operatörlerin sað operandý  olarak kullanýldýklarýnda
+	name-lookup ile class definition içinde aranýrlar.
+
+
+	x.a  member selection dot op.nün sað operandý olan a ismi
+	ptr->b member selection arrowop.nün sað operandý olan a ismi
+	:: (scope resolution operator)  Myclass::c
+
+
+Kod derlenirken derleyici :
+name lookup
+	context control
+		access control  (eriþim kontrolü public , private vs.)
+
+public
+protected
+private
+
+
+
+OOP
+
+superclass		sub class
+parentclass		child class
+baseclass		derived class
+
+
+
+class Myclass {
+public:
+	void foo();
+	void foo(int);
+	void foo(double);
+};
+
+
+void Myclass::foo()
+{
+	std::cout << "Myclass::foo()\n";
+}
+
+void Myclass::foo(int)
+{
+	std::cout << "Myclass::foo(int)\n";
+}
+
+void Myclass::foo(double)
+{
+	std::cout << "Myclass::foo(double)\n";
+}
+int main()																					
+{		
+	Myclass m; 
+	m.foo();
+	m.foo(1);
+	m.foo(1.2);
+
+
+	
+
+}
+
+Çýktý : 
+Myclass::foo()
+Myclass::foo(int)
+Myclass::foo(double)
+
+
+class Myclass {
+
+	// classýn içinde tanýmlanmasý inline function
+	void foo()
+	{
+
+	}
+};
+
+class Date {
+public:
+	void set(int d, int m, int y)  // non const member function
+	{
+		md = d;
+		mm = m;
+		my = y;
+	}
+	void print()const;  // const member function
+	int get_month()const
+	{
+		return mm;
+	}
+
+private:
+	int md, mm, my;
+}
+
+	void set(/*Date* /int d, int m, int y)
+	{
+		md = d;
+		mm = m;
+		my = y;
+	}
+	void print(/*const Date*/)const;  // const member function
+
+	gibi düþün.
+
+1) const bir üye fonksiyon içinde sýnýfýn 
+non-static veri elemanlarýný deðiþtirmeye yönelik kodlar geçersizdir.
+
+2) const bir sýnýf nesnesi için sýnýfýn non-const üye fonksiyonlarýna çaðrý yapmak geçersizdir.
