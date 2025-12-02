@@ -169,4 +169,164 @@ olusturabilir.
 
 
 -----------------------------------------------------------------------------
-21.ders 1:20 de kaldým.
+21. ders tekrar
+
+
+
+
+class Darray {
+public:
+	Darray(std::size_t size) :msize(size),mp(new int[msize])
+	{
+		std::memset(mp, 0, msize*sizeof(int));
+		std::cout << "Darray(std::size_t size)\n";
+	}
+	~Darray()
+	{
+		delete[] mp;
+		std::cout << "Destructor\n";
+	}
+	int& operator[](std::size_t idx)
+	{
+		return mp[idx];
+	}
+	std::size_t size()const {
+		return msize;
+	}
+private:
+	std::size_t msize;
+	int* mp;
+
+}
+
+	Darray x(10);
+	for (size_t i = 0; i < x.size(); i++)
+	{
+		cout << x[i] << x.operator[](i)<< '\n';
+	}
+	for (size_t i = 0; i < x.size(); i++)
+	{
+		x[i] = i;
+
+	}
+	for (size_t i = 0; i < x.size(); i++)
+	{
+		cout << x[i] << '\n';
+	}
+
+	---------------------------
+
+		int& operator[](std::size_t idx)const
+	{
+		return mp[idx];
+	}
+
+
+	const Darray x(10);
+
+
+	for (size_t i = 0; i < 10; i++)
+	{
+		x[i] = i;
+	}
+	for (size_t i = 0; i < 10; i++)
+	{
+		std::cout << x[i] << '\n';
+	}
+
+	Const olmasýna raðmen deðer atabiliyorum ? 
+
+		const int& operator[](std::size_t idx)const
+	{
+		return mp[idx];
+	}
+	Böyle yaparsam da sadece read-only ...
+	 o yüzden overload etmem gerek.
+
+
+------------------------------------------
+	 int& operator[](std::size_t idx)
+	{
+		return mp[idx];
+	}
+	 int operator[](std::size_t idx)const {
+		 return mp[idx];
+	}
+-------------------------------------------
+
+overload edince eðer sadece 
+const nesneler için const
+non-const olan nesneler için non-const
+
+
+dereferencing
+*
+
+member selection arrow
+->
+
+*ptr 
+
+
+ptr->foo()
+	(*ptr).foo()
+ptr->mx
+	(*ptr).mx
+a
+*ptr
+
+************
+	Dikkat!
+	ok operatörü 2 operand alan bir operator olmasýna karþýn
+	unary operator olarak overload edilir.
+	************
+	Global op. olamaz.
+
+		std::string* operator->()
+	{
+		return mp;
+	}
+	Olay þu : 
+
+	sptr->lenght() mesela length std::string e ait bir fonksiyon deðil mi ? 
+	-evet 
+	O zaman ben  std::string* yani bir string addresi döndürmem gerek -> 
+
+	std::string* operator->() yani -> operatorle bir string addresi döndürmem gerek.
+
+	std::string* operator->()
+	{
+		return mp;  // mp'nin kendisini döndürmem gerek
+	}
+	cout << sptr->length();
+
+	------------------------
+
+/*
+* þimdi stringptr sýnýfýný move only
+* type yapalým
+* yani kopyalamaya kapalý taþýmaya açýk
+*/	
+
+
+
+
+struct A {
+
+	void foo();
+};
+
+struct B {
+	B(A);
+	void bar();
+};
+
+
+int main()
+{
+	// most vexing parse
+
+	// burada aslýnda b türünden bx deðiþkeninin olusturmak
+	// istiyorum fakat . 'most vexing parse'  Geri dönüþü
+	// b olan bx fonksiyonu olarak tanýmlýyor.
+	B bx(A());
