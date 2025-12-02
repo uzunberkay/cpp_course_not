@@ -330,3 +330,85 @@ int main()
 	// istiyorum fakat . 'most vexing parse'  Geri dönüþü
 	// b olan bx fonksiyonu olarak tanýmlýyor.
 	B bx(A());
+
+	Legal olan yapýlar:
+	{} kullandýðýnda fonk. tanýmý olma ihtimali yok.
+	B bx{ A() };
+	B bx( A{} );
+	B bx{ A{} };
+	B bx((A()));  --> öncelik parantezi !!
+	
+
+Type-cast operator functions
+tür dönüþtürme operatörü
+
+(target_type)
+(int)dval
+	
+	int x = 5;
+	Myclass m;
+	x = m;
+
+	Bunu yapamýyoruz.
+
+	/*
+	* geri dönüþ deðeri yazýlmayacak. (kural)
+	yazýlsa idi int operator int()const gibi kendini 
+	tekrar eden bir yapý olacaktý. Bu istenmemiþ ve kural koyulmuþ.
+	*/
+	operator int() const
+	{
+		std::cout << "operator int() const\n";
+		return 42;
+	}
+
+		int x = 5;
+	Myclass m;
+	x = m;
+
+	std::cout << x; artýk legal
+
+	conversion ctor
+	conversion sequence
+
+	std conv + udc
+	udc + std conv
+	std conv. + std conv. olmuyor.!!!!
+
+	 	double y;
+	y = m; 
+
+	int için dönüþüm ekledim fakat double 'da oluyor ?
+	BUnu kaldýrmak için explicit eklemek gerek :
+		explicit operator int() const
+	{
+		std::cout << "operator int() const\n";
+		return 42;
+	}
+
+	Myclass m;
+	int x = static_cast<int>(m);
+	artýk böyle dönüþüm yapacak. 
+
+	overload da edilebilir.
+
+if(expr)
+while(expr)
+do while(expr)
+for(expr)
+
+
+function call operator function
+
+	Myclass m;
+	m();
+	//m.operator()();
+
+	void operator()()
+	{
+		std::cout << "Myclass operator()()\n";
+		std::cout << "this: "<< this <<'\n';
+	}
+Myclass operator()()
+this: 0000005BDAD6F804
+
