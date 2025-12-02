@@ -345,4 +345,132 @@ Bu sanýrým class içinde tanýmlayamyýnca böyle oluyor.
 	m1.operator+(m2) ...
 	operator+(m1,m2) ikisinin farký aslýnda ? 
 
-	1:33:56
+	<-> 
+	three-way comparasion operator
+	spaceship operator
+
+
+	relational operators
+	< <= > >=
+
+	equality operator
+	== !=
+
+
+	a< b
+	a > b  ==> b<a
+	a>=b	==> !(a<b)
+	a<=b	==>	!(b<a)
+	a!=b	==> !(a==b)
+
+
+	----------------------------------------------------
+		friend bool operator==(const Mint& lhs, const Mint& rhs)
+	{
+		return lhs.mval == rhs.mval;
+	}
+	friend bool operator!=(const Mint& lhs, const Mint& rhs)
+	{
+		return !(lhs == rhs);
+	}
+
+
+	 friend bool operator<(const Mint& lhs, const Mint& rhs)
+	 {
+		 return lhs.mval < rhs.mval;
+	 }
+	 friend bool operator>(const Mint& lhs, const Mint& rhs)
+	 {
+		 return rhs < lhs;
+	 }
+	 friend bool operator>=(const Mint& lhs, const Mint& rhs)
+	 {
+		 return !(lhs < rhs);
+	 }
+	 friend bool operator<=(const Mint& lhs, const Mint& rhs)
+	 {
+		 return !(rhs < lhs);
+	 }
+	 -----------------------------------------------------------
+
+	 Þöyle basit bi þekilde de kuþþanabiliriz ;
+	 class Date
+{
+public:
+	Date() = default;
+	Date(int d , int m , int y):d_(d),m_(m),y_(y){}
+
+	auto operator<=>(const Date&)const = default;
+
+private:
+
+	int y_{ 1900 }, m_{ 1 }, d_{ 1 };
+};
+
+C++20 standartýyla
+	cout << boolalpha;
+	cout << (Date(12, 07, 87) > Date(12, 07, 97)) << '\n';
+	cout << (Date(12, 07, 87) < Date(12, 07, 97)) << '\n';
+	cout << (Date(12, 07, 87) != Date(12, 07, 97)) << '\n';
+	cout << (Date(12, 07, 87) == Date(12, 07, 97)) << '\n';
+	cout << (Date(12, 07, 87) >= Date(12, 07, 97)) << '\n';
+	cout << (Date(12, 07, 87) <= Date(12, 07, 97)) << '\n';
+false
+true
+true
+false
+false
+true
+
+++ op. 
+
+	Mint& operator++()
+	{
+		++mval;
+		return *this;
+	}
+	Mint x{ 333 };
+	++x;
+
+x++ için : 
+	Mint operator++(int)
+	{
+		Mint temp{ *this };
+		++mval;
+		return temp;
+	}
+
+	Mint x{ 333 };
+	++x;
+	cout << x;
+	x++;
+	cout << x;
+		friend Mint& operator++(Mint& other)
+	{
+		++other.mval;
+		return other;
+	}
+	friend Mint operator++(Mint& other,int)
+	{
+		Mint ret{ other };
+		++other;
+		return ret;
+	}
+
+	global yazmak isteyince.
+
+	inserter(s)  cout << mydate
+	extractors  cin>>mydate;
+	aritmetik operatörler
+	compound assignment op's
+	comparison
+	sign operators
+	increment/decrement
+
+	subscript operator function
+	a[b]
+	*ptr   (deref)
+
+	ptr->foo()
+
+
