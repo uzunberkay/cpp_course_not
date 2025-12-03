@@ -1,0 +1,26 @@
+22. Ders
+
+
+enum class Weekday {
+	Sunday, Monday, Tuesday, Wednesday, Thursday,
+	Friday, Saturday
+};
+
+std::ostream& operator<<(std::ostream& os, const Weekday& wd)
+{
+	constexpr const char* pdays[] = { "Sunday","Monday",
+	"Tuesday","Wednesday","Thursday","Friday","Saturday" };
+	return os << pdays[static_cast<int>(wd)];
+}
+
+
+int main()
+{
+
+	Weekday wd(Weekday::Friday);
+
+	std::cout << wd;
+}
+
+
+1:0:0
