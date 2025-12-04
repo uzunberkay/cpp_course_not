@@ -1,0 +1,164 @@
+23. Ders
+-----------------------------------
+
+using declartion;  --> using std::cout;
+using namespace directive  --> using namespace std;
+ADL lookup 
+-using declartion;-
+1) hiç kullanmak
+	2) dar kapsamlý kullanmak
+
+
+	namespace nec {
+	void foo()
+	{
+		std::cout << "nec::foo called\n";
+	}
+}
+
+namespace erg {
+	using nec::foo;
+}
+
+namespace fer {
+	using erg::foo;
+}
+int main()
+{
+	using std::cout;
+nec::foo called	
+
+- using namespace directive-
+namespace nec {
+	int x;
+}
+namespace erg {
+	using namespace nec;
+}
+
+using namespace erg;
+int main()
+{
+	erg::x = 456;
+	std::cout << ::x;
+
+	----------------------
+ADL ARgument Dependent Lookup
+(Argümana baðlý arama)
+Koenig lookup
+Andrew Koenig
+
+
+bir fonksiyon çaðrýsý ifadesi 
+ nitelenmemiþ bir isim ile yapýlýrsa
+   söz konusu isim
+	normal isim arama dýþýnda
+	  fonksiyona gönderilen argüman(lar)ýn
+	     iliþkin olduðu namespace'te de aranýr.
+
+foo(expr);
+
+namespace nec {
+	int x;
+	class data{};
+	enum color{White , Yellow , Red , Brown,Blue,Black};
+	void foo(int);
+	void bar(data);
+	void bom(color);
+}
+
+int main()
+{
+	nec::data x;
+	bar(x);  // x'in türü nec namespace'ine ait data sýnýfý
+	// bar sýnýfý o zaman nec namespace'inde de aranacak.
+	bom(nec::Blue);  // ayný þekilde
+
+	return 0;
+}
+
+
+
+namespace nec {
+	class Data {};
+
+	void foo(Data)
+	{
+		std::cout << "nec::foo called\n";
+	}
+}
+
+void foo(nec::Data)
+{
+	std::cout << "::foo called\n";
+}
+
+int main()
+{
+	nec::Data d;
+	foo(d);  
+	/*
+	* ambiguity.
+	* Sebep ? 
+	* foo yu ararken 2 namespace de ariyor.
+	* 
+	*/
+
+	return 0;
+}
+
+
+---
+	// burada adl var mi ? var xd
+	std::cout << "hello world" << '\n';
+
+		operator<<(std::cout, " hello world with operator<< ") << '\n';
+		----
+	std::vector<int> vec(100);
+	sort(begin(vec), end(vec));
+ADL'ye en güzel örneklerden  
+normalde std::begin(vec) , std::end(vec) olmasý gerekirken ADL sayesinde
+std namespace'inde arama yapýlýyor.(vec sayesinde)
+Peki sort neden std::sort olarak çaðrýlmýyor ?
+Çünkü begin ve end fonksiyonlarý ADL sayesinde çaðrýlabiliyor.
+sort fonksiyonuda begin ve end fonksiyonlarýný parametre aldýðý için
+ADL sayesinde sort fonksiyonu da std namespace'inde aranýyor.
+-----------------------------------
+namespace nec {
+
+	class Myclass
+	{
+	public:
+		Myclass() = default;
+		~Myclass() {
+			std::cout << "Destructor\n";
+		}
+		friend void swap(Myclass&, Myclass&);
+
+	private:
+		int mx{};
+	};
+
+	void swap(Myclass& a, Myclass& b)
+	{
+		std::cout << "nec::Swap\n";
+		int temp{ a.mx };
+		a.mx = b.mx;
+		b.mx = temp;
+		
+	}
+
+
+}
+
+int main()
+{
+	nec::Myclass obj1, obj2;
+
+	std::swap(obj1, obj2);
+	swap(obj1, obj2);
+}
+
+------------------------------------
+
+UNNAMED NAMESPACE --- 1:45:00
