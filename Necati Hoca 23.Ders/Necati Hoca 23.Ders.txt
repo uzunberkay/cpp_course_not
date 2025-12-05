@@ -162,3 +162,103 @@ int main()
 ------------------------------------
 
 UNNAMED NAMESPACE --- 1:45:00
+
+
+namespace {
+	className {
+		//...
+	};
+
+	int x = 10;
+}
+
+className  sadece bu dosyada geçerli. internal linkage. 
+dýþarý açýlmasýný istemiyorsak unnamed namespace içine koyarýz.
+
+
+namespace nec {
+	namespace {
+		int x;
+	}
+}
+
+int main()
+{
+	nec::x = 4;
+}
+
+
+içerideki unnamed namespacede derleyici kendisi isim verir.
+xfsafs gibi sallýyorum. 
+namespace nec {
+	namespace xfsafs{
+		int x;
+	}
+	using namespace xfsafs;
+}
+gibi bir taným yaptýðý için nec::x olarak eriþilebiliyor.
+
+inline namespace
+
+anahtar kelimeler overload ediliyor aslýnda.
+bir anahtar kelimenin birden fazla anlamý olabilir.
+örneðin static.
+
+-----
+namespace nec {
+	namespace erg {
+		int x;
+	}
+}
+
+int main()
+{
+	nec::erg::x = 5;
+}
+Normalde böyle eriþiyoruz.
+eðer ben direkt nec::x olarak eriþmek istersem ne yaparým ?
+eski yöntem using namespace erg; nec içine yazýlýrdý.
+namespace nec {
+	namespace erg {
+		int x;
+	}
+	using namespace erg;
+}
+bir de inline namespace var. eðer erg inline namespace ise
+namespace nec {
+	inline namespace erg {
+		int x;
+	}
+}
+nec::x = 5; olarak eriþilir.
+
+ama neden inline namespace kullanýlýr ?
+çünkü inline namespace ler versiyonlama için kullanýlýr.
+namespace nec {
+	
+	inline namespace ver1 {
+		class Data{};
+	}
+	namespace ver2 {
+		class Data {};
+	}
+}
+Örneðin ver1 deki Data sýnýfýný kullansýn isterseniz  inline yaparsýnýz.
+Bir süre sonra ver2 yi kullanmak isterseniz inline ý kaldýrýrsýnýz. ve ver2yi
+inline yaparsýnýz.
+
+-----------------------------------
+namespace alias (takma ad)
+isim alaný eþ ismi
+
+namespace mylib_pro_gen {
+
+	namespace progren_constant {
+		constexpr int val = 1;
+	}
+}
+
+{
+	// normalde
+	mylib_pro_gen::progren_constant::val; // þeklinde eriþilir.
+}
