@@ -262,3 +262,9 @@ namespace mylib_pro_gen {
 	// normalde
 	mylib_pro_gen::progren_constant::val; // þeklinde eriþilir.
 }
+
+---
+	// namespace alias ile 
+	namespace constant = mylib_pro_gen::progren_constant;
+	constant::val;
+	---

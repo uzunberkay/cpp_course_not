@@ -1,0 +1,111 @@
+24. Ders
+-------------------
+
+nested tyoes
+type member
+member type
+
+içsel türler
+
+nested types
+
+erg is a nested class of class Nec
+class Nec {
+public:
+	class Erg {
+
+	};
+};
+int main()
+{
+	Nec::Erg obj;  nested class
+
+1 class scopda 
+class ile mantýksal bi iliþkisi var
+
+enclosing class kendi nested class'inýn private
+bölümüne eriþebilir mi ? 
+- Hayýr eriþemez.
+class Nec {
+public:
+	void necFunc()
+	{
+		Erg obj;
+		obj.foo();
+		
+	}
+private:
+	class Erg {
+		class Nec;
+		void foo();
+
+	};
+};
+eriþemiyor fakat  Erg içinde Nec classi friend
+olarak tanýmlanýrsa eriþebilir.
+-
+class Nec {
+public:
+	void necFunc()
+	{
+		Erg obj;
+		obj.foo();
+		
+	}
+private:
+	class Erg {
+		friend class Nec;
+		void foo();
+
+	};
+};
+-
+
+
+class Nec {
+public:
+	
+private:
+	void necFunc();
+	class Erg {
+		
+		 void foo()
+		 {
+			 Nec n;
+			 n.necFunc();
+		}
+
+	};
+};
+
+Bu legal xd.
+nested class içinde enclosing class'in private bölümüne eriþebilir.
+
+
+---------------------------------
+class Enc {
+public:
+	class Nested {
+	public:
+		Nested() = default;
+		Nested(int val = 0) : value(val) {}
+		Nested foo(int x)
+		{
+			std::cout << "Value: " << value + x << std::endl;
+			return Nested(x);
+		}
+	private:
+		int value;
+	};
+};
+
+
+int main()
+{
+	Enc::Nested n1(3);
+	n1.foo(5);
+	return 0;
+
+}
+---------------------------------
+1:0:0 .
