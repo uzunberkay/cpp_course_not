@@ -108,4 +108,46 @@ int main()
 
 }
 ---------------------------------
-1:0:0 .
+
+
+has-a-relationtip
+
+is-a-relation
+
+
+class Member {
+public:
+    Member() {
+        std::cout << "Member default ctor\n";
+    }
+    
+    ~Member() {
+        std::cout << "Member dtor\n";
+	}
+};
+
+
+class Owner {
+public:
+    Owner()
+    {
+		std::cout << "Owner default ctor\n";
+    }
+    ~Owner()
+	{
+		std::cout << "Owner dtor\n";
+	}
+    Member mx;
+};
+
+int main()
+{
+
+    Owner a;
+    
+}
+Member default ctor
+Owner default ctor
+Owner dtor
+Member dtor
+---------------------------------
