@@ -147,3 +147,16 @@ Length: 13, Capacity: 15
 	cout << str << endl;
 	cout << "Length: " << str.length() << ", Capacity: " << str.capacity() << endl;
 
+	Hello, World!
+Length: 13, Capacity: 15
+Hello, World! Welcome to C++23.
+Length: 31, Capacity: 31
+********************************
+Dikkat!
+string sýnýfýnýn char parametreli ctor yok!!!
+
+Dikkat ! 
+string sýnýfýnýn 
+string::size_type yani size_t türümnden
+constexpr static npos isimli bir veri elemaný
+string::npos ne iþe yarýyor ? 
