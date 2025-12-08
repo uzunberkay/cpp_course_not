@@ -59,3 +59,91 @@ iþini görüyprsa
 (default)
 	seçim 
 	  dinamik dizi
+
+capacity (kapasite)
+
+Dikkat! 
+reallocation (yeniden tahsis)
+
+    reallocation takes time 
+
+
+sso  small string optimization
+	small memory optimization
+
+string sýnfý içinde 20 bytlelýk alan var. Eðer string 20 byte dan kýsaysa heap e gitmiyor.
+stackte tutuluyor. Bu da küçük stringler için performans artýþý saðlýyor.
+Allocator kullanýmý azaltýyor.
+Eðer sonradan eklenip 20 byte ý geçerse heap e gidiyor. (allocator kullanýyor))
+
+
+	cout << str.length() << endl;
+	cout << str.size() << endl;  // contanier
+
+big class
+
+contanier
+  .size()
+  .empty()  
+  .erase(iter)
+  .clear() tüm ögeleri siler
+  .front() ilk ögeye eriþim
+  .back() son ögeye eriþim
+
+index interface
+
+str.find('a');  index of first 'a'
+
+----------------
+	using namespace std;
+	vector vec{ 2,5,7,9,1 };
+
+	auto iter = vec.begin() + 2;
+	vec.erase(iter);
+
+	cout << "Vector elemanlari: ";
+	for (const auto& eleman : vec)
+	{
+		cout << eleman << " ";
+	}
+	Vector elemanlari: 2 5 9 1
+----------------
+index isteyen tüm parametreler
+index döndürem tüm fonksiyonlar
+
+yazý uzunluðu
+kapasite
+index 
+
+string::size_type
+
+string sýnýfýnda karþýmýza çýkacak
+fonksiyonlarýn parametrik yapýlar
+
+
+param											anlamý
+const char* s        (cstring)                   sonunda null karakter olan yazý addresi
+const string& str						parametre olan stringin tuttuðu yazý
+const char*p , size_t n					p adresinden baþlayarak n karakterlik yazý
+size_t n , char c						n karakterlik yazý, her karakter c
+const string& str , size_t idx (data)            str stringinin idx indeksinden baþlayan yazý ve geri kalan kýsmý
+size_t n , char c (fill)
+initialize_list<char>                ilist			listedeki karakterlerin olustudugu yazý
+
+const char*pf , const char* pe           
+ 
+
+ -------------------
+	auto len = str.length();
+	auto cap = str.capacity();
+	cout << "Length: " << len << ", Cap
+
+Length: 13, Capacity: 15
+
+-------------------
+	cout << str << endl;
+	cout << "Length: " << str.length() << ", Capacity: " << str.capacity() << endl;
+	str += " Welcome to C++23.";
+	cout << str << endl;
+	cout << "Length: " << str.length() << ", Capacity: " << str.capacity() << endl;
+
