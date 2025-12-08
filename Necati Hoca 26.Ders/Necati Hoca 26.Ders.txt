@@ -1,0 +1,102 @@
+26. DERS
+******************
+string::npos nedir?
+
+size_t en büyük deðerini temsil eden sabittir.
+	string str = "Hello, World!";
+	auto idx = str.find("World");
+	if (idx != string::npos) {
+		cout << "'World' found at index: " << idx << endl;
+	} else {
+		cout << "'World' not found." << endl;
+	}
+
+	aranan bulunamazsa npos döner.
+*******************
+	string name = "yasar ugur gulec";
+	string str(name,6,4);
+	cout << str << endl;
+	**ugur**
+	*******************
+		string s1{ "alican" }, s2{ "metehan" };
+
+	//  std::string op std::string 
+	//  std::string op const char*
+	//  const char* op string
+
+	if (s1 == s2)
+	{
+		cout << "s1 ve s2 esit\n";
+	}
+	else
+	{
+		cout << "s1 ve s2 esit degil\n";
+	}
+
+s1 ve s2 esit degil
+*********************************************
+lexicographical compare
+iki contanier 
+   karþýlaþtýrýldýðýnda 
+	eþit olmalarý için 
+		size'lar eþit olacak
+		    hem de karþýlýklý bütün öðeler eþit olmalý
+f
+
+cout << s1 + s2 << endl;
+alicanmetehan oluyor.
+
+string + string
+string + cstring
+string + cstring
+string + char
+char + string
+
+
+	s1.append(" metehan");
+	cout << s1 << endl;
+
+alican metehan
+
+***********************
+	string str{ "bugun cuma gunu" };
+
+	for(char& c : str)
+	{
+		if(c == ' ')
+		{
+			c = '_';
+		}
+	}
+	cout << str << endl;
+bugun_cuma_gunu
+
+***********************
+
+
+	vector<int> vec = { 1,2,3,4,5,6,7,8,9,10 };
+
+	cout << vec.front() << endl;  // Output: 1
+	cout << vec.back() << endl;   // Output: 10
+		vec.front() = 100;
+	cout << vec.front() << endl;  // Output: 100
+********************************************
+		// atama operator fonksiyonu
+	// copy assig. veya move assig.
+
+	string s1;
+	string s2 = { "gizem" };
+
+	s1 = s2; // copy assignment
+
+	cout << s1 << " " << s2 << endl;
+	gizem gizem
+****
+	s1 = move(s2); // move assignment
+
+	cout << s1 << " " << s2 << endl;
+	cout << boolalpha << (s1 == s2) << endl;
+	gizem
+	false
+****
+1:40:00 da kaldým
