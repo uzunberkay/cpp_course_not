@@ -1,0 +1,61 @@
+25. Ders
+--------------
+
+String Sýnýfý
+
+class template
+
+template instantiation
+	template specilization
+
+basic_string
+
+	basic_string<char, char_traits<char>, allocator<char>> s1;
+	basic_string<char> s2;
+	string str = "Hello, World!";
+
+	Bunlar ayný.
+
+
+	kaynak kullanan sýnýfýlar
+		RAII idiom
+			move semantics
+	operator overloading
+	     function overloading
+	function overloading
+	   member func.
+	   free func.
+	nested type 
+	    type alias
+
+special member functions
+
+   string_view 
+   regex library
+
+data structures (veri yapýlarý)
+
+dynamic array (dinamik dizi)
+
+
+contanier (kap)
+
+contanier interface
+	insert
+	erase
+iterator
+
+
+STL (Standard Template Library)
+
+algorithm
+
+O(1)
+O(n)
+O(log n)
+O(n log n)
+
+iþini görüyprsa 
+(default)
+	seçim 
+	  dinamik dizi
