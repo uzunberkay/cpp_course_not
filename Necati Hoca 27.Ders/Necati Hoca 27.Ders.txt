@@ -1,0 +1,155 @@
+27.DERS*
+********
+
+STL (Standart Template Library)
+
+class template
+function template
+variable template
+alias template
+concept (diðer template'leri constraint etmek)
+
+
+
+	string str("bugun hava cok guzel");
+	cout << "[" << str << "]\n";
+	cout << "Kapasite= " << str.capacity() << '\n';
+	cout << "uzunluk = " << str.length() << '\n';
+	str.append(12, 'a');
+	cout << "Kapasite= " << str.capacity() << '\n';
+	cout << "uzunluk = " << str.length() << '\n';
+	cout << "[" << str << "]\n";
+
+	*
+	[bugun hava cok guzel]
+Kapasite= 31
+uzunluk = 20
+Kapasite= 47
+uzunluk = 32
+[bugun hava cok guzelaaaaaaaaaaaa]
+*
+**************************************
+Eðer string nesnenizin tuttuðu yazýnýn "giderek belirli bir uzunluða 
+kadar büyüyeceðini baþtan biliyosanýz 
+	defalarca reallocation olacaðýna
+	baþtan belirtelim.  "
+
+	str.reserve(4000) gibi...
+**************************************
+Küçültmek istersem örneðin 40000 -> 10000 yapmak istiyorum.
+non-binding shrink request
+
+baðlayýcý olmayan büzülme talebi
+
+
+-------------------------------------
+	/*
+	* str.erase(1) ile 
+	* 1.indexten sonrasýný sildik. 
+	* len = 1 oldu . Fakat
+	* capacity düþmedi.. Düþmesini beklerdik dimi...
+	*/
+	string str(100'000, 'a');
+	cout << "str.length() = " << str.length() << '\n';
+	cout << "str.capacity() = " << str.capacity() << '\n';
+
+	str.erase(1);
+	
+	cout << "str.length() = " << str.length() << '\n';
+	cout << "str.capacity() = " << str.capacity() << '\n';
+
+str.length() = 100000
+str.capacity() = 100015
+str.length() = 1
+str.capacity() = 100015
+
+-------------------------------------
+	str.reserve(40);
+	cout << "after reserve call\n";
+	cout << "str.capacity() = " << str.capacity() << '\n';
+	str.capacity() = 100015
+after reserve call
+str.capacity() = 100015
+capacity düþürmüyor.
+-------------------------------------
+	str.shrink_to_fit();
+	// dikkat bu da aslýnda non-binding request
+	cout << "after reserve call\n";
+	cout << "str.capacity() = " << str.capacity() << '\n';
+str.capacity() = 100015
+after reserve call
+str.capacity() = 15
+
+str.shrink_to_fit----
+-------------------------------------
+	string str{ "necatiergin" };
+
+	auto s = str.substr(3);
+	print(s);
+	[atiergin]
+	substr ile stringin belirli kýsýmlarýndan yeni bir string olusturulabilir.
+	auto s = str.substr(3,3);
+	[ati]
+
+		string str{ "necatiergin" };
+
+	auto s = str.substr();  // str.substr(0); 
+	gibi . O yüzden strnin aynýsý olur.
+
+	print(s);
+	[necatiergin]
+	Burada aslýnda bir deep copy yapýyorum.
+	str.substr(4000,50000); gibi bir þey yapsaydým maliyet fena olacaktý
+	peki sadece okumak istesem bu maliyeti ödemeden yapabilir miyim ? 
+	Evet 
+	<string_view> ile.
+-------------------------------------
+	string str{ "necatiergin" };
+
+	auto s = str.substr();
+	string_view sv(str.substr(2));
+	cout << sv;
+
+	BU þekilde sv sadece read-only iþlemler yapýlabiliyo. Aslýnda
+	2 adet pointer tutuyor içeride.
+Dikkat!!
+eðer substring oluþturmak istemenizin nedeni yalnýzca
+access op ise 
+	yeni bir kopya oluþturmak yerine
+		gözlemci 
+			string_view kullanýn.
+f
+****************************************
+
+overloading
+fonksiyona hem L value hem de R value gönderilebilsin.
+void bar(std::string& s)
+{
+	// gelen L value ise onun kaynaðýný kopyala
+	// gelen R value ise onun kaynaðýný çal.
+}
+
+void bar(const std::string& s)
+{
+	std::cout << "L value geldi bana onun kaynagini kopyaliyorum\n";
+}
+
+void bar(std::string&& s)
+{
+	std::cout << "R value geldi bana onun kaynagini caliyorum\n";
+}
+
+********************************************************************
+	/*
+	* ilginc bir þekilde allocate edilen bellek alanýnýn>
+	* addresini aþaðýdaki kodlardan herhangi biriyle elde edebiliriz.
+	*/
+	cout << static_cast<const void*>(str.c_str()) << "\n";
+	cout << static_cast<const void*>(str.data()) << "\n";
+	cout << static_cast<const void*>(&str[0]) << "\n";
+	cout << static_cast<const void*>(&str.at(0)) << "\n";
+	cout << static_cast<const void*>(&*str.begin()) << "\n";
+
+
+	 1:40:00 
+
