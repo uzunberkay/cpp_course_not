@@ -1,8 +1,8 @@
-26. DERS
+ï»¿26. DERS
 ******************
 string::npos nedir?
 
-size_t en büyük deðerini temsil eden sabittir.
+size_t en bÃ¼yÃ¼k deÄŸerini temsil eden sabittir.
 	string str = "Hello, World!";
 	auto idx = str.find("World");
 	if (idx != string::npos) {
@@ -11,7 +11,7 @@ size_t en büyük deðerini temsil eden sabittir.
 		cout << "'World' not found." << endl;
 	}
 
-	aranan bulunamazsa npos döner.
+	aranan bulunamazsa npos dÃ¶ner.
 *******************
 	string name = "yasar ugur gulec";
 	string str(name,6,4);
@@ -37,10 +37,10 @@ s1 ve s2 esit degil
 *********************************************
 lexicographical compare
 iki contanier 
-   karþýlaþtýrýldýðýnda 
-	eþit olmalarý için 
-		size'lar eþit olacak
-		    hem de karþýlýklý bütün öðeler eþit olmalý
+   karÅŸÄ±laÅŸtÄ±rÄ±ldÄ±ÄŸÄ±nda 
+	eÅŸit olmalarÄ± iÃ§in 
+		size'lar eÅŸit olacak
+		    hem de karÅŸÄ±lÄ±klÄ± bÃ¼tÃ¼n Ã¶ÄŸeler eÅŸit olmalÄ±
 f
 
 cout << s1 + s2 << endl;
@@ -99,4 +99,123 @@ bugun_cuma_gunu
 	gizem
 	false
 ****
-1:40:00 da kaldým
+String atama fonksiyonlarÄ±*
+***************************
+
+	string s{ "muratcan" };
+	cout << "[" << s << "]\n";
+	s = "omer dogu";
+	cout << "[" << s << "]\n";
+	s = 'a';
+	cout << "[" << s << "]\n";
+	s = { 'a','l','i' };
+	cout << "[" << s << "]\n";
+	initializer_list<char> ilist = { 'n','u','r' };
+	s = ilist;
+	cout << "[" << s << "]\n";
+
+[muratcan]
+[omer dogu]
+[a]
+[ali]
+[nur]
+
+************
+
+	s.assign(10, 'p');
+	cout << "[" << s << "]\n";
+	10 tane p karakteri at  [pppppppppp]
+
+**************************
+	string s{ "muratcan" };
+	string str{ "erman candan" };
+	print(s);
+
+	s.assign(str, 6);
+	print(s);
+************************
+	char ar[] = "Kerim oksuz";
+	print(s);
+
+	s.assign(str, 6);
+	print(s);
+	s.assign(ar, 5);
+	print(s);
+******************************
+char ar[] = "mehmet ali ersoy";
+	s.assign(ar + 7 , 5);
+	print(s);
+[ali e]
+**************
+mutators
+
+push_back  
+operator+=
+append  -> sona ekleme 
+operator=
+assign
+
+	string s{ "muratcan" };
+	cout << "S len : " << s.length() << '\n';
+	s.resize(20);
+	cout << "S len : " << s.length() << '\n';
+	S len : 8
+S len : 20
+
+**************************
+	string s{ "muratcan" };
+	cout << "S len : " << s.length() << '\n';
+	s.resize(20,'x');
+	cout << "S len : " << s.length() << '\n';
+	print(s);
+S len : 8
+S len : 20
+[muratcanxxxxxxxxxxxx]
+***************************
+
+ekleme fonksiyonlarÄ± her zaman konum ister.
+hangi konuma ekleme yapÄ±lacak.
+
+2 5 6 9 3
+	
+***************************
+	string name;
+	cout << "ismin ne kardeÅŸim: ";
+	getline(cin, name);
+
+	print(name);
+	name.erase(name.begin() + 1, name.end() - 1);
+	print(name);
+ismin ne kardeâ– im: berkay
+[berkay]
+[by]
+Hangi aralÄ±klar silinecek ? 
+*****************************
+name.pop_back(); son karakteri siliyo.
+
+	string name;
+	cout << "ismin ne kardeÅŸim: ";
+	getline(cin, name);
+
+	print(name);
+	name.insert(name.begin() + 3, '*');
+	print(name);
+
+	ismin ne kardeâ– im: berkay
+[berkay]
+[ber*kay]
+
+*******************************
+	string str(40, 'a');
+	cout << "[" << str << "]\n";
+
+	str.clear();
+
+	cout << "[" << str << "]\n";
+	str.clear(); // tamamen siler .
+	str.resize(0); // tamamen siler .
+	str.erase(str.begin(),str.end()); // tamamen siler .
+	str.erase(0); // tamamen siler .
+	str.assign(""); // tamamen siler .
+	str.assign({}); // tamamen siler .
+	str = string{};
