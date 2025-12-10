@@ -151,5 +151,81 @@ void bar(std::string&& s)
 	cout << static_cast<const void*>(&*str.begin()) << "\n";
 
 
-	 1:40:00 
+	 str.find
+	 str.rfind
+	 str.
+	 find_first_of
 
+
+	 if(str.contains('c'))
+********************************
+	string str;
+
+	cout << "Bir yazi girin : ";
+
+	getline(cin, str);
+	if (auto idx = str.find('e');idx != string::npos) find ilki bulur rfind sonu bulur.
+	{
+		cout << "bulundu! idx = " << idx << '\n';
+		str[idx] = '*';
+		cout << str;
+	}
+	else
+	{
+		cout << "Bulunmadi!\n";
+	}
+
+
+	str.find('eiau',4) böyle falan a olabiliyor.
+***********************************
+	cout << "Bir yazi girin : ";
+
+	getline(cin, str);
+	cout << "[" << str << "]\n";
+	auto ival = stoi(str);
+	cout << ival;
+	Bir yazi girin : 12334berkay
+[12334berkay]
+12334
+***********************************
+	size_t idx{};
+	auto ival = stoi(str,&idx);
+	cout << ival << '\n';
+	cout << "idx = " << idx << '\n';
+	Bir yazi girin : 321321berkay
+[321321berkay]
+321321
+idx = 6
+***********************************
+
+	cout << "[" << str << "]\n";
+	size_t idx{};
+	auto ival = stoi(str,&idx,16);
+	cout << ival << '\n';
+	cout << "idx = " << idx << '\n';
+
+	16 ' da sayı tabanıymış
+***********************************
+	cout << "Bir yazi girin : ";
+
+	getline(cin, str);
+	cout << "[" << str << "]\n";
+	if (str.contains("necati"))
+	{
+		cout << "evet var\n";
+	}
+	else
+	{
+		cout << "Hayir yok \n";
+	}
+
+***********************************
+	string str{ " object oriented c++" };
+
+	size_t n = erase(str, 'e');
+
+	if (n)
+		cout << "silindi : [ " << str << "]\n";
+silindi : [  objct orintd c++] 
+e leri sildik.
+***********************************
