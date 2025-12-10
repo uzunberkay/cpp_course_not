@@ -1,0 +1,153 @@
+|28. DERS*|
+|*********|
+
+
+	string str;
+	cout << "Bir yazi girin : ";
+	getline(cin,str);
+	print(str);
+	reverse(str.begin(), str.end()); // terrs çevir
+	print(str);
+	sort(str.begin(), str.end());  // sýrala
+	print(str);
+*******************************
+	mt19937 eng;
+	for (size_t i = 0; i < 10; i++)
+	{
+		shuffle(str.begin(), str.end(), eng); // karýþtýr
+	}
+*******************************
+INHERITENCE
+	runtime polymorphism
+OOP
+	Car					BMW
+	parent	class    - child class
+	super	class	 - subclass
+
+
+
+base class ( taban sýnýf )
+	derived class ()
+		derivation
+single inheritance    CAR -> VOLVO
+multi-level inheritance	CAR -> VOLVO -> VOLVO S90
+
+eski kodlarýn daha sonradan yazýlacak kodlarý kullanabilmesi
+
+public inheritance   diðer dillerdeki kalýtým...
+private inheritance
+protected inheritance
+
+!!!!!!!!!	Base class incomplete type olamaz.	!!!!!!!!!
+class Car {
+
+};
+
+class Mercedes :public Car {  public kalýtýmý 
+eðer yazýlmaz ise private...
+
+};
+
+***************************************************
+class Base {
+	//...
+};
+
+class Der :public Base {
+	//...
+};
+
+	//upcasting
+	Der myder;
+	Base mybase = myder;
+***************************************************
+class Car {
+public:
+	void start();
+	void run();
+	void stop();
+};
+
+class Mercedes :public Car {
+public:
+	void open_sunroof();
+	void main_tain();
+};
+
+
+void cargame(Car& car);
+
+int main()
+{
+	Mercedes mrc;
+	mrc.run();
+	mrc.open_sunroof();
+
+	return 0;
+}
+***************************************************
+
+Taban sýnýfýn private bölümü kalýtýmda türemiþ sýnýflara kapalýdýr.
+class Base {
+private:
+	void foo();
+protected:
+	void bar();
+public:
+	void baz();
+};
+
+class Der : public Base {
+	void derfunc()
+	{
+		baz();	// public  
+		foo();  // private  ulaþamýyorum
+		bar();	// protected ulaþabiliyorum
+	}
+};
+***************************************************
+Der sýnýfý Base sýnýfýndan kalýtým ile elde edilmiþ.
+Der sýnýfýnýn Member sýnýfý türünden bir elemaný var.
+
+Der my ; 
+Base->Member->Der
+
+class A {
+public:
+	A()
+	{
+		cout << "A ctor \n";
+	}
+};
+class B {
+public:
+	B()
+	{
+		cout << "B ctor \n";
+	}
+};
+class Base {
+public:
+	Base()
+	{
+		cout << "Base ctor\n";
+	}
+};
+
+class Der :public Base {
+public:
+	Der()
+	{
+		cout << "Der ctor \n";
+	}
+	A ax;
+	B bx;
+};
+Base ctor
+A ctor
+B ctor
+Der ctor
+
+dtorlarda tam tersi.    Der dtor -> B dtor -> A dtor -> Base ctor
+***************************************************
+1:40:00
