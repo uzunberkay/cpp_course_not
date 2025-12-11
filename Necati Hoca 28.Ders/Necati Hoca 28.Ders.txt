@@ -150,4 +150,136 @@ Der ctor
 
 dtorlarda tam tersi.    Der dtor -> B dtor -> A dtor -> Base ctor
 ***************************************************
-1:40:00
+class Base {
+public:
+	Base()
+	{
+		cout << "Base def. ctor\n";
+	}
+	Base(int) { cout << "Base(int)\n"; }
+	Base(int, int) { cout << "Base(int,int)\n"; }
+};
+
+class Der :public Base {
+public:
+
+
+};
+
+Der myder;
+
+Burada Der için def. ctor çalýþacak ve Base içinde.
+Eðer base sýnýftaki def. ctoru silersek derleyici Der sýnýfýndaki def.
+ctoru deleted eder.
+
+
+	Der myder;
+	Base* baseptr = &myder;
+	Base& baseref = myder;
+	Base mybase = myder; // valid code
+	
+	Bunlar geçerli fakat çok kullanýlmayacak. Sakýncalarý var.
+	 
+
+***************************************************
+class Base {
+public:
+	int x;
+};
+
+class Der :public Base {
+
+
+
+};
+
+
+int main()
+{
+	Der m;
+
+	m.x;  // ilk der'e bakýcak eðer x i bulursa arama bitecek.
+	// Türetilmiþ class'da x  yoksa base sýnýfa bakacak.
+***************************************************
+class Base {
+public:
+	void foo(int, int);
+};
+
+class Der :public Base {
+
+public:
+	void foo(int x)
+	{
+		//foo(2,5);  // legal deðil.
+		//foo(2);  // legal kendimi çaðýrýrým
+		Base::foo(3,2); // legal Base'deki foo yu çaðýrýyorum.
+	}
+
+};
+int main()
+{
+	Der m;
+	return 0;
+}
+***************************************************
+
+class Base {
+public:
+	Base() {
+		cout << "Base def. ctor \n";
+	}
+	Base(const Base&) {
+		cout << "Base copy. ctor \n";
+	}
+};
+
+class Der :public Base {
+
+public:
+	
+
+};
+int main()
+{
+	Der m;
+	Der m2 = m;
+	return 0;
+}
+
+Türetilmiþ sýnýfta copy ctor yazmadýðýmýzda derleyici bizim yerimize
+Der(const Der& oth):Base(oth)  yazýyor yani Base'in copy ctorunu kullanýyoruz.
+Fakat biz kendimiz bir copy ctor yazmak istediðimizde tüm sorumluluk bize geçiyor
+class Der :public Base {
+
+public:
+	Der() = default;
+	Der(const Der&)
+	{
+
+	}
+
+};
+Böyle yazdýðýmýzý düþünürsek (ki en büyük hatalardan birisiymiþ)
+Base def. ctor
+Base def. ctor Base sýnýfýn def. ctoru çaðýrýlýr. Bizim copy ctoru çaðýrmamýz gerekiyor.
+***************************************************
+	Base(Base&& oth)
+	{
+		cout << "Move ctor\n";
+	}
+
+class Der :public Base {
+
+public:
+	Der() = default;
+
+
+};
+	Der m;
+	Der m2 = move(m);
+	Base def. ctor
+Move ctor
+Copy ctor'da olduðu gibi eðer move ctor yazacaksak derleyicinin yazdýðý geçerli olmayacak.
+Eðer base move ctoru çaðýrmazsak def. ctor çaðrýlýr otomatik olarak.
+
