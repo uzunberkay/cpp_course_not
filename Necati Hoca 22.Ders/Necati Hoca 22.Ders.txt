@@ -5,7 +5,7 @@ enum class Weekday {
 	Sunday, Monday, Tuesday, Wednesday, Thursday,
 	Friday, Saturday
 };
-
+0
 std::ostream& operator<<(std::ostream& os, const Weekday& wd)
 {
 	constexpr const char* pdays[] = { "Sunday","Monday",

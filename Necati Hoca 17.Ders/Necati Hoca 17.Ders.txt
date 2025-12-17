@@ -67,9 +67,6 @@ int main()
 	m2.s++;
 	m3.s *= 2;
 	std::cout << "  S  =  " << Myclass::s << '\n';
-
-
-
 }
   S  =  12
 Yani Myclass sınıfının elemanlarının ortak bir global değişkeniymiş gibi...
