@@ -1,0 +1,122 @@
+#include<iostream>
+#include<ostream>
+
+
+class Car {
+
+public:
+	void start(){
+		std::cout << "Car start\n";
+	}
+	void stop() {
+		std::cout << "Car stop !\n";
+	}
+	void run()
+	{
+		std::cout << "Car run!\n";
+	}
+};
+
+void car_game(Car& car)
+{
+	car.start();
+	car.run();
+	car.stop();
+}
+
+class Audi:public Car{};
+class Bmw:public Car{};
+class Volvo:public Car{};
+class Honda:public Car{};
+class Toyota:public Car{};
+
+int main()
+{
+	Audi audi;
+	Bmw bmw;
+	Volvo volvo;
+
+	car_game(audi);
+	car_game(bmw);
+	car_game(volvo);
+	return 0;
+}
+
+Car start
+Car run!
+Car stop !
+Car start
+Car run!
+Car stop !
+Car start
+Car run!
+Car stop !
+
+Audi Bmw Volvo gibi türetilmis sýnýflarý base sýnýfýn yönetildiði bir
+fonksiyonda veya iþlevde kullanabiliyorum.
+
+taban sýnýfýn öyle bir fonksiyonu ki
+	türemiþ sýnýflara hem bir interface 
+		hemde implementasyon verir.
+Airplane 
+fly
+
+taban sýnýfýn öyle bir fonksiyonu ki
+	türemiþ sýnýflara hem bir interface 
+		hemde 'default' verir
+Airplane 
+land
+
+taban sýnýfýn öyle bir fonksiyonu ki
+	türemiþ sýnýflara hem bir interface 
+		imðlemtasyonu türemiþ sýnýflara býrakýyor.
+
+polymorphic class
+abbstract class( soyut sýnýf )
+
+override 
+
+	void start(){  // start 1. kategori
+		std::cout << "Car start\n";
+	}
+
+2. kategorideki fonksiyonlar için 'virtual' eklenir.
+	virtual void run()
+	{
+		std::cout << "Car run!\n";
+	}
+1den fazla kategoride barýndýrýyorsa class 'polymorphic class ' olur.
+
+3. kategori fonksiyonlar için  'pure virtual function'
+virtual void stop() = 0;
+
+'Soyut olmak icin 3. kategoriden olmak zorunda'
+
+contextual ketword
+baðlamsal anahtar sözcük
+
+
+class Car {
+public:
+	void start()
+	{
+		std::cout << "car has just started !\n";
+	}
+	virtual void run();
+	virtual void stop() = 0; // pure virtual function
+};
+
+
+/*
+* Somut sýnýf diyebilir miyiz ElecetricCar için .
+* Cevap evet.
+* Çünkü taban sýnýfýn pure virtual func.'ni override etti.
+* 
+*/
+class ElectricCar :public Car {
+public:
+	void stop()override;
+};
+
+-----------------------------------------------
+dk 45.
