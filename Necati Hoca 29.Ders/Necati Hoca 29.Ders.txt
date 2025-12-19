@@ -119,4 +119,239 @@ public:
 };
 
 -----------------------------------------------
-dk 45.
+Soyut sýnýflardan nesne olusturamazsýn
+
+
+Dikkat!!!
+Türemiþ sýnýf
+	taban sýnýfýn sanal fonksiyonu ile
+		ayný isme ayný imzaya sahip
+			fakat geri dönüþ türü farklý olan bir fonksiyon bildiremez.
+				ancak bunun önemli bir istisnasý
+					covariance  - covariant
+
+-
+static binding (early binding)
+dynamic binding (late binding)
+--------------------------------
+
+
+class Car {
+public:
+	void start()
+	{
+		std::cout << "car has just started!\n";
+	}
+	void run()
+	{
+		std::cout << "car is running now!\n";
+	}
+};
+class Peugeot :public Car {
+public:
+	void start()
+	{
+		std::cout << "Peugeot has just started!\n";
+	}
+	void run()
+	{
+		std::cout << "Peugeot is running now!\n";
+	}
+};
+
+class Opel :public Car {
+public:
+	void start()
+	{
+		std::cout << "Opel has just started!\n";
+	}
+	void run()
+	{
+		std::cout << "Opel is running now!\n";
+	}
+};
+
+void game_car(Car& c)
+{
+	c.start();
+	c.run();
+}
+
+
+int main()
+{
+	Peugeot p;
+	Opel op;
+	game_car(p);
+	game_car(op);
+
+
+	return 0;
+}
+car has just started!
+car is running now!
+car has just started!
+car is running now!
+----------------------------
+
+	virtual void start()
+	{
+		std::cout << "car has just started!\n";
+	}
+	virtual void run()
+	{
+		std::cout << "car is running now!\n";
+	}
+
+	Peugeot has just started!
+Peugeot is running now!
+Opel has just started!
+Opel is running now!
+
+
+virtual dispatcj / sanal gönderim.
+-------------------------------------------------
+
+--
+class Car {
+public:
+	virtual void start()
+	{
+		std::cout << "car has just started!\n";
+	}
+	virtual void run()
+	{
+		std::cout << "car is running now!\n";
+	}
+	virtual void stop()
+	{
+		std::cout << "car has stopped!\n";
+	}
+};
+class Peugeot :public Car {
+public:
+	void start()
+	{
+		std::cout << "Peugeot has just started!\n";
+	}
+	void run()
+	{
+		std::cout << "Peugeot is running now!\n";
+	}
+	void stop()
+	{
+		std::cout << "Peugeot has stopped!\n";
+	}
+};
+
+class Opel :public Car {
+public:
+	void start()
+	{
+		std::cout << "Opel has just started!\n";
+	}
+	void run()
+	{
+		std::cout << "Opel is running now!\n";
+	}
+	void stop()
+	{
+		std::cout << "Opel has stopped!\n";
+	}
+};
+
+void game_car(Car& c)
+{
+	c.start();
+	c.run();
+}
+
+
+int main()
+{
+	Peugeot p;
+	Opel op;
+	game_car(p);
+	game_car(op);
+
+
+	return 0;
+}
+--
+
+class Base {
+public:
+	virtual int foo(unsigned int);
+	int bar(int);
+};
+
+class Der :public Base {
+public:
+	int bar(int);  // !
+};
+
+---------
+	int foo(int)override;
+	int bar(int);
+	bu override ekleyerek derleyiciye bu fonksiyonun override oldugunu söylüyosun
+bu da hata yapmaný önler.
+
+---------
+Bir taban sýnýfýn bir sanal fonksiyonunu override eden türemiþ sýnýf fonksiyonu
+virtual anahtar sözcüðünü kullanmasa da  sanal bir fonksiyondur.
+
+class Base {
+public:
+	virtual int foo( int);
+};
+
+class Der :public Base {
+public:
+	int foo(int)override;  // burada istersen virtual kullan kullanma.
+};
+
+-------------------
+class Base {
+public:
+	virtual void foo() {
+		std::cout << "Base::foo()\n";
+	}
+};
+
+class Der :public Base {
+public:
+	void foo()override
+	{
+		std::cout << "Der::foo()\n";
+	}
+};
+
+class NecDer :public Der {
+public:
+	void foo()override
+	{
+		std::cout << "NecDer::foo()\n";
+	}
+};
+
+	Der myder;
+	NecDer mynecder;
+
+	Base* baseptr = &myder;
+	baseptr->foo();
+	baseptr = &mynecder;
+	baseptr->foo();
+
+Der::foo()
+NecDer::foo()
+Eðer Necder ve der deki fooyu silsek basedeki foo çalýþacaktý.
+-----------------------------
+
+virtual dispatch hangi durumlarda devreye girer.
+virtual dispatch hangi durumlarda devreye girmez.
+
+1. taban sýnýf nesnesi ile sanal fonksiyon çaðrýlýrsa 
+virtual dispatch devreye girmez.
+2. 
+
+2:0:0
