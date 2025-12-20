@@ -354,4 +354,19 @@ virtual dispatch hangi durumlarda devreye girmez.
 virtual dispatch devreye girmez.
 2. 
 
-2:0:0
+
+class Base {
+public:
+	virtual void foo()
+	{
+		std::cout << "Base::foo\n";
+	}
+};
+
+class Der : public Base {
+private:
+	void foo()override
+	{
+		std::cout << "Der:foo()\n";
+	}
+};
