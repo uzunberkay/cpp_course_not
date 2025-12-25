@@ -1,4 +1,129 @@
 30.ders			|
 -----------------
 
-void foo 
+
+car.h 
+#pragma once
+
+#include<iostream>
+#include<string>
+#include<random>
+
+#pragma once
+
+#include<iostream>
+#include<string>
+#include<random>
+
+class Car {
+public:
+	virtual void start()
+	{
+		std::cout << "car has just started!\n";
+	}
+	virtual void run()
+	{
+		std::cout << "car is running now!\n";
+	}
+	virtual void stop()
+	{
+		std::cout << "car has stopped!\n";
+	}
+};
+
+class Peugeot :public Car {
+public:
+	void start()override
+	{
+		std::cout << "Peugeot has just started!\n";
+	}
+	void run()override
+	{
+		std::cout << "Peugeot is running now!\n";
+	}
+	void stop()override
+	{
+		std::cout << "Peugeot has stopped!\n";
+	}
+};
+
+class Opel :public Car {
+public:
+	void start()override
+	{
+		std::cout << "Opel has just started!\n";
+	}
+	void run()override
+	{
+		std::cout << "Opel is running now!\n";
+	}
+	void stop()override
+	{
+		std::cout << "Opel has stopped!\n";
+	}
+};
+
+
+class Audi :public Car {
+public:
+	void start()override
+	{
+		std::cout << "Audi has just started!\n";
+	}
+	void run()override
+	{
+		std::cout << "Audi is running now!\n";
+	}
+	void stop()override
+	{
+		std::cout << "Audi has stopped!\n";
+	}
+};
+class Honda :public Car {
+public:
+	void start()override
+	{
+		std::cout << "Honda has just started!\n";
+	}
+	void run()override
+	{
+		std::cout << "Honda is running now!\n";
+	}
+	void stop()override
+	{
+		std::cout << "Honda has stopped!\n";
+	}
+};
+
+class Mercedes :public Car {
+public:
+	void start()override
+	{
+		std::cout << "Mercedes has just started!\n";
+	}
+	void run()override
+	{
+		std::cout << "Mercedes is running now!\n";
+	}
+	void stop()override
+	{
+		std::cout << "Mercedes has stopped!\n";
+	}
+};
+
+class Volvo :public Car {
+public:
+	void start()override
+	{
+		std::cout << "Volvo has just started!\n";
+	}
+	void run()override
+	{
+		std::cout << "Volvo is running now!\n";
+	}
+	void stop()override
+	{
+		std::cout << "Volvo has stopped!\n";
+	}
+};
+------------------------------------------------------------
