@@ -9,26 +9,12 @@ car.h
 #include<string>
 #include<random>
 
-#pragma once
-
-#include<iostream>
-#include<string>
-#include<random>
-
 class Car {
 public:
-	virtual void start()
-	{
-		std::cout << "car has just started!\n";
-	}
-	virtual void run()
-	{
-		std::cout << "car is running now!\n";
-	}
-	virtual void stop()
-	{
-		std::cout << "car has stopped!\n";
-	}
+	virtual void start() = 0;
+	virtual void run() = 0;
+	virtual void stop() = 0;
+	virtual Car* clone() = 0;
 };
 
 class Peugeot :public Car {
@@ -45,6 +31,9 @@ public:
 	{
 		std::cout << "Peugeot has stopped!\n";
 	}
+	virtual Car* clone()override {
+		return new Peugeot(*this);
+	}
 };
 
 class Opel :public Car {
@@ -60,6 +49,9 @@ public:
 	void stop()override
 	{
 		std::cout << "Opel has stopped!\n";
+	}
+	virtual Car* clone()override {
+		return new Opel(*this);
 	}
 };
 
@@ -78,6 +70,9 @@ public:
 	{
 		std::cout << "Audi has stopped!\n";
 	}
+	virtual Car* clone()override {
+		return new Audi(*this);
+	}
 };
 class Honda :public Car {
 public:
@@ -92,6 +87,9 @@ public:
 	void stop()override
 	{
 		std::cout << "Honda has stopped!\n";
+	}
+	virtual Car* clone()override {
+		return new Honda(*this);
 	}
 };
 
@@ -109,6 +107,9 @@ public:
 	{
 		std::cout << "Mercedes has stopped!\n";
 	}
+	virtual Car* clone()override {
+		return new Mercedes(*this);
+	}
 };
 
 class Volvo :public Car {
@@ -125,5 +126,76 @@ public:
 	{
 		std::cout << "Volvo has stopped!\n";
 	}
+	virtual Car* clone()override {
+		return new Volvo(*this);
+	}
 };
+
+class Toyota :public Car {
+public:
+	void start()override
+	{
+		std::cout << "Toyota has just started!\n";
+	}
+	void run()override
+	{
+		std::cout << "Toyota is running now!\n";
+	}
+	void stop()override
+	{
+		std::cout << "Toyota has stopped!\n";
+	}
+	virtual Car* clone()override {
+		return new Toyota(*this);
+	}
+};
+
+class HondaCivic :public Honda {
+public:
+	void start()override
+	{
+		std::cout << "HondaCivic has just started!\n";
+	}
+	//void run()override
+	//{
+	//	std::cout << "HondaCivic is running now!\n";
+	//}
+	void stop()override
+	{
+		std::cout << "HondaCivic has stopped!\n";
+	}
+	virtual Car* clone()override {
+		return new HondaCivic(*this);
+	}
+};
+
+inline Car* create_random_car()
+{
+	static std::mt19937 eng;
+	static std::uniform_int_distribution dist(0, 7);
+	switch (dist(eng)) {
+	case 0: std::cout << "Peugeot case\n"; return new Peugeot;
+	case 1: std::cout << "Opel case\n"; return new Opel;
+	case 2: std::cout << "Audi case\n"; return new Audi;
+	case 3: std::cout << "Honda case\n"; return new Honda;
+	case 4: std::cout << "Mercedes case\n"; return new Mercedes;
+	case 5: std::cout << "Volvo case\n"; return new Volvo;
+	case 6: std::cout << "Toyota case\n"; return new Toyota;
+	case 7: std::cout << "HondaCivic case\n"; return new HondaCivic;
+
+	default: return nullptr;
+
+	}
+}
 ------------------------------------------------------------
+
+
+polimorfik sýnýflarýn
+	destructor'lari
+		ya public virtual
+			ya da
+				orýtected non-virtual olmalý
+Herb Sutter
+
+
+dk. 40
