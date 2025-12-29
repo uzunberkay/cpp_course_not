@@ -198,4 +198,9 @@ polimorfik sýnýflarýn
 Herb Sutter
 
 
-dk. 40
+virtual ctor idiom
+virtual dtor
+
+virtual friend
+virtualization of free functions
+1:06
