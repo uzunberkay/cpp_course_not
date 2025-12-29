@@ -354,6 +354,7 @@ virtual dispatch hangi durumlarda devreye girmez.
 virtual dispatch devreye girmez.
 2. 
 
+<<<<<<< HEAD
 ---------------------------------------------------------------------
 
 Tekrar dinliyorum.
@@ -475,3 +476,21 @@ Ancak bunun önemli bir istisnasý var.
 1:0:0
 
 
+=======
+
+class Base {
+public:
+	virtual void foo()
+	{
+		std::cout << "Base::foo\n";
+	}
+};
+
+class Der : public Base {
+private:
+	void foo()override
+	{
+		std::cout << "Der:foo()\n";
+	}
+};
+>>>>>>> cbbd6ae38cc37651e54e13b0ca8ffa3b0d604d60
