@@ -352,6 +352,15 @@ virtual dispatch hangi durumlarda devreye girmez.
 
 1. taban sýnýf nesnesi ile sanal fonksiyon çaðrýlýrsa 
 virtual dispatch devreye girmez.
+
+Dikkat!
+taban sýnýfýn ctor'ý içinde yapýlan sanal fonksiyon çaðrýlarý
+için virtual dispatch uygulanmaz.
+
+Taban sýnýfýn dtor'ý içinde yapýlan sanal fonksiyon
+çaðrýlarý için 'virtual dispatch' uygulanmaz!
+çaðrýlan taban sýnýf fonksiyonudur.
+
 2. 
 
 
