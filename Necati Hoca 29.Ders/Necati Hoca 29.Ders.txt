@@ -363,6 +363,129 @@ Taban sýnýfýn dtor'ý içinde yapýlan sanal fonksiyon
 
 2. 
 
+<<<<<<< HEAD
+---------------------------------------------------------------------
+
+Tekrar dinliyorum.
+
+
+class Car {
+public:
+	void start()
+	{
+		std::cout << "Car has just started!\n";
+	}
+	void run()
+	{
+		std::cout << "Car is running now \n";
+	}
+	void stop()
+	{
+		std::cout << "Car has stopped! \n";
+	}
+
+};
+
+class Audi : public Car {
+
+};
+
+class Bmw : public Car {
+
+};
+class Volvo : public Car {
+
+};
+
+void car_game(Car& car)
+{
+	car.start();
+	car.run();
+	car.stop();
+}
+
+int main()
+{
+	Audi audi;
+	Bmw bmw;
+	Volvo volvo;
+
+	car_game(audi);
+	car_game(bmw);
+	car_game(volvo);
+
+
+	return 0;
+}
+
+Car has just started!
+Car is running now
+Car has stopped!
+Car has just started!
+Car is running now
+Car has stopped!
+Car has just started!
+Car is running now
+Car has stopped!
+
+Her sýnýf için Car sýnýfý çalýþtý.
+
+taban sýnýfýn öyle bir fonksiyonu ki 
+	türemiþ sýnýflara hem bir interface 
+		hem  de implentasyon verir.
+
+
+		 Galiba virutal
+Airplane 
+	fly   Her uçak uçar sizde uçacaksýnýz istersen kendi kodunla istersen benim kodla uç.
+taban sýnýfýn öyle bir fonksiyonu ki 
+	türemiþ sýnýflara hem bir interface  
+		hem de "default" implentasyon verir.
+
+		Galiba virtual void foo()=0; gibi bir þey.
+taban sýnýfýn öyle bir fonksiyonu ki 
+	türemiþ sýnýflara yalnýzca  bir interface veriyor.
+		imðlentasyonu  türemiþ sýnýfa býrakýyo.
+		
+	polymorphic class				
+	abstract class (soyut sýnýf)  3. klasmanda en az 1 fonk olursa
+
+	override
+
+
+class Car {
+public:
+	void start()  // 1. kategori
+	{
+		std::cout << "Car has just started!\n";
+	}
+	virtual void run()  // 2.kategori.  sizinde run fonksiyonunuz olcak. 
+	eðer ovveride ederseniz onu kullanýrsýnýz etmezseniz benimkini kullanýrsýnýz.
+	{
+		std::cout << "Car is running now \n";
+	}
+	virtual void stop() = 0;  //  pure virtual function  sap sanal
+	// 3. kategori Paþa paþa bu fonksiyonu sen yazacaksýn.
+
+
+
+class Skoda :public Car {
+
+public:
+	void run()override;
+};
+};
+
+Dikkat!
+Türemiþ sýnýf  taban sýnýfýn sanal fonksiyonuyla 
+ayný isme ayný imzaya sahip fakat geri dönüþ türü farklý olan bir
+fonksiyon bildiremez.
+Ancak bunun önemli bir istisnasý var.
+	covariamce - covariant
+1:0:0
+
+
+=======
 
 class Base {
 public:
@@ -378,4 +501,97 @@ private:
 	{
 		std::cout << "Der:foo()\n";
 	}
+
+----------------------------------------------
+class Car {
+public:
+    void start()
+    {
+        std::cout << "Car has just started!\n ";
+    }
+    void run()
+    {
+        std::cout << "car is running now!\n";
+    }
 };
+
+class Peugeot :public Car {
+public:
+    void start() 
+    {
+        std::cout << "Peugeot has just started!\n ";
+    }
+    void run()
+    {
+        std::cout << " Peugeot is running now!\n";
+    }
+};
+
+class Opel :public Car {
+public:
+    void start()
+    {
+        std::cout << "Opel has just started!\n ";
+    }
+    void run()
+    {
+        std::cout << " Opel is running now!\n";
+    }
+};
+
+
+void car_game(Car& carref)
+{
+    carref.start();
+    carref.run();
+}
+
+int main()
+{
+    Peugeot p; 
+    Opel op;
+    car_game(p);
+    car_game(op);
+
+	Car has just started!
+ car is running now!
+Car has just started!
+ car is running now!
+
+
+ class Car {
+public:
+    virtual oid start()
+    {
+        std::cout << "Car has just started!\n ";
+    }
+    virtual void run()
+    {
+        std::cout << "car is running now!\n";
+    }
+};
+    base sýnýfdaki fonksiyonlarý "VIRTUAL" yaparsak
+	Peugeot has just started!
+  Peugeot is running now!
+Opel has just started!
+  Opel is running now!
+
+
+  tabiii türetilmiþ sýnýfdakileri de override eklemek önemli.
+}
+
+
+ bir taban sýnýfýn  bir sanal fonksiyonunu
+ override eden türemiþ  sýnýf fonksi,yopnu
+ virtuaþll anahtar sözcüðünü kullanmasa da  da sanal bir  fonksiyondur.
+
+
+ Virtual dispatch hangi durumlarda devreye girer
+ Virtual dispatch hangi durumlarda devreye girmez
+
+
+Çaðrýnýn pointer veya referans ile yapýlmasý gerekiyor.
+
+
+
+1:55:55
