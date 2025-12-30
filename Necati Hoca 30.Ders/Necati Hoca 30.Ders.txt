@@ -203,4 +203,141 @@ virtual dtor
 
 virtual friend
 virtualization of free functions
-1:06
+
+
+TEkrar izliyorums.
+
+
+CTOR sanal olamaz.
+
+ polimorfik sýnýflarýn
+	destructor'larý
+		ya public virtual
+			ya da 
+				protected non-virtual
+					olmalý !
+Herb Sutter.
+
+
+	Base* baseptr = new Der;
+
+
+	delete baseptr;  // ub 
+
+class Base
+{
+public:
+	virtual void foo()
+	{
+		std::cout << "Base::foo()\n";
+	}
+	virtual ~Base() {
+		std::cout << "Base destructor \n";
+	}
+};
+
+eðer dtoru virtual yapmazsak ub oluyor.
+
+virtual constructor
+virtual destructor
+
+
+virtual friend 
+virtualiation of free functions
+
+
+virtual dispatch ilave maliyeti
+a) iþlem sayýsý
+b) kullanulan bellek alaný
+
+Dikkat!!!
+C++ standartý hiçbir zaman implen 
+
+
+
+-----------------
+void car_game(Car* carptr)
+{
+	std::cout << *carptr << '\n';
+	carptr->start();
+	carptr->run();
+	carptr->stop();
+
+}
+
+int main()
+{
+
+	for (size_t i = 0; i < 10; i++)
+	{
+		car_game(create_random_car());
+		(void)getchar();
+	}
+
+	return 0;
+}
+-------------
+
+
+Sýnýf hiyerarþisi içindeki tüm sýnýflar için
+derleyicinin oluþturduðu kod runtime'ýn baþýnda 
+bir veri yapýsý (virtual function table)
+her türemiþ sýnýf nesnesinin içindeki
+	vptryi 
+	, ilgili sýnýfýn sanal fonksiyon tablosunun  addresi ile init ediyor.
+	virtual function table for Mercedes
+
+	0
+	1		&Mercedes::start
+	2		&Mercedes::run
+	3		&Mercedes::stop
+	virtual function table for Audi
+
+	0
+	1		&Audi::start
+	2		&Audi::run
+	3		&Audi::stop
+
+iþlem maliyeti
+
+	her sýnýf için bir sanal fonksiyon tablosu oluþturulacak.
+	carptr->run()
+	carptr->vptr[2]
+
+Kalýtým tek alternatifimiz deðil.
+
+Generic programlama
+	CRTP  curiously recurring template pattern
+	closed hierarchy
+
+std::variant
+
+
+type-erasure
+
+öyle durumlar var ki
+	derleyidci
+		bir sanal fonksiyon çaðýrýsý söz konusu olmasýna karþýn
+			derleme zamanýnda	
+				hangi fonksiyonun çaðrýlacaðýný 
+					anlayabiliyor.
+
+final
+	sýnýf içinde yapýlan using bildirimi
+
+using word = int ;
+
+using std::cout
+using namespace std::placeholders;
+
+using enum Color;
+
+using Color::Blue;
+
+
+inherited constructor
+
+
+final class ,  öyle bir sýnýf ki o kalýtýmda taban sýnýf olarak kullanýlamaz.
+
+final override
