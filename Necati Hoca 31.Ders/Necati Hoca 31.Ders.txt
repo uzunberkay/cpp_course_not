@@ -1,0 +1,10 @@
+31. ders
+--------------
+kaplarda doðrudan referans tutulamaz.
+	kaplarda pointer deðiþkenler tutulabilir (raw pointer)
+	kaplarda smart pointer deðiþkenler tutulabilir
+	unique_ptr
+
+	reference_wrapper
+
+
