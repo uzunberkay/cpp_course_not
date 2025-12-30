@@ -593,5 +593,79 @@ Opel has just started!
 Çaðrýnýn pointer veya referans ile yapýlmasý gerekiyor.
 
 
+Virtual fonksiyon base sýnýfýn public kýsmýnda olmak zorunda deðil.
+Private kýsýmda da olabilir.
 
-1:55:55
+class Base {
+private:
+	virtual void foo()
+	{
+		std::cout << "Base::foo\n";
+	}
+public:
+	void bar();
+};
+
+
+class Der :public Base {
+
+	void foo()override
+	{
+		std::cout << "Der::foo\n";
+	}
+
+};
+
+void Base::bar()
+{
+	Base* basep = new Der;
+
+	basep->foo();
+}
+
+
+int main()
+{
+	Base b;
+	b.bar();
+
+	return 0;
+}
+
+Der::foo
+Virtual dispach oluyor.
+
+---------------------------------------
+
+global fonklar ve sýnýfýn static fonklarý virtual olamaz.
+
+Dikkat!
+Taban sýnýfýn ctor'i içinde yapýlan sanal
+fonksiyon çaðrýlarý için virtual dispatch uygulanmaz!
+çaðrýlan taban sýnýfýn fonksiyonudur!!!
+
+class Base {
+public:
+	Base()
+	{
+		std::cout << "Base default ctor \n";
+		foo();
+	}
+	virtual void foo()
+	{
+		std::cout << "Base::foo\n";
+	}
+};
+Base* basep = new Der;
+
+Base default ctor
+Base::foo
+
+DTOR'da da olmaz. 
+
+Taban sýnýfýn dtor'i içinde yapýlan sanal
+fonksiyon çaðrýlarý için virtual dispatch uygulanmaz!
+çaðrýlan taban sýnýfýn fonksiyonudur!!!
+
+
+
