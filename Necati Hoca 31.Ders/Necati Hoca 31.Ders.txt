@@ -8,3 +8,166 @@ kaplarda doðrudan referans tutulamaz.
 	reference_wrapper
 
 
+Normal olarak taban sýnýfýn
+sanal fonksiyonunu override eden
+türemiþ sýnýf fonksiyonu
+	taban sýnýf fonksiyonu ile ayný imzaya sahip 
+	ve ayný geri dönüþ türüne sahip olmalý.
+	eðer g.d.d türü farklý olursa kod gecersiz olur.
+
+bir taban sýnýfýn sanal fonksiyonunn bildirimi þöyle olsun: 
+class Base{
+
+virtual B* foo();
+virtual B& bar();
+};
+
+eðer D sýnýfý B sýnýfýnýn bir (public türeöiþ sýnýfý ise)
+
+class B{}
+class D: public B{}
+
+
+
+class B{
+
+};
+
+class D:public B{
+};
+
+class Base {
+public:
+	virtual B* foo();
+	virtual B& bar();
+
+};
+
+class Der :public Base {
+	public: 
+	 D* foo()override;  // D de B de geçerli olur.
+	 D& bar()override;
+
+};
+
+
+RTTI
+	runtime type information
+	runtime type identification
+
+	programýn çalýþma zamanýnýn bir  nesnenin dinamik türünün belirlenmesi 
+
+static_cast
+	const_cast
+		reinterpret_cast
+			dynamic_cast
+
+dynamic_cast op.
+down-casting'in güvenli  bir biçimde yapýlýp yapulamayacaðýný kontrol eder.
+
+typeid 
+ type_info
+ upcasting
+ downcasting
+cross-cast 
+	multiple interitance
+dynamic_cast<Der*>(base_ptr);
+
+Dikkat!
+dynamic_cast op. kullanýlabilmesi için
+operand olan ifadenin polimorfik bir türden olmasý gerekir.
+
+Der* deptr = dunamic_cast<Der*>(base_ptr);
+
+if(derptr != nullptr){
+	// down-casting baþarýlý)
+	derptr->foo();
+	}
+
+	for (size_t i = 0; i < 100; i++)
+	{
+		Car* carptr = create_random_car();
+		carptr->start();
+		carptr->run();
+		if(Honda* h = dynamic_cast<Honda*>(carptr))
+		{
+			h->open_sunroof();
+			(void)getchar();
+		}
+	}
+
+typedeid(x)
+typedeid(*ptr)
+typedeid(10)
+
+std::type_info sýnýfý türünden bir nesne kullanmanýn tek yolu 
+
+typeid operatorü kullanmaktýr.
+
+class Myclass {};
+struct Neco {};
+
+int main()
+{
+
+	using namespace std;
+	int x = 5;
+	int* ptr{ &x };
+
+	Myclass m;
+	Neco nec;
+
+	std::cout << typeid(x).name() << '\n';
+	std::cout << typeid(ptr).name() << '\n';
+	std::cout << typeid(*ptr).name() << '\n';
+	std::cout << typeid(m).name() << '\n';
+	std::cout << typeid(nec).name() << '\n';
+
+
+	return 0;
+}
+
+int
+int * __ptr64
+int
+class Myclass
+struct Neco
+
+--------------------------------------------------------------
+class Base {
+public:
+	/*virtual void foo(){}*/
+};
+
+class Der : public Base {
+};
+
+int main()
+{
+
+	Base* base_ptr = new Der();	
+
+	std::cout << typeid(*base_ptr).name() << "\n";
+	std::cout << std::boolalpha << (typeid(*base_ptr) == typeid(Der)) << "\n";
+
+	
+
+	return 0;
+}
+class Base
+false
+
+polimorfik olmayan türlerde runtime type information (RTTI) 
+	çalýþma zamanýnda tür bilgisi saðlanmaz.
+
+class Base {
+public:
+	virtual void foo(){}
+};
+
+class Der : public Base {
+};
+
+polimorfik türlerde RTTI çalýþýr. 
+class Der
+true
