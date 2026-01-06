@@ -1,0 +1,268 @@
+32. Ders
+------------------------------------------
+
+VTable for Mercedes
+
+-------------------------------
+0		&type_info object for Mercedes
+-------------------------------
+1		&Mercedes::start
+-------------------------------
+2		&Mercedes::run
+-------------------------------
+
+
+public inheritance
+private inheritance
+protected inheritance
+
+
+class Base {
+public:
+	
+};
+
+// private inheritance
+class Der :  Base {
+};
+
+Taban sýnýfýn protected kýsýmý 
+türemiþ sýnýfýn protected kýsmýna aktarýlýr.
+
+
+class Base {
+public:
+	void f_public();
+protected:
+
+	void f_protected();
+private:
+	void f_private();
+
+};
+
+class Der :  public Base {
+public:
+	void foo()
+	{
+		f_public();
+		f_protected();
+		//f_private(); // error
+	}
+};
+
+private kalýtýmýnda taban sýnýfýn public ve protected kýsýmlarý
+türemiþ sýnýfýn private kýsmýna aktarýlýr.
+
+
+Dikkat!
+private kalýtýmýnda "client" kodlar için
+
+is - a - relationship geçerli deðildir.
+
+Ancak
+
+türemiþ sýnýfýn üye fonksiyonlarý içinde
+türemiþ sýnýfýn friend'lik verdiði kodlar içinde 
+is- a - relationship geçerlidir.
+
+
+private kalýtýmý (çok büyük çoðunlukla)
+	composition 
+	    alternatifi olarak kullanýlýr.
+
+class A1 {
+	int mx{}, my{};
+
+public:
+	void foo();
+
+};
+
+class B1 {
+	A1 a1x;  
+	// B1 sýnýfýnýn A1 sýnýfý türünden bir üyesi var
+};
+
+class A2 {
+	int mx{}, my{};
+public:
+	void foo();
+
+};
+
+class B2 :private A2
+{
+
+};
+
+int main()
+{
+	B1 b1;
+	B2 b2;
+
+	// b1.foo(); // error sebebi ise B1 sýnýfýnýn A1 nesnesinni fonkusyonlarýna eriþememesi
+	// b2.foo(); // error sebebi ise B2 sýnýfýnýn A2 sýnýfýndan türemesi private olduðundan dolayýdýr. yani eriþim kontrolü
+	return 0;
+}
+
+------------------------------------------------------------
+ Peki private kalýtýmýnda geçerli olan
+  ancak 
+     containment/composition'da geçerli olmayan neler var ?
+
+elemanýmýn protected bölümüne eriþemem ancak private
+kalýtýmýnda  taban sýnýfýn protected bölümüne eriþebilirim.
+
+public inheritance ===> is - a  - relationship
+private inheritance ===> is implemented in terms of base class
+
+
+C++ dilinde attribute'ler var.
+
+[[nodiscard]]
+[[maybe_unused]]
+[[fallthrough]]
+[[likely]]
+[[unlikely]]]]
+
+
+a) bazý durumlarda derleyiciye mesajý vermeye teþvik etmek
+b) bazý durumlarda derleyiciye mesajý vermemeye teþvik etmek
+c) bazý durumlarda derleyiciye  daha etkin optimizasyon yapma olanaðý vermek.
+// EBO Empty Base Optimization
+
+
+
+
+/*
+* public kalýtýmýnda taban sýnýfýn public bölümüne türemiþ sýnýfýn private bölümünde
+* public kalýtýmýnda taban sýnýfýn protected bölümü türemiþ sýnýf protected bölümüne
+*/
+
+
+/*
+* private kalýtýmýnda taban sýnýfýn public bölümüne türemiþ sýnýfýn private bölümünde
+* private kalýtýmýnda taban sýnýfýn protected bölümü türemiþ sýnýf private bölümüne
+*/
+
+
+/*
+* protected kalýtýmýnda taban sýnýfýn public bölümüne türemiþ sýnýfýn protected bölümünde
+* protected kalýtýmýnda taban sýnýfýn protected bölümü türemiþ sýnýf protected bölümüne
+*/
+
+
+
+Çoklu kalýtým
+multiple inh.
+
+class Base1 {
+
+};
+
+class Base2 {
+
+
+};
+
+class Der :public Base1, public Base2 {
+
+};
+
+
+class Base1 {
+public:
+	void foo();
+};
+
+class Base2 {
+public:
+	void bar();
+
+};
+
+class Der :public Base1, public Base2 {
+
+};
+
+int main()
+{
+
+	Der myder;
+	myder.foo();
+	myder.bar();
+	return 0;
+}
+
+-----------------------
+class Drawable {
+public:
+	virtual void draw() = 0;
+};
+
+class Printable {
+public:
+	virtual void print() = 0;
+};
+
+class Der : public Drawable, public Printable {
+public:
+	void draw()override;
+	void print()override;
+};
+
+
+void foo(Drawable& dr);
+void bar(Printable& pr);
+
+
+	Der myder;
+	foo(myder);
+	bar(myder);
+	 mixin class ....
+
+
+-----------------------------------------------------
+
+Eðer  birden fazla taban sýnýftan
+ayný isim gelirse
+
+bu isimlerin aranmasýnda bir öncelik sonralýk iliþkisi yoktur.
+
+
+Diomand formation
+
+// DDD formation
+
+// deathful diamond of derivation
+// dradful diamond of derivation
+
+class Base {
+
+};
+
+class Der : public Base {};
+class Mer : public Base {};
+
+class Nec:public Der,public Mer{};
+
+
+class Base {
+
+	int mx{};
+
+};
+
+class Der : public Base {};
+class Mer : public Base {};
+
+class Nec:public Der,public Mer{};
+
+
+	constexpr auto sz1 = sizeof(Base);  // 4
+	constexpr auto sz2 = sizeof(Der);  // 4
+	constexpr auto sz3 = sizeof(Mer);  // 4
+	constexpr auto sz4 = sizeof(Nec);  // 8
+
+
