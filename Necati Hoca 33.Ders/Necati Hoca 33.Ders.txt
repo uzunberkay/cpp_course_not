@@ -1,0 +1,328 @@
+33
+-------------
+class Device{
+public:
+	virtual ~Device() = default;  // polymorphic base class
+};
+
+
+#include<iostream>
+
+
+class Device{
+public:
+	virtual ~Device() = default;  // polymorphic base class
+	void turn_on(){
+		m_onflag = true;
+		std::cout << "Device is turned on.\n" ;
+	}
+	void turn_off(){
+		m_onflag = false;
+		std::cout << "Device is turned off.\n" ;
+	}
+
+	bool is_on() const {
+		return m_onflag;
+	}
+private:
+
+	bool m_onflag{};
+	
+};
+
+class Scanner: public Device{
+
+public:
+	void scan()
+	{
+		if(is_on())
+			std::cout << "Scanning document...\n";
+		else
+			std::cout << "Scanner is off. Please turn it on first.\n";
+	}
+};
+class Printer: public Device{
+
+public:
+	void print()
+	{
+		if(is_on())
+			std::cout << "Printing document...\n";
+		else
+			std::cout << "Printer cannot print the device is off\n";
+	}
+};
+
+class Combo: public Scanner, public Printer{
+};
+
+int main(){
+	
+	Combo myCombo;
+	myCombo.turn_on();
+	myCombo.print();
+	myCombo.scan();
+	myCombo.turn_off();
+	myCombo.print();
+	myCombo.scan();
+	return 0;
+}
+
+-------------------------------------
+
+virtual inheritance
+
+virtual function
+virtual despatch
+pure virtual function
+virtual destructor
+virtual constructor idiom
+devirtualization optimization
+
+
+class Base{};
+
+class Der :public Base {};
+
+class NecDer :public Der {};
+
+// direct Base class
+// indirect Base class
+
+
+ctor init list ile 
+yalnýzca doðrudan taban sýnýfýn ctor'ina çaðrý yapýlabilir.
+dolaylý taban sýnýfýn ctor'ina çaðrý yapýlamaz.
+
+
+
+class Base{
+public:
+	Base(const char* p)
+	{
+		std::cout << "Base(const char* p) called with p = " << p << '\n';
+	}
+
+};
+
+class DerX : virtual public Base {
+	public:
+		DerX() :Base("called by DerX ctor\n")
+	{
+		
+	}
+};
+
+class DerY : virtual public Base {
+public:
+	DerY() :Base("called by DerY ctor\n")
+	{
+
+	}
+};
+
+class Mder :public DerX, public DerY {
+public:
+	Mder():Base("called by Mder ctor\n")
+	{
+	}
+
+};
+
+class NecDer :public Mder {
+public:
+	NecDer() :Base("called by NecDer ctor\n")
+	{
+	}
+
+};
+
+
+// direct Base class
+// indirect Base class
+
+int main(){
+	
+	DerX d1;
+	DerY d2;
+	Mder d3;
+	NecDer d4;
+
+	return 0;
+}
+
+
+----------------------------------------------------------------
+Generic programming in C++
+
+öyle bir kod olsun ki bu kod
+ birden fazla data-type  için kullanýlabilsin.
+
+
+void c_generic_swap(void* p1, void* p2,size_t sz)
+{
+	char* pp1 = (char*)p1;
+	char* pp2 = (char*)p2;
+	while (sz--)
+	{
+		char *temp = *pp1;
+		*pp1 = *pp2;
+		*pp2 = temp;
+		++pp1, ++pp2;
+	}
+}
+
+c de generic swap fonksiyonu
+
+
+Cppde 
+
+derleme zamanýnda derleyiciye kod yazdýrmak.
+
+derleyicinin kod yazmasýný saðlayan kod formuna
+	template denir.
+
+generic code
+meta code 
+
+
+template öyle bir kod ki varlýk nedeni 
+  derleyiciye kod yazdýrmaktýr.
+
+  function template (fonksiyon þablonu) C++98
+  class template (sýnýf þablonu)	 C++98
+
+  variable template (deðiþken þablonu) C++14
+  alias template (tür eþ isim þablonu) C++11
+  concept template (kavram þablonu) C++20
+
+
+  template instantiate
+
+  template specialization
+   template kodda üretilen  kodun kendisi
+
+// template parameters
+// type parameters
+// non - type parameters
+// template template parameters
+
+template <std::size_t N>
+class bitset {
+
+};
+
+
+
+
+
+template <typename T>
+void swap(T &x, T &y){
+	T temp(std::move(x));
+	x = std::move(y);
+	y = std::move(temp);
+}
+	double a = 2.3, b = 5.4;
+
+	std::cout << "Before swap: a = " << a << ", b = " << b << std::endl;
+	swap(a, b);
+	std::cout << "After swap: a = " << a << ", b = " << b << std::endl;
+x
+derleyicinin derleme zamanýnda
+bir template'ten bir kodu oluþturabilmesi için
+
+template parametrelerine karþýlýk kullanýlacak template argumanlarýnýn 
+ne ya da neler olacaðýný bilmesi gerekir.
+
+
+explicit template argument(s)
+deduction (çýkarým)
+	template argument deduction (þablon argüman çýkarýmý)
+	CTAD (class template argument deduction)
+
+
+template <typename T = int>
+class Myclass{};
+
+int main(){
+	
+	
+	Myclass <> obj1; // default template argument kullanýmý
+
+	return 0;
+}
+
+
+
+template instantiation  == > template specialization
+
+implcit instantiation
+explicit instantiation
+
+
+
+explicit(full) specialization
+derleyiciye bir template specialization için
+kodun kendisini vermek
+
+
+partial specialization
+
+
+Exception handling
+
+hata 
+
+
+geleneksel hata iþleme yöntemleri
+
+error 
+    programming errors
+	kod çalýþma zamanýnda iþini yapamýyor 
+	çünkü kod yanlýþ yazýlmýþ.
+	runtime errors
+
+
+	assertions(doðrulama)
+	static assertions(derleme zamanýnda doðrulama)
+	dynamic asserions(çalýþma zamanýnda doðrulama)
+
+
+
+çaðrýlan bir fonksiyon (beklenmeyen nedenler ile )
+iþini yapamayacaðýný (baþarýsýz olacaðýný) anlarsa
+ne yapacak ? 
+
+kendisini çaðýran kodu bu durumdan haberdar edecek.
+
+1) geri dönüþ deðeri ile iletilmesi
+2)  int foo(,int* perror)
+3) global bir hata deðiþkenini set etmek
+
+ - Geleneksel hata yönetme metotlarýnýn dezavantajlarý
+ -
+
+
+try 
+throw
+catch
+
+
+try block
+biz bir hata olusmasý durumunda iþlemek istiyorsak o kodu try bloðu içine koyuyoruz.
+
+throw statement;
+
+
+
+try{
+
+	f1();
+}
+catch(???)
+{
+}
+
+
+
+istisna 
