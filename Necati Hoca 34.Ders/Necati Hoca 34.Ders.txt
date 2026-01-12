@@ -1,0 +1,174 @@
+34.ders
+
+
+try
+throw 
+catch 
+
+tr{
+}
+catch(int x){
+
+
+}
+
+
+uncaught exception  - yakalanmamýþ
+
+std::terminate		
+	std::abort 
+
+neden yakalýyoruz ? 
+yakalayýnca ne yapacaðýz ? 
+
+
+
+void f4()
+{
+	std::cout << "f4() called!\n";
+	throw 42;
+	std::cout << "f4!() ends\n";
+}
+
+
+
+void f3()
+{
+	std::cout << "f3() called!\n";
+	f4();
+	std::cout << "f3!() ends\n";
+}
+
+void f2()
+{
+	std::cout << "f2() called!\n";
+	f3();
+	std::cout << "f2!() ends\n";
+}
+
+void f1()
+{
+	std::cout << "f1() called!\n";
+	f2();
+	std::cout << "f1!() ends\n";
+}
+
+void myabort()
+{
+	std::cout << "myabort function called!\n";
+	std::exit(EXIT_FAILURE);
+}
+
+int main(){
+	std::set_terminate(myabort);
+	std::cout << "main started running...\n";
+	f1();
+	std::cout << "main ends ..\n";
+
+	return 0;
+}
+
+set_terminate ile davranýþý özelleþtiriyorum.
+
+
+int main(){
+
+	std::cout << "main started running...\n";
+
+	try
+	{
+		f1();
+	}
+	catch (int x )
+	{
+		std::cout << "exception caught  x = " << x << '\n';
+	}
+
+	std::cout << "main ends ..\n";
+
+	return 0;
+}
+
+
+main started running...
+f1() called!
+f2() called!
+f3() called!
+f4() called!
+exception caught  x = 42
+main ends ..
+
+
+
+Dikkat hemen her zaman catch parametreleri 
+bir sýnýf türünden referans olur .
+
+catch (std::expection& ex)
+{
+	ex.what();
+}
+
+exception nesnesinin türü ne anlama geliyor ? 
+
+
+throw  FileReadError{};
+
+throw DivideByZeroError{};
+
+throw BadDate{};
+
+
+
+yukarýya gönderilen hata nesnesini türü
+zaten hatanýn niteliðinde iliþkin bir bilgidir.
+
+
+invalid_argument
+logic
+out_of_rane
+runtime_error
+bad_alloc
+bad_cast
+bad_typeid
+
+
+void foo(const std::string& s)
+{
+	if (s.empty())
+		throw std::invalid_argument{ "bad argument in foo\n" };
+	auto c1 = s.front();
+	auto c2 = s.back();
+}
+
+
+
+int main(){
+
+
+	try {
+		foo("");
+	}
+	catch (const std::exception& ex)
+	{
+		std::cout << "exception caught : " << ex.what() << "\n";
+	}
+
+	return 0;
+}
+
+
+exception caught : bad argument in foo
+
+exceptionu yaklayan kod ne yapabilir ? 
+
+resumptive 
+
+terminative 
+
+
+a) tamamen handle eder.
+b) (kýsmi müdahale) translate 
+c) rethrow 
+d) gerekli önlemleri alýp programý sonlandýrýþ.
+
+1:31:00 ' da kaldým.
