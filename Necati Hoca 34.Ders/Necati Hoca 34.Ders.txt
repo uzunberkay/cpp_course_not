@@ -242,3 +242,13 @@ program flow is in catch block now
 exception caught:  error in f3()
 
 Kaynak sýzýntýsý olmadý.
+
+unique_ptr
+shared_ptr
+
+
+1) exception yakalanmaz se (uncaught exception)
+2) new ifadelerini çýplak kullanmak çok riskli.
+
+
+throw std::runtime_error{"error"};
