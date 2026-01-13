@@ -171,4 +171,74 @@ b) (kýsmi müdahale) translate
 c) rethrow 
 d) gerekli önlemleri alýp programý sonlandýrýþ.
 
-1:31:00 ' da kaldým.
+
+
+
+class Nec {
+
+public:
+	Nec(int id) :m_id(id) {
+		std::cout << "for " << id << " resource allocated!\n";
+	}
+	~Nec()
+	{
+		std::cout << "resource for id : " << m_id << " freed\n";
+	}
+private:
+	int m_id;
+};
+
+
+void f3()
+{
+	Nec n3(3);
+	throw std::runtime_error("error in f3()");
+}
+
+void f2()
+{
+	Nec n2(2)
+		;
+	f3();
+}
+
+
+void f1()
+{
+	Nec n1(1);
+	f2();
+}
+
+
+int main(){
+	try
+	{
+		f1();
+	}
+	catch (const std::exception& ex)
+	{
+		std::cout << "program flow is in catch block now\n";
+		(void)getchar();
+		std::cout << "exception caught:  " << ex.what() << '\n';
+	}
+	
+
+	return 0;
+}
+
+
+
+
+
+
+for 1 resource allocated!
+for 2 resource allocated!
+for 3 resource allocated!
+resource for id : 3 freed
+resource for id : 2 freed
+resource for id : 1 freed
+program flow is in catch block now
+
+exception caught:  error in f3()
+
+Kaynak sýzýntýsý olmadý.
