@@ -266,3 +266,233 @@ class Nec:public Der,public Mer{};
 	constexpr auto sz4 = sizeof(Nec);  // 8
 
 
+	-----------------
+
+	Teklrar
+
+
+
+VTable for Mercedes
+
+-------------------------------
+0		&type_info object for Mercedes
+-------------------------------
+1		&Mercedes::start
+-------------------------------
+2		&Mercedes::run
+-------------------------------
+
+
+
+private - protected inheritance
+
+multiple inheritance
+
+
+class Base {
+public:
+	void f_public();
+protected:
+	void f_protected();
+private:
+	void f_private();
+
+};
+
+class Der :public Base {
+
+public:
+	void foo()
+	{
+		f_public();
+		f_protected();
+	}
+};
+
+--------------------------------
+
+
+class Base {
+public:
+	void f_public();
+protected:
+	void f_protected();
+private:
+	void f_private();
+
+};
+
+
+// private kalýtýmýnda taban sýnýfýn public ve protected bölümü türemiþ sýnýfýn
+// private kýsmýna ekleniyor.
+class Der :private Base {
+
+public:
+	void foo()
+	{
+		f_public();
+		f_protected();
+	}
+};
+
+
+Dikakt! 
+private kalýtýmýnda "client" kodlar için
+is-a-releationship yok
+
+Ancak
+
+türemiþ sýbnýfýn üye fonksiyonlarý içinde
+türemiþ sýnýfýn friendlik verdiði kodlar içinde
+geçerli
+
+privatte kalýtýmý (çok bütyük çoðunlukla)
+	composition
+	alternatifi oalrak kullanýlýr
+
+Peki,
+private kalýtýmýnda geçerli olan 
+ancak 
+ containment/composition da geçerli olmayan neler var ?
+
+ elemanýmýon protected bölümüne eriþemem 
+ anck private kaltýmýnda taban sýnýfýn protected bölümüne eriþebilirimç.
+
+
+// EBO 
+// empty base optimization
+
+
+class Nec
+{
+
+};
+
+
+
+int main()
+{
+	std::cout << "sizeof(Nec)= " << sizeof Nec<<'\n';
+
+	return 0;
+}
+
+1
+
+
+class Empty {
+
+	public:
+		void efoo();
+		void ebar();
+};
+
+
+class Nec {
+	Empty ex;
+};
+
+
+
+
+
+int main()
+{
+	std::cout << "sizeof(Empty)= " << sizeof Empty <<'\n';
+	std::cout << "sizeof(Nec)= " << sizeof Nec<<'\n';
+
+	return 0;
+}
+
+sizeof(Empty)= 1
+sizeof(Nec)= 1
+
+
+
+int main()
+{
+	std::cout << "sizeof(Nec)= " << sizeof Nec<<'\n';
+
+	return 0;
+}
+
+1
+
+
+class Empty {
+
+	public:
+		void efoo();
+		void ebar();
+};
+
+
+class Nec {
+	Empty ex;
+	int x;
+
+};
+
+
+
+
+
+int main()
+{
+	std::cout << "sizeof(Empty)= " << sizeof Empty <<'\n';
+	std::cout << "sizeof(Nec)= " << sizeof Nec<<'\n';
+
+	return 0;
+}
+
+sizeof(Empty)= 1
+sizeof(Nec)= 8
+
+
+private kalýtýmý yaparajk 4 e düþürcem.
+
+
+class Empty {
+
+	public:
+		void efoo();
+		void ebar();
+};
+
+
+class Nec:private Empty {
+	int mx;
+	void func()
+	{
+		efoo();
+		ebar();
+	}
+};
+
+
+
+
+
+int main()
+{
+	std::cout << "sizeof(Empty)= " << sizeof Empty <<'\n';
+	std::cout << "sizeof(Nec)= " << sizeof Nec<<'\n';
+
+	return 0;
+}
+sizeof(Empty)= 1
+sizeof(Nec)= 4
+:
+
+
+C++ dilinde attribute 
+
+[[nodiscard]]
+[[fallthrough]]
+
+a) bazý durumlarda derleyiciye uyarý mesajý vermeye teþvik etmek
+b) bazý durumlarda derleyiciye uyarý mesajý vermemeye teþvik etmek
+c) bazý durumlarda derleyiciye daha etkin optimizasyon yapma olanaðýo vermek
+
+
+1:32
