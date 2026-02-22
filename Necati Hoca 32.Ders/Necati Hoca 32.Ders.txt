@@ -1,4 +1,4 @@
-32. Ders
+ï»¿32. Ders
 ------------------------------------------
 
 VTable for Mercedes
@@ -26,8 +26,8 @@ public:
 class Der :  Base {
 };
 
-Taban sınıfın protected kısımı 
-türemiş sınıfın protected kısmına aktarılır.
+Taban sÄ±nÄ±fÄ±n protected kÄ±sÄ±mÄ± 
+tÃ¼remiÅŸ sÄ±nÄ±fÄ±n protected kÄ±smÄ±na aktarÄ±lÄ±r.
 
 
 class Base {
@@ -51,25 +51,25 @@ public:
 	}
 };
 
-private kalıtımında taban sınıfın public ve protected kısımları
-türemiş sınıfın private kısmına aktarılır.
+private kalÄ±tÄ±mÄ±nda taban sÄ±nÄ±fÄ±n public ve protected kÄ±sÄ±mlarÄ±
+tÃ¼remiÅŸ sÄ±nÄ±fÄ±n private kÄ±smÄ±na aktarÄ±lÄ±r.
 
 
 Dikkat!
-private kalıtımında "client" kodlar için
+private kalÄ±tÄ±mÄ±nda "client" kodlar iÃ§in
 
-is - a - relationship geçerli değildir.
+is - a - relationship geÃ§erli deÄŸildir.
 
 Ancak
 
-türemiş sınıfın üye fonksiyonları içinde
-türemiş sınıfın friend'lik verdiği kodlar içinde 
-is- a - relationship geçerlidir.
+tÃ¼remiÅŸ sÄ±nÄ±fÄ±n Ã¼ye fonksiyonlarÄ± iÃ§inde
+tÃ¼remiÅŸ sÄ±nÄ±fÄ±n friend'lik verdiÄŸi kodlar iÃ§inde 
+is- a - relationship geÃ§erlidir.
 
 
-private kalıtımı (çok büyük çoğunlukla)
+private kalÄ±tÄ±mÄ± (Ã§ok bÃ¼yÃ¼k Ã§oÄŸunlukla)
 	composition 
-	    alternatifi olarak kullanılır.
+	    alternatifi olarak kullanÄ±lÄ±r.
 
 class A1 {
 	int mx{}, my{};
@@ -81,7 +81,7 @@ public:
 
 class B1 {
 	A1 a1x;  
-	// B1 sınıfının A1 sınıfı türünden bir üyesi var
+	// B1 sÄ±nÄ±fÄ±nÄ±n A1 sÄ±nÄ±fÄ± tÃ¼rÃ¼nden bir Ã¼yesi var
 };
 
 class A2 {
@@ -101,21 +101,95 @@ int main()
 	B1 b1;
 	B2 b2;
 
-	// b1.foo(); // error sebebi ise B1 sınıfının A1 nesnesinni fonkusyonlarına erişememesi
-	// b2.foo(); // error sebebi ise B2 sınıfının A2 sınıfından türemesi private olduğundan dolayıdır. yani erişim kontrolü
+	// b1.foo(); // error sebebi ise B1 sÄ±nÄ±fÄ±nÄ±n A1 nesnesinni fonkusyonlarÄ±na eriÅŸememesi
+	// b2.foo(); // error sebebi ise B2 sÄ±nÄ±fÄ±nÄ±n A2 sÄ±nÄ±fÄ±ndan tÃ¼remesi private olduÄŸundan dolayÄ±dÄ±r. yani eriÅŸim kontrolÃ¼
 	return 0;
 }
 
 ------------------------------------------------------------
- Peki private kalıtımında geçerli olan
+ Peki private kalÄ±tÄ±mÄ±nda geÃ§erli olan
   ancak 
-     containment/composition'da geçerli olmayan neler var ?
+     containment/composition'da geÃ§erli olmayan neler var ?
 
-elemanımın protected bölümüne erişemem ancak private
-kalıtımında  taban sınıfın protected bölümüne erişebilirim.
+elemanÄ±mÄ±n protected bÃ¶lÃ¼mÃ¼ne eriÅŸemem ancak private
+kalÄ±tÄ±mÄ±nda  taban sÄ±nÄ±fÄ±n protected bÃ¶lÃ¼mÃ¼ne eriÅŸebilirim.
 
 public inheritance ===> is - a  - relationship
 private inheritance ===> is implemented in terms of base class
+
+
+
+
+class Empty
+{
+public:
+	void efoo();
+	void ebar();
+};
+
+class Nec :Empty
+{
+	int mx;
+	void func()
+	{
+		efoo();
+		ebar();
+	}
+};
+
+
+int main()
+{
+
+	/*
+	* Empty sÄ±nÄ±fÄ±n boyutu 1 dir.
+	*
+	*sizeof nec: 4sizeof empty: 1
+	* private kalÄ±tÄ±mÄ± yaptÄ±ÄŸÄ±m iÃ§in.
+	*
+	*/
+	std::cout << "sizeof nec: " << sizeof(Nec) <<"sizeof empty: " << sizeof(Empty)<< std::endl;
+
+
+
+	--
+	class Empty
+{
+public:
+	void efoo();
+	void ebar();
+};
+
+class Nec 
+{
+	int mx;
+	Empty m;
+	void func()
+	{
+		m.efoo();
+		m.ebar();
+	}
+};
+
+
+int main()
+{
+
+	/*
+	* Empty sÄ±nÄ±fÄ±n boyutu 1 dir.
+	*
+	*sizeof nec: 8sizeof empty: 1
+	* Empty m nesnesi olusturuldugu iÃ§in
+	* alignment gereÄŸi 3 byte padding ekleniyor.
+	*
+	*/
+	std::cout << "sizeof nec: " << sizeof(Nec) <<"sizeof empty: " << sizeof(Empty)<< std::endl;
+
+
+	------------
+
+
+
 
 
 C++ dilinde attribute'ler var.
@@ -127,34 +201,38 @@ C++ dilinde attribute'ler var.
 [[unlikely]]]]
 
 
-a) bazı durumlarda derleyiciye mesajı vermeye teşvik etmek
-b) bazı durumlarda derleyiciye mesajı vermemeye teşvik etmek
-c) bazı durumlarda derleyiciye  daha etkin optimizasyon yapma olanağı vermek.
+a) bazÄ± durumlarda derleyiciye mesajÄ± vermeye teÅŸvik etmek
+b) bazÄ± durumlarda derleyiciye mesajÄ± vermemeye teÅŸvik etmek
+c) bazÄ± durumlarda derleyiciye  daha etkin optimizasyon yapma olanaÄŸÄ± vermek.
 // EBO Empty Base Optimization
 
 
 
 
 /*
-* public kalıtımında taban sınıfın public bölümüne türemiş sınıfın private bölümünde
-* public kalıtımında taban sınıfın protected bölümü türemiş sınıf protected bölümüne
+* public kalÄ±tÄ±mÄ±nda taban sÄ±nÄ±fÄ±n public bÃ¶lÃ¼mÃ¼ne tÃ¼remiÅŸ sÄ±nÄ±fÄ±n private bÃ¶lÃ¼mÃ¼nde
+* public kalÄ±tÄ±mÄ±nda taban sÄ±nÄ±fÄ±n protected bÃ¶lÃ¼mÃ¼ tÃ¼remiÅŸ sÄ±nÄ±f protected bÃ¶lÃ¼mÃ¼ne
 */
 
 
 /*
-* private kalıtımında taban sınıfın public bölümüne türemiş sınıfın private bölümünde
-* private kalıtımında taban sınıfın protected bölümü türemiş sınıf private bölümüne
+* private kalÄ±tÄ±mÄ±nda taban sÄ±nÄ±fÄ±n public bÃ¶lÃ¼mÃ¼ne tÃ¼remiÅŸ sÄ±nÄ±fÄ±n private bÃ¶lÃ¼mÃ¼nde
+* private kalÄ±tÄ±mÄ±nda taban sÄ±nÄ±fÄ±n protected bÃ¶lÃ¼mÃ¼ tÃ¼remiÅŸ sÄ±nÄ±f private bÃ¶lÃ¼mÃ¼ne
 */
 
 
 /*
-* protected kalıtımında taban sınıfın public bölümüne türemiş sınıfın protected bölümünde
-* protected kalıtımında taban sınıfın protected bölümü türemiş sınıf protected bölümüne
+* protected kalÄ±tÄ±mÄ±nda taban sÄ±nÄ±fÄ±n public bÃ¶lÃ¼mÃ¼ne tÃ¼remiÅŸ sÄ±nÄ±fÄ±n protected bÃ¶lÃ¼mÃ¼nde
+* protected kalÄ±tÄ±mÄ±nda taban sÄ±nÄ±fÄ±n protected bÃ¶lÃ¼mÃ¼ tÃ¼remiÅŸ sÄ±nÄ±f protected bÃ¶lÃ¼mÃ¼ne
 */
 
 
+private kaltÄ±mÄ±ndan taban sÄ±nÄ±fÄ±n public bÃ¶lÃ¼mÃ¼
+tÃ¼remiÅŸ sÄ±nÄ±fÄ±n private bÃ¶lÃ¼mÃ¼ne eklendiÅŸÄŸi iÃ§in
+tÃ¼remiÅŸsÄ±nÄ±ftan tekrar kalÄ±tÄ±m yapÄ±ldÄ±gÄ±nda yeni tÃ¼retilen sÄ±nÄ±f traaban sÄ±nÄ±fÄ±n private bÃ¶lÃ¼mÃ¼ne eriÅŸemez.
 
-Çoklu kalıtım
+
+Ã‡oklu kalÄ±tÄ±m
 multiple inh.
 
 class Base1 {
@@ -225,10 +303,12 @@ void bar(Printable& pr);
 
 -----------------------------------------------------
 
-Eğer  birden fazla taban sınıftan
-aynı isim gelirse
+EÄŸer  birden fazla taban sÄ±nÄ±ftan
+aynÄ± isim gelirse
 
-bu isimlerin aranmasında bir öncelik sonralık ilişkisi yoktur.
+bu isimlerin aranmasÄ±nda bir Ã¶ncelik sonralÄ±k iliÅŸkisi yoktur.
+A::foo()  // Base1::foo()'u Ã§aÄŸÄ±rÄ±r
+B::foo()  // Base2::foo()'u Ã§aÄŸÄ±rÄ±r
 
 
 Diomand formation
@@ -264,6 +344,29 @@ class Nec:public Der,public Mer{};
 	constexpr auto sz2 = sizeof(Der);  // 4
 	constexpr auto sz3 = sizeof(Mer);  // 4
 	constexpr auto sz4 = sizeof(Nec);  // 8
+
+
+class Base {
+public:
+
+	void foo();
+};
+
+class Der: public Base {
+};
+class Mer:public Base {
+};
+class Nec: public Der,public Mer {
+};
+
+int main()
+{
+	Nec mynec;
+	mynec.foo();  // Hangi foo Ã§aÄŸÄ±rÄ±lacak ? Der mi Mer mi ?  C++ bunu bilemez. Bu yÃ¼zden hata verir. ambuguity (belirsizlik) hatasÄ± verir.
+
+	mynec.Der::foo(); olur
+	return 0;
+}
 
 
 	-----------------
@@ -323,8 +426,8 @@ private:
 };
 
 
-// private kalıtımında taban sınıfın public ve protected bölümü türemiş sınıfın
-// private kısmına ekleniyor.
+// private kalÄ±tÄ±mÄ±nda taban sÄ±nÄ±fÄ±n public ve protected bÃ¶lÃ¼mÃ¼ tÃ¼remiÅŸ sÄ±nÄ±fÄ±n
+// private kÄ±smÄ±na ekleniyor.
 class Der :private Base {
 
 public:
@@ -337,26 +440,26 @@ public:
 
 
 Dikakt! 
-private kalıtımında "client" kodlar için
+private kalÄ±tÄ±mÄ±nda "client" kodlar iÃ§in
 is-a-releationship yok
 
 Ancak
 
-türemiş sıbnıfın üye fonksiyonları içinde
-türemiş sınıfın friendlik verdiği kodlar içinde
-geçerli
+tÃ¼remiÅŸ sÄ±bnÄ±fÄ±n Ã¼ye fonksiyonlarÄ± iÃ§inde
+tÃ¼remiÅŸ sÄ±nÄ±fÄ±n friendlik verdiÄŸi kodlar iÃ§inde
+geÃ§erli
 
-privatte kalıtımı (çok bütyük çoğunlukla)
+privatte kalÄ±tÄ±mÄ± (Ã§ok bÃ¼tyÃ¼k Ã§oÄŸunlukla)
 	composition
-	alternatifi oalrak kullanılır
+	alternatifi oalrak kullanÄ±lÄ±r
 
 Peki,
-private kalıtımında geçerli olan 
+private kalÄ±tÄ±mÄ±nda geÃ§erli olan 
 ancak 
- containment/composition da geçerli olmayan neler var ?
+ containment/composition da geÃ§erli olmayan neler var ?
 
- elemanımıon protected bölümüne erişemem 
- anck private kaltımında taban sınıfın protected bölümüne erişebilirimç.
+ elemanÄ±mÄ±on protected bÃ¶lÃ¼mÃ¼ne eriÅŸemem 
+ anck private kaltÄ±mÄ±nda taban sÄ±nÄ±fÄ±n protected bÃ¶lÃ¼mÃ¼ne eriÅŸebilirimÃ§.
 
 
 // EBO 
@@ -449,7 +552,7 @@ sizeof(Empty)= 1
 sizeof(Nec)= 8
 
 
-private kalıtımı yaparajk 4 e düşürcem.
+private kalÄ±tÄ±mÄ± yaparajk 4 e dÃ¼ÅŸÃ¼rcem.
 
 
 class Empty {
@@ -490,9 +593,91 @@ C++ dilinde attribute
 [[nodiscard]]
 [[fallthrough]]
 
-a) bazı durumlarda derleyiciye uyarı mesajı vermeye teşvik etmek
-b) bazı durumlarda derleyiciye uyarı mesajı vermemeye teşvik etmek
-c) bazı durumlarda derleyiciye daha etkin optimizasyon yapma olanağıo vermek
+a) bazÄ± durumlarda derleyiciye uyarÄ± mesajÄ± vermeye teÅŸvik etmek
+b) bazÄ± durumlarda derleyiciye uyarÄ± mesajÄ± vermemeye teÅŸvik etmek
+c) bazÄ± durumlarda derleyiciye daha etkin optimizasyon yapma olanaÄŸÄ±o vermek
 
 
-1:32
+
+
+---------------------------------------
+Restricted polymorphism
+
+
+TÃ¼m fonksiyonlara deÄŸil, yalnÄ±zca seÃ§ilmiÅŸ olanlara (f1) virtual dispatch + Base referansÄ±na dÃ¶nÃ¼ÅŸÃ¼m izni vermek.
+
+Bunu saÄŸlamak iÃ§in:
+
+Der, Baseâ€™den private inheritance ile tÃ¼retilir
+
+Bu yÃ¼zden Der â†’ Base dÃ¶nÃ¼ÅŸÃ¼mÃ¼ dÄ±ÅŸarÄ±ya kapalÄ±dÄ±r
+
+Sadece friend void f1(); sayesinde f1 bu dÃ¶nÃ¼ÅŸÃ¼mÃ¼ yapabilir
+
+foo(Base&) fonksiyonu virtual Ã§aÄŸrÄ± yapar
+
+f2 ve f3 derleme hatasÄ± verir
+f2 ve f3 derleme hatasÄ± verir
+
+
+#include <iostream>
+
+class Base {
+public:
+    virtual void vfunc() {
+        std::cout << "Base::vfunc\n";
+    }
+
+    virtual ~Base() = default;
+};
+
+class Der : private Base {
+    void vfunc() override {
+        std::cout << "Der::vfunc\n";
+    }
+
+    // Sadece f1 Base'e dÃ¶nÃ¼ÅŸÃ¼mÃ¼ yapabilsin
+    friend void f1();
+};
+
+// Base referansÄ± Ã¼zerinden virtual dispatch
+void foo(Base& baseref)
+{
+    baseref.vfunc();
+}
+
+
+// âœ” Ä°zin verilen fonksiyon
+void f1()
+{
+    Der myder;
+    foo(myder);   // OK â€” f1, Der'in friend'i
+}
+
+
+// âœ– Ä°zin verilmeyen fonksiyonlar
+void f2()
+{
+    Der myder;
+    // foo(myder);   // DERLEME HATASI:
+                     // Base, Der'in private base'i
+}
+
+void f3()
+{
+    Der myder;
+    // foo(myder);   // DERLEME HATASI
+}
+
+
+int main()
+{
+    f1();   // Ã‡alÄ±ÅŸÄ±r, Der::vfunc Ã§aÄŸrÄ±lÄ±r
+
+    // f2(); // aÃ§arsan compile error
+    // f3();
+
+    return 0;
+}
+
+---------------------------------------

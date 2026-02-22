@@ -80,6 +80,78 @@ virtual constructor idiom
 devirtualization optimization
 
 
+// device is virtual Base now 
+class Device {
+public:
+	virtual ~Device() = default;  // polymorphic base class
+	void turn_on() {
+		m_onflag = true;
+		std::cout << "Device is turned on.\n";
+	}
+	void turn_off() {
+		m_onflag = false;
+		std::cout << "Device is turned off.\n";
+	}
+
+	bool is_on() const {
+		return m_onflag;
+	}
+private:
+
+	bool m_onflag{};
+
+};
+
+class Scanner : virtual  public Device {
+
+public:
+	void scan()
+	{
+		if (is_on())
+			std::cout << "Scanning document...\n";
+		else
+			std::cout << "Scanner is off. Please turn it on first.\n";
+	}
+};
+class Printer : virtual public Device {
+
+public:
+	void print()
+	{
+		if (is_on())
+			std::cout << "Printing document...\n";
+		else
+			std::cout << "Printer cannot print the device is off\n";
+	}
+};
+
+class Combo :public Scanner, public Printer {
+
+
+};
+
+int main()
+{
+
+	/*
+	* Artýk virtual inheritance sayesinde Device sýnýfýnýn tek bir örneði var ve Combo sýnýfý bu tek örneði kullanýyor.
+	* yani iki sýnýf da Device sýnýfýný kalýtým alýyor ama virtual inheritance sayesinde tek bir Device örneði var ve Combo sýnýfý bu tek örneði kullanýyor.
+	* ortak fonksiyonlar da tek bir Device örneði üzerinden çaðrýlýyor.
+	*/
+	Combo mycombo;
+	mycombo.turn_on();
+	mycombo.print();
+	mycombo.scan();
+
+
+	return 0;
+}
+
+
+
+
+
+
 class Base{};
 
 class Der :public Base {};
@@ -325,4 +397,29 @@ catch(???)
 
 
 
-istisna 
+çaðrýlan bir fonksiyon  beklenmeyen nedenlerle iþiin yapamayacaðýný anlarsa
+ne yapacak ? 
+
+kendsiini çaðýran kodu bu durumdan haberdar edecek.
+1) geri dönüþ deðeri ile iletilmesi
+	int remove(const char* p);
+
+2) int foo(,int *perror)
+
+3) global bir hata deðiþkenini set etmek  errno.h 'daki errno gibi
+
+Geleneksel hata yönetme metotlarýnýn dezavantajlarý
+
+int x = do_something();
+if(x == ?)
+{
+	// error handling code
+}
+try
+		throw statement; // hata fýrlatmak.
+catch
+
+
+
+try block hata olusabilecekw bir kod bloðu
+catch block ise o hatayý yakalayarak iþlemek için kullanýlýr.
