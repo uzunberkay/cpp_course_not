@@ -1,4 +1,4 @@
-34.ders
+﻿34.ders
 
 
 try
@@ -13,13 +13,13 @@ catch(int x){
 }
 
 
-uncaught exception  - yakalanmam��
+uncaught exception  - yakalanmamış
 
 std::terminate		
 	std::abort 
 
-neden yakal�yoruz ? 
-yakalay�nca ne yapaca��z ? 
+neden yakalıyoruz ? 
+yakalayınca ne yapacağız ? 
 
 
 
@@ -68,7 +68,7 @@ int main(){
 	return 0;
 }
 
-set_terminate ile davran��� �zelle�tiriyorum.
+set_terminate ile davranışı özelleştiriyorum.
 
 
 int main(){
@@ -101,14 +101,14 @@ main ends ..
 
 
 Dikkat hemen her zaman catch parametreleri 
-bir s�n�f t�r�nden referans olur .
+bir sınıf türünden referans olur .
 
 catch (std::expection& ex)
 {
 	ex.what();
 }
 
-exception nesnesinin t�r� ne anlama geliyor ? 
+exception nesnesinin türü ne anlama geliyor ? 
 
 
 throw  FileReadError{};
@@ -119,8 +119,8 @@ throw BadDate{};
 
 
 
-yukar�ya g�nderilen hata nesnesini t�r�
-zaten hatan�n niteli�inde ili�kin bir bilgidir.
+yukarıya gönderilen hata nesnesini türü
+zaten hatanın niteliğinde ilişkin bir bilgidir.
 
 
 invalid_argument
@@ -167,12 +167,39 @@ terminative
 
 
 a) tamamen handle eder.
-b) (k�smi m�dahale) translate 
+b) (kısmi müdahale) translate 
 c) rethrow 
-d) gerekli �nlemleri al�p program� sonland�r��.
+d) gerekli önlemleri alıp programı sonlandırış.
 
 
+std::exception
+├─ std::bad_alloc
+│  └─ std::bad_array_new_length
+├─ std::bad_cast
+├─ std::bad_typeid
+├─ std::bad_exception
+├─ std::bad_function_call
+├─ std::bad_weak_ptr
+├─ std::bad_optional_access
+├─ std::bad_variant_access
+├─ std::logic_error
+│  ├─ std::domain_error
+│  ├─ std::invalid_argument
+│  ├─ std::length_error
+│  └─ std::out_of_range
+└─ std::runtime_error
+   ├─ std::range_error
+   ├─ std::overflow_error
+   ├─ std::underflow_error
+   ├─ std::system_error
+   │  └─ (implementation/extension) filesystem_error
+   ├─ std::future_error
+   ├─ std::regex_error
+   └─ std::ios_base::failure
 
+stack unwinding
+
+f1=>f2=>f3=>f9=f10
 
 class Nec {
 
@@ -241,14 +268,30 @@ program flow is in catch block now
 
 exception caught:  error in f3()
 
-Kaynak s�z�nt�s� olmad�.
+Kaynak sızıntısı olmadı.
 
 unique_ptr
 shared_ptr
 
 
 1) exception yakalanmaz se (uncaught exception)
-2) new ifadelerini ��plak kullanmak �ok riskli.
+2) new ifadelerini çıplak kullanmak çok riskli.
 
 
 throw std::runtime_error{"error"};
+
+
+ctor ve exceptionlar
+
+ctor işini yapamaycağını anlarsa 
+class Server
+{
+public:
+	Server()
+	{
+		// step1();
+		// step2();
+		// 
+		// step3();
+	}
+};
