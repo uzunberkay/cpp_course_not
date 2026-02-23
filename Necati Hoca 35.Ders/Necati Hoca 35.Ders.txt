@@ -1,0 +1,136 @@
+class Member {
+public:
+	Member()
+	{
+		std::cout << "member constructor\n"
+			;
+	}
+	~Member()
+	{
+		std::cout << "member destructor\n";
+	}
+};
+
+class Nec {
+public:
+	Nec()
+	{
+		std::cout << "nec constructor\n";
+	}
+	~Nec()
+	{
+		std::cout << "nec destructor\n";
+	}	
+};
+
+class Owner {
+public:
+	Owner()
+	{
+		std::cout << "owner constructor\n";
+
+		throw std::exception("owner constructor exception");
+	}
+	~Owner()
+	{
+		std::cout << "owner destructor\n";
+	}
+private:
+	Nec mnec;
+	Member mx;
+};
+
+int main()
+{
+	try
+	{
+		Owner x;
+	}
+	catch (const std::exception& ex)
+	{
+		std::cout << "exception catched  " << ex.what() << '\n';
+	}
+	
+	return 0;
+}
+nec constructor
+member constructor
+owner constructor
+member destructor
+nec destructor
+exception catched  owner constructor exception
+
+
+throw std::exception("owner constructor exception"); nec ' e taşıyalım ...
+
+exception catched  owner constructor exception
+hiçbir şey hayata gelmiyor çünküü owner olusurken ilk nex olusuyor.
+
+exception catched  owner constructor exception
+
+
+
+class Nec {
+public:
+	Nec()
+	{
+		std::cout << "nec constructor\n";
+		throw std::exception("owner constructor exception");
+		
+	}
+	~Nec()
+	{
+		std::cout << "nec destructor\n";
+	}	
+};
+
+
+
+int main()
+{
+	try
+	{
+		Nec* p = new Nec;
+		delete p;
+	}
+	catch (const std::exception& ex)
+	{
+		std::cout << "exception catched  " << ex.what() << '\n';
+	}
+	
+	return 0;
+}
+
+nec constructor
+exception catched  owner constructor exception
+
+
+
+
+void foo()
+{
+	try
+	{
+		// all code of funcition foo
+	}
+	catch (const std::exception& ex)
+	{
+		std::cout << "exception  caught : " << ex.what() << '\n';
+	}
+}
+
+void foo()
+try
+{
+		// all code of funcition foo
+}
+catch (const std::exception& ex)
+{
+	std::cout << "exception  caught : " << ex.what() << '\n';
+}
+
+
+fiilen bir farkı yokmus.
+
+
+35. ders 45. dkda kaldım
