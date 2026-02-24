@@ -1,0 +1,72 @@
+36. ders	|
+------------
+Generic programlama ve template'ler.
+Derleyice kod yazdıran koda 'template' diyoruz.
+
+
+Function template
+class template
+variable template c++14
+alias template  c++11
+
+concepts c++20
+
+template (derleyiciyte kod yazdıran kod)
+
+meta kod 
+
+
+// template parameter
+type parameter
+non-type parameter
+template parameter
+
+
+template<typename T>
+struct Data {
+	T value;
+
+};
+
+// specialization ==> açılım
+
+Data<20>
+
+
+
+template<typename T , std::size_t SIZE>
+class Array {
+
+};
+
+// specialization ==> açılım
+int main()
+{
+	Array<int, 10> a;
+	return 0;
+}
+
+----------------
+template<typename T , std::size_t SIZE>
+class Array {
+	T arr[SIZE];
+};
+
+// specialization ==> açılım
+int main()
+{
+	Array<int, 10> a;
+	return 0;
+}
+-----------------
+
+template argument deduction
+	c++17 std. ' a kadar yalnızca fonksiyon şablonları için geçerliydi.
+	CTAD  (class template argument deduction) c++17 ile class template'leri için de geçerli oldu.
+
+
+	explicit template arguments
+
+
+
+	36. ders 30.dkda kaldım
