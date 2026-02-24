@@ -68,7 +68,35 @@ hiçbir şey hayata gelmiyor çünküü owner olusurken ilk nex olusuyor.
 
 exception catched  owner constructor exception
 
+class Member {
+public:
+	Member(int x)
+	{
+		std::cout << "Member constructor\n";
+		throw std::exception("owner constructor exception");
+		
+	}
+	~Member()
+	{
+		std::cout << "Member destructor\n";
+	}	
+};
 
+class Myclass {
+public:
+	Myclass(int x)try:mx(x)
+	{
+
+	}
+	catch (const std::exception& ex)
+	{
+		std::cout << "exception caught : " << ex.what() << '\n';
+
+
+	}
+private :
+	Member mx;
+};
 
 class Nec {
 public:
@@ -133,4 +161,141 @@ catch (const std::exception& ex)
 fiilen bir farkı yokmus.
 
 
-35. ders 45. dkda kaldım
+Dikakt!
+bir fonkisyopmnun exception ile ilgili verdiği garantiş seviyeleri söz konusu
+
+no guareantee
+	resource leak 
+	program state'i geçersiz duruma düşerse
+basic guarantee
+	fonksiyon diopyr i
+	 benden exception göndermem yolıuyla çıkılırsa
+	 ve bu exception yakalanırsa
+	 kaynak sızıntısı olmayacak.
+
+
+strong guarantee
+	basic'in hepsinbi verihyopr
+
+	commit or rollback guarantee
+	ya ben işimi tamamlarım ya da
+	başlamadan önce ki state'i korurum
+no-throw guarantee
+
+fonksiyon exception göndermeyeceğini garanti eder.
+
+
+
+noexcept specifier
+noexcept operator
+
+void foo() noexcept
+{
+	// bu fonksiyon exception göndermeyeceğini garanti eder.
+}
+
+
+noexcept operatoru
+// noexcept(expr)
+expr ifadesinin yürütülmesi durumudna exception throw etme ihtimali var mı
+evetr var ==> false
+hayır yok ==> true
+
+
+excep. göndermeme garantisi veren
+bir noexcpt fonksiyon runtime'da exception gönderirse
+ne olur ? 
+program terminate olur.
+
+
+void foo()noexcept
+{
+	// all code of funcition foo
+}
+
+void foo()noexcept
+{
+	std::cout << "foo called\n";
+	throw std::runtime_error("exception from foo");
+}
+
+int main()
+{
+
+	
+	try {
+		foo();
+
+	}
+	catch (const std::exception& ex)
+	{
+		std::cout << "exception caught in main : " << ex.what() << '\n';
+	}
+	return 0;
+}
+termiante çağırılıyo.
+
+
+
+void foo()noexcept
+{
+	try
+	{
+		std::cout << "foo called\n";
+		throw std::runtime_error("exception from foo");
+	}
+	catch (const std::exception& ex)
+	{
+		std::cout << "exception caught in foo : " << ex.what() << '\n';
+	}
+
+	foo called
+exception caught in foo : exception from foo
+
+kendi içinde yakalayabilir. no except olsa bile.
+
+
+special member func of classes
+destructor kesinlikle noexcept olmalı
+
+Bir special member fun için
+a) default bildirimi yapılmış ise ya da 
+b ) sınıfın member func implicity declaret
+
+buradaki krual şu
+
+ // bir excepitopon yakalıyorsunuz
+ fakat yakaladıgınız exceeptinou farklı bir bağlamda handle etmek istiyoruz.
+
+
+void handle_exception(std::exception_ptr eptr)
+{
+	if (eptr)
+	{
+		std::cout << "eptr dolu\n";
+	}
+	else
+	{
+		std::cout << "hayir eptr bos\n";
+	}
+}
+
+int main()
+{
+
+	using namespace std;
+	exception_ptr eptr;
+	try {
+		string str{ "necati" };
+		auto c = str.at(569);
+
+	}
+	catch (const std::exception& ex)
+	{
+		std::cout << "exception caught in main : " << ex.what() << '\n';
+		eptr = current_exception();
+	}
+	handle_exception(eptr);
+
+	
+------------------------------------------
