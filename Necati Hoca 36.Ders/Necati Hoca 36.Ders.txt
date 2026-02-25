@@ -69,4 +69,79 @@ template argument deduction
 
 
 
-	36. ders 30.dkda kaldım
+	default template argument
+
+
+	implicit instantiation %95
+	explicit instantiation %5
+
+explicit specialization  / full specialization
+partial specialization
+
+
+template <typename T>
+class Myclass {
+public:
+	Myclass()
+	{
+		std::cout << "Myclass<T> T = " << typeid(T).name() << '\n';
+	}
+};
+
+
+int main()
+{
+	Myclass<int> m1;
+	Myclass<double> m2;
+}
+
+
+Myclass<T> T = int
+Myclass<T> T = double
+
+
+Function templates
+
+
+template <typename T>
+T square( T x)
+{
+	return x * x;
+}
+
+square<int>(5);
+fonksiyon değil. bir fonksiyon şablonu. derleyici bu şablonu kullanarak kod yazdırır.
+
+fonksiyon şablonları iiçin derleyici
+t.a.d 
+sürecini yürütür.
+
+fonksiyon çağrısında kullanılan 
+argümanl(lar) dan hareket 
+ 
+
+ template argument deduction
+
+ i ) başarılı olabilir
+ ii) başarısız olabilir
+		derleyicimni elinjde çıakrım yapabilmesi için yeterli bilgi yoktur.
+
+template argument deduction
+ ===> substitude
+
+ bi fonksiyon şablonu ile 
+ aynı isimli bir fonksiypn var 
+ birden fazla aynı isğmli fonksiyon şablonu var
+
+ argument deduction
+	substition
+		template id
+			function overload resolution
+				instantiation
+
+-
+template argument deduction nasıl yapılıyor ?? 
+
+Dikkat! 
+template argument deduction ile 
+auto type deduction neredeyse aynı.
