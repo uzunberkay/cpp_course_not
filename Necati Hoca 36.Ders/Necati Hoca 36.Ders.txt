@@ -193,3 +193,8 @@ int main()
 
 
 auto type deduciton ile template argument deduciton arasındaki tek fark budur.
+
+
+// reference collapsing kuralının ilginç bir görünümü
+
+
