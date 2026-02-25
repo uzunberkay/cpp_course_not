@@ -145,3 +145,51 @@ template argument deduction nasıl yapılıyor ??
 Dikkat! 
 template argument deduction ile 
 auto type deduction neredeyse aynı.
+
+
+
+/*
+* artık
+* a) const'luk düşmeyecek 
+* b ) array decay olmayacak
+* c) function decay olmayacak.
+*/
+template <typename T>
+void foo(T&)
+{
+	TypeTeller<T> x;
+}
+
+int main()
+{
+	const int x = 456;
+	foo(x);
+	
+}
+
+
+
+
+/*
+* 1) bu fonksiyon her türlü argümanı kabul eder.
+*/
+template <typename T>
+void foo(T&&)  forwarding reference
+{
+	TypeTeller<T> x;
+}
+
+
+template <typename T>
+void foo(T);
+
+
+int main()
+{
+	auto x = { 1,2,3,4 };
+	foo({ 1,2,3,4 });
+	
+}
+
+
+auto type deduciton ile template argument deduciton arasındaki tek fark budur.
