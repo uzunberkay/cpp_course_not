@@ -118,3 +118,8 @@ public:
 	friend std::ostream& operator<<(std::ostream& os, const Counter& c);
 
 };
+
+
+ders bitti.
+
+
