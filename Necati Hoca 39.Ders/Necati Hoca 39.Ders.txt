@@ -1,0 +1,200 @@
+class Myclass {
+public:
+	int foo(int x);
+	int bar(int x);
+	int baz(int x);
+	int bom(int x);
+};
+using Mfptr = int(Myclass::*)(int);
+int main()
+{
+	Mfptr ar[]={ &Myclass::bar, &Myclass::baz, &Myclass::bom , &Myclass::foo};
+	Myclass m;
+
+	for (std::size_t i = 0; i < sizeof(ar) / sizeof(Mfptr); ++i)
+	{
+		std::cout << (m.*ar[i])(1) << "\n";
+	}
+	for (auto p : ar)
+	{
+		std::cout << (m.*p)(1) << "\n";
+	}
+	
+
+	
+}
+
+
+---------------------------
+
+
+template<auto N>
+class A
+{
+};
+
+
+
+int main()
+{
+
+
+	A<5> a1;
+	A<3u> a2;
+	A<4.6> a3;
+	
+}
+
+
+TMP 
+
+meta function
+
+generic programlamada derleme zamanında
+bir türün ya da bir değerin hesaplaması
+
+input olarak bir type 
+output olarak bir value verecek.
+
+type ==> value 
+int ==> true
+Myclass ==> false	gibi.
+
+
+type ==> type
+const int ==> int
+ meta function deniyor.
+
+
+ template<typename T, T V>
+struct IntegralConstant
+{
+	static constexpr T value = V;
+};
+
+using TrueType = IntegralConstant<bool, true>;
+using FalseType = IntegralConstant<bool, false>;
+
+
+
+template <typename T>
+struct is_integral:FalseType {
+
+};
+template<>
+struct is_integral<int> :TrueType {
+};
+
+Değer hesaplayan meta fonksiyonlarda
+biz hep integral_constant yapısını kullanırız.
+
+
+
+#include<type_traits>
+
+
+template<typename,typename>
+struct is_same : std::false_type {};
+
+template<typename T>
+struct is_same<T, T> : std::true_type {};	
+
+
+
+
+int main()
+{
+
+	constexpr auto result = is_same<int, int>::value;
+}
+ 
+
+ // bir static assert declaration
+ namespace içinde
+ bir fonksiyon içinde
+ ya da bir class definition içinde olabilir.
+
+
+ static_assert(sizeof(int) == 4, "int must be 4 bytes");  --> hata yok derleyicimde size 4
+
+ static_assert(sizeof(long) == 8, "long must be 8 bytes");
+ hata verdi ' error C2338: static assertion failed: 'long must be 8 bytes''
+
+ static if
+ constexpr if
+
+
+ template <typename T>
+void foo(T x)
+{
+	if constexpr (std::is_integral_v<T>)
+	{
+		std::cout << "T is integral\n";
+	}
+	else
+	{
+		std::cout << "T is not integral\n";
+	}
+	
+}
+
+
+template <typename T>
+void foo(T x)
+{
+	if constexpr (std::is_integral_v<T>)
+	{
+		std::cout << "T is integral x : " << x  << '\n';
+	}
+	else if constexpr(std::is_floating_point_v<T>)
+	{
+		std::cout << "T is floating point x : " << x << '\n';
+	}
+	else
+	{
+		std::cout << "T is not integral\n";
+	}
+	
+}
+
+
+int main()
+{
+	
+	foo(5.f);
+}
+
+T is floating point x : 5
+
+
+template <typename T>
+auto get_value(T x)
+{
+	if constexpr (std::is_arithmetic_v<T>)
+	{
+		return x;
+	}
+	else if constexpr (std::is_pointer_v<T>)
+	{
+		return *x;
+	}
+	else
+	{
+		return 0;
+	}
+}
+
+//partial ordering rules
+template<typename T>
+void foo(T);
+template <typename T>
+void foo(T*);
+
+
+int main()
+{
+	
+	int* ptr = nullptr;
+	foo(ptr);
+}
+
