@@ -48,9 +48,9 @@ public:
 for (auto p : fighters)
 
         {
-```
+
 if (p != this)
-```cpp
+
             {
                 std::cout << p->name_ << " ";
             }

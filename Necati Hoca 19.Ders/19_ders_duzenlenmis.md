@@ -73,9 +73,9 @@ private:
 ```cpp
 class Nec
 {
-```
+
 public :
-```cpp
+
     void bar(int);
 };
 
