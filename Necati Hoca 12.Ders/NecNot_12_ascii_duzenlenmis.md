@@ -12,16 +12,16 @@ Bir s�n�f�n birden fazla ctor'� olabilir
 ctor nitelenmi� isimle yani x.Myclass() ptr->Myclass() �eklinde �a�r�lamaz.
 
 ## Destructor (Y�k�c� fonksiyon) (dtor)
-## lifespan
+### lifespan
 - free function olamaaz
 - static member function olamaz (non-static member)
 - const member function olamaz
 geri d�n�� de�eri kavram� yok (void function olamaz.)
 dtor s�n�f ismiyle ayn� isim ta��mal� ama ba��nda ~ i�areti olmal�
 bir s�n�f�n sadece bir dtor'� olabilir. Parametre de�i�keni olmayacak.
-- ~Myclass() { }
-
 ```cpp
+   ~Myclass() { }
+
    class Myclass {
 public:
     Myclass() {
@@ -52,7 +52,7 @@ public:
 };
 
 ```
-Modern C++ ile birlikte herhangi bir fonk.
+## Modern C++ ile birlikte herhangi bir fonk.
 i�in delete bildirimi yap�labilir.
 ```cpp
 void foo(int) = delete;
@@ -88,7 +88,7 @@ ctor'�n�n s�n�f�n non-static veri elemanlar�n�
 init. etmesi �zel bir sentaks ile belirtilir.
 
 ## ctor init list.
-member initializer list deniliyordu.  (mil syntax)
+- member initializer list deniliyordu.  (mil syntax)
 
 ```cpp
 class Myclass {
