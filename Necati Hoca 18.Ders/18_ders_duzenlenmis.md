@@ -44,8 +44,9 @@ public:
     {
         std::cout << "Arkadaslar ben savasci " << name_ << '\n';
 ```
-for (auto p : fighters)
 ```cpp
+for (auto p : fighters)
+
         {
 ```
 if (p != this)
@@ -163,8 +164,9 @@ public:
     void bar(int);
     void baz(double);
 ```
-static Singleton& instance()
 ```cpp
+static Singleton& instance()
+
     {
         static Singleton s;
 
