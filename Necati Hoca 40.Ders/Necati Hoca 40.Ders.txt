@@ -225,3 +225,53 @@ void emplace_back(Args&& ... args
 }
 
 };
+
+
+perfect forwarding en tipik örneği
+konteynırların nesneyi kopyalayarak ya da taşıyarak oluşturmak yerine
+sen bana argümanları gönder ben o argümanları kullanarak sağladığın bellek alanında
+nesneyi construct edeyim....
+
+
+auto return type
+
+
+class Myclass {};
+
+// auto return type
+auto foo()
+{
+
+	return Myclass{};
+}
+
+// trailing return type
+auto bar() ->Myclass
+{
+	return Myclass{};
+}
+// decltype(auto) return type
+decltype(auto) baz()
+{
+	return Myclass{};
+}
+
+------------------------------
+
+
+auto bar() -> int*(*) (int*, int*)
+{
+
+}
+
+
+böyle kullanılabilir.
+
+
+int ar[10];
+auto bom() -> int(&)[10]
+{
+	return ar;
+}
+
+
