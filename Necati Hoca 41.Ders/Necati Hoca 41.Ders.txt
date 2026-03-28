@@ -1,0 +1,83 @@
+41. ders
+
+
+
+- variadic templateler -
+
+
+
+void func(...);
+
+
+parameter pack
+
+
+template <typename ...Types>
+class A{};
+
+n tane   tempalte parametresine sahip olabilir.
+
+template <int ...NS>
+n tane template non-tyhpe parametresine sahip olabilir.
+
+
+template<tempalte<typnemae>class ...T>
+class C{};
+n tane template tempalte parametreye sahip olabilir..
+
+
+
+------------
+
+
+template <typename ...Types>
+class A {};
+
+
+
+
+int main()
+{
+
+
+	A<int, double, long> a1;
+	parametre paketidne 3 tane tür olascak
+	A < int, int> a2;
+	parametre paketidne 2 tane tür olascak
+	A<std::string> a3;
+	parametre paketidne 1 tane tür olascak
+	A<> a4;
+	parametre paketidne  tür olmyacak
+
+	
+}
+-----------------
+
+
+
+------------------
+
+template <int ...NS>
+class A {};
+
+
+
+
+int main()
+{
+
+
+	A<2, 4, 5> a1;
+	A < 3, 9> a2;
+	A<134> a3;
+	A<> a4;
+	
+}
+
+--------------------
+
+
+template parameter pack
+function parameter pack
+
+
