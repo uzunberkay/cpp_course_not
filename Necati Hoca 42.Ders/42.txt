@@ -160,10 +160,41 @@ int main() {
 
 unary lef fold over comma operator
 
-1:44 de kaldım
 
 -*-----------------
 
+/*
+* C++ 20 
+* abbreviated template syntax 
+* 
+*/
+void foo(auto x)
+{
+
+}
+
+
+
+constexpr auto sum(const auto& ...args)
+{
+	return (... + args);
+}
+
+
+
+   
+int main() {
+
+	constexpr auto val = sum(3, 4, 5, 6, 6, 7, 8, 9);
+	return 0;
+}
+
+
+48
+
+modern cpp ile auto yerini tutuyormus
+
+2:0:0
 
 -*-----------------
 
