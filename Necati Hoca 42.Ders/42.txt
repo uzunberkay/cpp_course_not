@@ -1,0 +1,144 @@
+template <typename ...TS>
+void Print(const TS& ...args)
+{
+	
+
+
+
+}
+
+
+
+int main() {
+
+	Print(1, 2.3, 9);
+	//Print<int, double, int>(const int&, const double&, const int&);
+
+	return 0;
+}
+---------------------------------------------------------
+template<typename T>
+void Print(const T& r)
+{
+	std::cout << r << '\n';
+}
+
+
+template <typename T , typename ...TS>
+void Print(const T& r, const TS& ...args)
+{
+	Print(r);
+	Print(args...);
+
+	Yani r yi yazdırıp tekrar parameterelerle çağırıoyprıum ama
+	r bir sağa kaymıs oluyor
+
+
+}
+
+
+
+
+
+int main() {
+	
+	int x = 4;
+	std::string name{ "Beko" };
+	double dval{ 3.976 };
+
+	Print(x, name, dval, 4.5f);
+
+
+	return 0;
+}
+4
+Beko
+3.976
+4.5
+
+std::cout << __FUNCSIG__ << '\n';
+
+void __cdecl Print<int>(const int &)
+4
+void __cdecl Print<class std::basic_string<char,struct std::char_traits<char>,class std::allocator<char> >>(const class std::basic_string<char,struct std::char_traits<char>,class std::allocator<char> > &)
+Beko
+void __cdecl Print<double>(const double &)
+3.976
+void __cdecl Print<float>(const float &)
+4.5
+
+-------------------------
+
+template<typename ...TS>
+void Print(const TS& ...args)
+{
+	std::initializer_list<int>{(std::cout << args << ' ', 0)...};
+	std::cout << '\n';
+}
+
+template<typename ...TS>
+void foo(TS... args)
+{
+	Print(args...);
+}
+
+
+
+
+int main() {
+	foo(1, 2, 3, 4, "manber", 4.5);
+
+
+	return 0;
+}
+1 2 3 4 manber 4.5
+
+
+-*-----------------
+
+fold exppressions (min c++ 17 olması gerekior)
+katlama ifadeleri
+
+p1,p2,p3,p4
+
+p1+p2+p3+p4 ifadesine çevirecek
+
+
+p1*p2*p3*p4
+ifadesine çevirecek
+
+
+right fold  p1+(p2+(p3+p4))
+left fold	(p1+p2+)p3)+p4
+
+
+
+fold over
+
+
+binary fold
+
+(init+ p1) + p2 ) + p3 +p4)) left fold
+
+
+p1 + (p2 + (p3 + (p4 + init)) right fold
+
+
+
+(args + ...)  ... sagada ise r  solda ise l fold
+
+(... + args)
+
+
+-*------------     -----
+
+
+-*-----------------
+
+
+
+-*-----------------
+
+
+-*-----------------
+

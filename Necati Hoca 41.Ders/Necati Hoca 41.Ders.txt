@@ -81,3 +81,110 @@ template parameter pack
 function parameter pack
 
 
+--------------------------------
+template <typename ...TS> type parameter pack
+void func(TS ...args) func parameter pack
+{
+
+}
+
+
+
+
+int main()
+{
+
+
+	func(1, 2, 3, 4, 5);
+	func(1, 2, 3, 4, 5, 6, 7, 8, 9, 10);
+	func(1, 2, 'a', "naber", 3.14, 1.f);
+
+}
+--------------------------------
+
+
+sizeof(expr)
+sizeof...(expr)  variadic sizeof operatoru
+
+
+-----------------------
+template <typename ...Types>
+int foo(int,Types&& ...args)
+{
+	std::cout << __FUNCSIG__ << "\n";
+	return 42;
+}
+
+
+
+
+int main()
+{
+	int x{};
+	double dval{};
+	foo(x, 3.4, 'A', dval);
+}
+int __cdecl foo<double,char,double&>(int,double &&,char &&,double &)
+
+-----------------------
+
+
+// pack expansion
+
+
+
+template <typename ...TS>
+class Nec {};
+
+template <typename ...TS>
+class Myclass {
+
+	Nec<TS...> mnec;
+};
+
+
+
+-----------
+
+struct A {
+	void foo();
+};
+struct B {
+	void bar();
+};
+struct C {
+	void baz();
+};
+
+
+template <typename ...TS>
+class Der : public TS...{};
+
+
+
+
+
+int main()
+{
+	Der<A, B, C> d;
+	d.foo();
+
+	
+}
+
+
+-----------
+
+fonksiyon şablonları
+
+recursive pack expansion
+
+fold expression
+
+recursive pack expansion
+initializer list expansion
+if cxpr
+fold expression
+
+
+----------- 
