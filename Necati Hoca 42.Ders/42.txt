@@ -240,16 +240,16 @@ int main() {
 
 
 container sınıflar - sequence container
-vector
-string m
-deque
-list
-forward_list
-array
+vector      dynamic_array
+string		dynamic_array
+deque		dinamik dizilerin dizisi
+list		double link list
+forward_list single linked list
+array		
 
 -*-----------------
 associative containers
-set
+set			2li arama agacı hepsi
 multiset
 map
 multimap
