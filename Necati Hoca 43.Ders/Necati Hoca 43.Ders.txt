@@ -65,15 +65,46 @@ int main() {
 iter = vec.end();
 *iter -> ub
 
- 1:0:0 da kaldım
-
-|**********|********************|*************|*********|
 
 
 |**********|********************|*************|*********|
+neden modern C++ ile 
+begin ve end fonk geldi ?
+ - diziler
 
 
 |**********|********************|*************|*********|
+
+input iterator
+++iter iter++
+*iter
+iter1 == iter2
+iter1 != iter2
+
+output iterator
+
+++iter iter++
+*iter
+
+forward iterator
+input interface + output interface
+
+bidirectional iterator
+	forward iterator +
+	--iter
+	iter--
+random access iterator
+iter2-iter1
+iter[n]
+iter + n 
+iter - n
+random access iterator 
+
+|**********|********************|*************|*********|
+
+vec.begin()  vec.end()
+vec.cbegin()  vec.cend()
+ 
 
 
 |**********|********************|*************|*********|
