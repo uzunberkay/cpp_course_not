@@ -1,4 +1,4 @@
-template <typename ...TS>
+0template <typename ...TS>
 void Print(const TS& ...args)
 {
 	
@@ -194,7 +194,106 @@ int main() {
 
 modern cpp ile auto yerini tutuyormus
 
-2:0:0
 
 -*-----------------
+constexpr auto get_last(auto ...args)
+{
+	return (args, ...);
+}
+
+
+
+int main() {
+
+	constexpr auto val = get_last(3, 4, 5, 6, 6, 7, 8, 9);
+	return 0;
+}
+
+
+
+-*-----------------
+STL 
+standart template library
+
+class template
+function template
+
+containers
+algorithms
+iterators
+
+
+template <typename T>
+class DynamicArray {
+
+public:
+	//void push_back
+	//void pop_back
+};
+
+
+
+int main() {
+	DynamicArray<int> x;
+	DynamicArray<double> x;
+
+
+
+container sınıflar - sequence container
+vector
+string m
+deque
+list
+forward_list
+array
+
+-*-----------------
+associative containers
+set
+multiset
+map
+multimap
+-*-----------------
+unordered assoicative containers
+unordered_set
+unordered_multiset
+unordered_map
+unordered_multimap
+-*-----------------
+
+-*-----------------
+
+-*-----------------
+
+-*-----------------
+
+-*-----------------
+
+-*-----------------
+
+-*-----------------
+
+-*-----------------
+
+-*-----------------
+
+-*-----------------
+
+-*-----------------
+
+-*-----------------
+
+-*-----------------
+
+-*-----------------
+
+-*-----------------
+
+
+-*-----------------
+-*-----------------
+
+-*-----------------
+
+
 
