@@ -16,7 +16,7 @@ unary predicate
 
 
 
-30dk. da kaldım.
+
 
 *-*-*-*-*-*-*-*-*-*-*-*-*-*-*
 template < typename T>
@@ -42,24 +42,51 @@ int main() {
 
 
 
-
+	  
 	return 0;
 }
 
 *-*-*-*-*-*-*-*-*-*-*-*-*-*-*
+[](int x, int y) {return x * x + y * y};
+lambda func.
+auto f  = [](int x, int y) {return x * x + y * y};
+
+int f (int , int );
+
+auto f = [](int x, int y) {return x * x + y * y;}(10, 20);
+
+Dikkat! C++20 öncesinde 
+lambda ifadeleri karşılıgı 
+ olusturdugu sınıfların default ctor
+ ve copy assign delete edilmişltir.
+*-*-*-*-*-*-*-*-*-*-*-*-*-*-*
+nested function
+
+
+*-*-*-*-*-*-*-*-*-*-*-*-*-*-*
+Lambda senaryoları
+STL algoritmalarına argüman olarak göndermek
+ 
 
 
 *-*-*-*-*-*-*-*-*-*-*-*-*-*-*
 
+	int x = 10, y = 20;
+	auto f = [x, y](int a) {return a * (x + y);};
+	[=] koyarsam hepğsini kullanabiliyom
+	auto retval = f(5);
+
+	std::cout << "retval = " << retval << '\n';
+
+	150
 *-*-*-*-*-*-*-*-*-*-*-*-*-*-*
+mutable
+trailing return type
+constexpr
+noexcept
 
 *-*-*-*-*-*-*-*-*-*-*-*-*-*-*
-
-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*
-
-
-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*
-
+auto f = [](auto x) {std::cout << x << '\n';};
 *-*-*-*-*-*-*-*-*-*-*-*-*-*-*
 
 *-*-*-*-*-*-*-*-*-*-*-*-*-*-*
