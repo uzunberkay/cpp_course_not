@@ -1,0 +1,8 @@
+	using namespace std;
+
+	vector<int> ivec{ 3,6,7,9 };
+
+	auto iter = ivec.rbegin();  
+
+
+	30. dkda kaldım.
