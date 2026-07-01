@@ -76,6 +76,7 @@ STL algoritmalarına argüman olarak göndermek
 	[=] koyarsam hepğsini kullanabiliyom
 	auto retval = f(5);
 
+
 	std::cout << "retval = " << retval << '\n';
 
 	150
@@ -87,6 +88,10 @@ noexcept
 
 *-*-*-*-*-*-*-*-*-*-*-*-*-*-*
 auto f = [](auto x) {std::cout << x << '\n';};
+
+istediğim argumanı geçebilirim
+
+
 *-*-*-*-*-*-*-*-*-*-*-*-*-*-*
 
 *-*-*-*-*-*-*-*-*-*-*-*-*-*-*
