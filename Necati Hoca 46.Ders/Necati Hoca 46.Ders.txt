@@ -5,4 +5,169 @@
 	auto iter = ivec.rbegin();  
 
 
-	30. dkda kaldım.
+template <typename Iter>
+void print(Iter beg, Iter end)
+{
+	while (beg != end)
+	{
+		std::cout << *beg++ << '\n';
+	}
+}
+
+
+int main() {
+	
+	using namespace std;
+
+	vector<int> svec{ 1,3,5,7,9,11 };
+	vector<int> dvec;
+
+	copy(svec.begin(), svec.end(), back_inserter(dvec));
+
+	print(dvec.begin(), dvec.end());
+	return 0;
+}
+1
+3
+5
+7
+9
+11
+
+-*-*-*-*-*-*-**-*-*--**-*-*-*-*-*-*--**--**-*-*-*-*-
+CTAD
+class template argument deduction
+
+template <typename T>
+class Myclass {
+public:
+	Myclass(T);
+};
+
+int main() {
+	
+	Myclass x(10);
+
+	return 0;
+}
+
+otomatik çıkarıyor.
+x in <int> açılımı oldugunu.
+
+
+
+back_inserter
+
+
+
+
+-*-*-*-*-*-*-**-*-*--**-*-*-*-*-*-*--**--**-*-*-*-*-
+C++ 23 ile 
+
+#include<print>
+int main() {
+	
+	using namespace std;
+
+	vector<int> x{ 1,2,3,4,5,6,7,89 };
+	println("{}", x);
+
+	return 0;
+}
+[1, 2, 3, 4, 5, 6, 7, 89]
+-*-*-*-*-*-*-**-*-*--**-*-*-*-*-*-*--**--**-*-*-*-*-
+STL Algo
+reverse
+sort
+copy
+copy_if
+count
+count_if
+transform
+
+
+find
+search  
+
+-*-*-*-*-*-*-**-*-*--**-*-*-*-*-*-*--**--**-*-*-*-*-
+	using namespace std;
+
+	vector<int> x{ 1,2,3,4,5,6,7,89 };
+	
+
+	all_of(x.begin(), x.end(), [](int y) {return y % 2 == 0;});
+
+-*-*-*-*-*-*-**-*-*--**-*-*-*-
+*-*-*--**--**-*-*-*-*-
+STL container (kap)
+
+container::size_t
+.size() öge sayısını döndürüyor
+.empty()  bool dönğyor is empty
+.clear()
+
+
+
+
+sequence containers
+	vector
+	deque
+	list
+	forward_list
+	string
+	array
+associative container
+set 
+multiset
+map
+multimap
+
+
+unorassociative container
+
+unordered_set 
+unordered_multiset
+unordered_map
+unordered_multimap
+
+
+-*-*-*-*-*-*-**-*-*--**-*-*-*-*-*-*--**--**-*-*-*-*-
+move semantics
+
+ekleme işlemi yapan
+insert
+	push_back
+	push_front
+	
+move overload edilmiş.
+
+-*-*-*-*-*-*-**-*-*--**-*-*-*-*-*-*--**--**-*-*-*-*-
+
+
+
+
+
+-*-*-*-*-*-*-**-*-*--**-*-*-*-*-*-*--**--**-*-*-*-*-
+
+
+-*-*-*-*-*-*-**-*-*--**-*-*-*-*-*-*--**--**-*-*-*-*-
+
+
+-*-*-*-*-*-*-**-*-*--**-*-*-*-*-*-*--**--**-*-*-*-*-
+
+
+-*-*-*-*-*-*-**-*-*--**-*-*-*-*-*-*--**--**-*-*-*-*-
+-*-*-*-*-*-*-**-*-*--**-*-*-*-*-*-*--**--**-*-*-*-*-
+-*-*-*-*-*-*-**-*-*--**-*-*-*-*-*-*--**--**-*-*-*-*-
+-*-*-*-*-*-*-**-*-*--**-*-*-*-*-*-*--**--**-*-*-*-*-
+-*-*-*-*-*-*-**-*-*--**-*-*-*-*-*-*--**--**-*-*-*-*-
+-*-*-*-*-*-*-**-*-*--**-*-*-*-*-*-*--**--**-*-*-*-*-
+-*-*-*-*-*-*-**-*-*--**-*-*-*-*-*-*--**--**-*-*-*-*-
+-*-*-*-*-*-*-**-*-*--**-*-*-*-*-*-*--**--**-*-*-*-*-
+-*-*-*-*-*-*-**-*-*--**-*-*-*-*-*-*--**--**-*-*-*-*-
+-*-*-*-*-*-*-**-*-*--**-*-*-*-*-*-*--**--**-*-*-*-*-
+-*-*-*-*-*-*-**-*-*--**-*-*-*-*-*-*--**--**-*-*-*-*-
+-*-*-*-*-*-*-**-*-*--**-*-*-*-*-*-*--**--**-*-*-*-*-
+-*-*-*-*-*-*-**-*-*--**-*-*-*-*-*-*--**--**-*-*-*-*-
+-*-*-*-*-*-*-**-*-*--**-*-*-*-*-*-*--**--**-*-*-*-*-
+-*-*-*-*-*-*-**-*-*--**-*-*-*-*-*-*--**--**-*-*-*-*-
