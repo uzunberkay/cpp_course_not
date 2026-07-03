@@ -163,7 +163,7 @@ capacity()
 capacity()
 data()
 get_allocator()
-
+ 
 
 
 operator[]()
@@ -174,10 +174,155 @@ front()
 front()const
 
 -_-_-_-_-_-_-_-_-_-_-_-_-_-_-_-_-_-_-_-
-1:30 da kaldım
+
+	using namespace std;
+	
+	vector<string> svec{ "ali","ege","tan" };
+	print(svec.begin(), svec.end());
+	std::cout << "---------------------\n";
+	svec.insert(svec.end(), { "esra","ayla","ecem" });
+	print(svec.begin(), svec.end());
+ali
+ege
+tan
+---------------------
+ali
+ege
+tan
+esra
+ayla
+ecem
 -_-_-_-_-_-_-_-_-_-_-_-_-_-_-_-_-_-_-_-
+	
+	vector<string> svec{ "ali","ege","tan" };
+	list<string> slist{ "joe","michael","janson","thomas" };
+	print(svec.begin(), svec.end());
+	
+	svec.insert(svec.end(), { "esra","ayla","ecem" });
+	print(svec.begin(), svec.end());
+	svec.insert(svec.begin(), slist.begin(), slist.end());
+	print(svec.begin(), svec.end());
+
+	ali
+ege
+tan
+---------------------
+ali
+ege
+tan
+esra
+ayla
+ecem
+---------------------
+joe
+michael
+janson
+thomas
+ali
+ege
+tan
+esra
+ayla
+ecem
+---------------------
+döngüsel yapıda 
+	döngünün her turunda 1 tane değeri
+		eklemek ya da silmek yerine
+
+eğer tek bir çağrıyla 
+	birden fazla eleman eklemek
+	birden fazla eleman silmek
+
+range_insert daha verimli.
+
+insert fonkları ilk insert edilen eleman konumunu döndürür
+erase fonkları son silinen elemandan sonrakiş konumunu döndürür
+(yani silinmemiş ilk elemanı)
+	vector<string> svec{ "ali","ege","tan" };
+	list<string> slist{ "joe","michael","janson","thomas" };
+	print(svec.begin(), svec.end());
+	
+	svec.insert(svec.end(), { "esra","ayla","ecem" });
+	print(svec.begin(), svec.end());
+	svec.insert(svec.begin(), slist.begin(), slist.end());
+	print(svec.begin(), svec.end());
+
+	auto iter = svec.erase(svec.begin());
+
+	cout << *iter;
+
+	ali
+ege
+tan
+---------------------
+ali
+ege
+tan
+esra
+ayla
+ecem
+---------------------
+joe
+michael
+janson
+thomas
+ali
+ege
+tan
+esra
+ayla
+ecem
+---------------------
+michael
+
+	svec.clear();
+	svec.resize(0);
+	svec.erase(svec.begin(), svec.end());
 
 -_-_-_-_-_-_-_-_-_-_-_-_-_-_-_-_-_-_-_-
+	vector<int> vec1{ 1,2,3,4,5,6 };
+	vector<int> vec2{ 7,8,9,10 };
+	print(vec1.begin(), vec1.end());
+	vec1.swap(vec2);
+
+	print(vec1.begin(), vec1.end());
+1
+2
+3
+4
+5
+6
+---------------------
+7
+8
+9
+10
+---------------------
+
+ğretimde vector üzerinde yapılan bazı tipil işlemler
+
+belirli bir değere sahip ilk ögeyi silmek
+
+belirli bir değere sahip tüm elemanları silmek için 
+
+erase-remove idiyomu kullanılır.
+
+ancak C++20 ile bu idiyomu  implemente eden
+	free function
+		std::erase eklenmiştir
+
+
+---------------------
+
+
+---------------------
+
+
+---------------------
+
+
+---------------------
+
 
 -_-_-_-_-_-_-_-_-_-_-_-_-_-_-_-_-_-_-_-
 
