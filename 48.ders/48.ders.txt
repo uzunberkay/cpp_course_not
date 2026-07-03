@@ -1,0 +1,65 @@
+
+removing algorithms
+
+remove
+remove_if
+unique
+
+
+silme işlemi yapmıyolar
+logical remove
+
+---------------------------------------
+
+2 4 5 4 1 2 22
+
+
+int main() {
+
+	using namespace std;
+
+	vector<int> ivec = { 1,2,3,4,5,6,7,71,2,3,44,55,13 };
+	print(ivec.begin(), ivec.end());
+	cout << "Size = " << ivec.size() << " capacity =  " << ivec.capacity() << '\n';
+
+	auto logic_end = remove(ivec.begin(), ivec.end(), 3);
+
+	print(ivec.begin(), ivec.end());
+	cout << "Size = " << ivec.size() << " capacity =  " << ivec.capacity() << '\n';
+
+
+
+
+
+	return 0;
+}
+1 2 3 4 5 6 7 71 2 3 44 55 13
+Size = 13 capacity =  13
+1 2 4 5 6 7 71 2 44 55 13 55 13
+Size = 13 capacity =  13
+
+---------------------------------------
+
+	auto n_erased = distance(logic_end, ivec.end());
+
+	cout << n_erased << " element removed!\n";
+	Size = 13 capacity =  13
+	2 element removed!
+
+---------------------------------------
+	auto n_exists = distance(ivec.begin(), logic_end);
+	cout << n_exists << " element removed!\n";
+11 element removed!
+
+20.dk da kaldım
+
+---------------------------------------
+
+---------------------------------------
+
+
+---------------------------------------
+---------------------------------------
+---------------------------------------
+---------------------------------------
+---------------------------------------
