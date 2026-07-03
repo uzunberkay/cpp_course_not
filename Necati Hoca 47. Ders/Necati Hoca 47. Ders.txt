@@ -16,31 +16,165 @@ vector ile dinamik diziyi aynı anlamda kullanıyor.
 
 vector<vector<vector<int>>> vec;
 
-20.dkda kaldım
+
+
+-_-_-_-_-_-_-_-_-_-_-_-_-_-_-_-_-_-_-_-
+
+	vector<string> svec{ "furkan","kaveh","gizem","ramazan" };
+
+	cout << svec[2] << '\n';
+	svec[2] += "naz;
+	cout << svec[2] << '\n';
+
 
 
 -_-_-_-_-_-_-_-_-_-_-_-_-_-_-_-_-_-_-_-
 
 
-
-
--_-_-_-_-_-_-_-_-_-_-_-_-_-_-_-_-_-_-_-
-
-
-
-
--_-_-_-_-_-_-_-_-_-_-_-_-_-_-_-_-_-_-_-
+gizem
+gizemnaz
 
 
 
 -_-_-_-_-_-_-_-_-_-_-_-_-_-_-_-_-_-_-_-
+Dikkat
+bir vektörü döngüsel bir yapıda
+büyütüyorsanız niahi erişebileceği boyutu hakkında
+bilgi sahibiyseniz
+
+
+
+	
+	vector<string> svec(10000);
+	cout << "svec.size() = " << svec.size() << '\n';
+	cout << "svec.capacity() = " << svec.capacity() << '\n';
+
+
+	svec.erase(svec.begin() + 10, svec.end());
+	cout << "svec.size() = " << svec.size() << '\n';
+	cout << "svec.capacity() = " << svec.capacity() << '\n';
+svec.size() = 10000
+svec.capacity() = 10000
+svec.size() = 10
+svec.capacity() = 10000
+
+
+baştan sınıfın reserve fonksiyonunu çağırın.
+
+bazı durumlarda vectorden elemanlar silindiğinde
+kapasiteyi shring (büzmek) isteyebiliriz.
+
+swap-trick
+[
+	vector<string> svec(10000);
+	cout << "svec.size() = " << svec.size() << '\n';
+	cout << "svec.capacity() = " << svec.capacity() << '\n';
+
+
+	svec.erase(svec.begin() + 10, svec.end());
+
+	vector<string>(svec).swap(svec);
+
+	cout << "svec.size() = " << svec.size() << '\n';
+	cout << "svec.capacity() = " << svec.capacity() << '\n';
+
+	svec.size() = 10000
+svec.capacity() = 10000
+svec.size() = 10
+svec.capacity() = 10
+
+]
+-_-_-_-_-_-_-_-_-_-_-_-_-_-_-_-_-_-_-_-
+shrink to fit
+
+	vector<string> svec(10000);
+	cout << "svec.size() = " << svec.size() << '\n';
+	cout << "svec.capacity() = " << svec.capacity() << '\n';
+
+
+	svec.erase(svec.begin() + 10, svec.end());
+
+	svec.shrink_to_fit();
+
+	cout << "svec.size() = " << svec.size() << '\n';
+	cout << "svec.capacity() = " << svec.capacity() << '\n';
+
+
+svec.size() = 10000
+svec.capacity() = 10000
+svec.size() = 10
+svec.capacity() = 10
 
 -_-_-_-_-_-_-_-_-_-_-_-_-_-_-_-_-_-_-_-
+void print_array(const int* p, size_t size)
+{
+	while (size--)
+		printf("%d ", *p++);
+	printf("\n");
+}
+
+int main() {
+	
+
+	using namespace std;
+	
+	vector<int> ivec(10,5);
+	cout << "svec.size() = " << ivec.size() << '\n';
+	cout << "svec.capacity() = " << ivec.capacity() << '\n';
+	print_array(ivec.data(), ivec.size());
+
+	cout << "svec.size() = " << ivec.size() << '\n';
+	cout << "svec.capacity() = " << ivec.capacity() << '\n';
+
+
+	return 0;
+}
+
+svec.size() = 10
+svec.capacity() = 10
+5 5 5 5 5 5 5 5 5 5
+svec.size() = 10
+svec.capacity() = 10
 
 -_-_-_-_-_-_-_-_-_-_-_-_-_-_-_-_-_-_-_-
+Vector<T>()
+Vector<T>(size_t)
+Vector<T>(size_t,T)
+Vector<T>(iter,iter)
+Vector<T>(const Vector<T>&)
+Vector<T>(Vector<T>&&)
+Vector<T>(initializer_list<T>)
+
+
+
+
+begin
+cbegin
+rbegin
+crbegin
+
+end
+cend
+rend
+crend
+
+size()
+capacity()
+capacity()
+data()
+get_allocator()
+
+
+
+operator[]()
+operator[]()const
+at()
+at()const
+front()
+front()const
 
 -_-_-_-_-_-_-_-_-_-_-_-_-_-_-_-_-_-_-_-
-
+1:30 da kaldım
 -_-_-_-_-_-_-_-_-_-_-_-_-_-_-_-_-_-_-_-
 
 -_-_-_-_-_-_-_-_-_-_-_-_-_-_-_-_-_-_-_-
