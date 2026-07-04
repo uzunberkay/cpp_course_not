@@ -51,10 +51,27 @@ Size = 13 capacity =  13
 	cout << n_exists << " element removed!\n";
 11 element removed!
 
-20.dk da kaldım
 
 ---------------------------------------
+int main()
+{
+    using namespace std;
 
+    vector<string> vec;
+    rfill(vec, 100, random_name);
+    cprint(vec);
+
+    vec.erase(
+        unique(vec.begin(), vec.end(),
+            [](const auto& s1, const auto& s2)
+            {
+                return s1.front() == s2.front();
+            }),
+        vec.end()
+    );
+
+    cprint(vec, " ");
+}
 ---------------------------------------
 
 
