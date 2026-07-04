@@ -74,7 +74,101 @@ int main()
 }
 ---------------------------------------
 
+int main()
+{
+    using namespace std;
 
+    vector<Date> vec;
+    rfill(vec, 1000, Date::random);
+
+    list<Date> ls;
+
+    int mon;
+    std::cout << "enter the month: ";
+    cin >> mon;
+
+    remove_copy_if(vec.begin(), vec.end(), back_inserter(ls),
+        [mon](const Date& dt)
+        {
+            return dt.month() > mon;
+        });
+
+    cprint(ls, "\n");
+}
+---------------------------------------
+	using namespace std;
+
+	string str{ "her goren agladi kalbini bagladi ankara ruzgarina" };
+
+	replace_copy(str.begin(), str.end(), ostream_iterator<char>(cout), 'a', '*');
+
+    her goren *gl*di k*lbini b*gl*di *nk*r* ruzg*rin*
+---------------------------------------
+	using namespace std;
+
+	string str{ "2313fasfas123fzxvxzvlzl4124123i591281" };
+
+	replace_copy_if(str.begin(), str.end(), ostream_iterator<char>(cout),
+		[](char c) {return isdigit(c); }, '?');
+????fasfas???fzxvxzvlzl???????i??????
+
+
+---------------------------------------
+
+sorting algorithms
+
+sort
+partial_sort
+stable_sort
+stable_sort
+nth_element
+
+partition
+stable_partition
+partition_copy
+partition_pointer
+
+
+is_sorted
+is_sorted_until
+is_parititioned
+
+
+
+// heap algorithms
+
+ 
+
+---------------------------------------
+
+int main()
+{
+    using namespace std;
+
+    vector<int> ivec;
+    rfill(ivec, 10000, Irand{ 0, 999999 });
+    sort(ivec.begin(), ivec.end());
+    sort(ivec.begin(), ivec.end(),[](int x , int y){return x>y;});
+    2 overload var
+
+
+    std::ofstream ofs{ "out.txt" };
+    if (!ofs) {
+        std::cerr << "out.txt dosyasi olusturulamadi\n";
+        exit(EXIT_FAILURE);
+    }
+
+    cprint(ivec, "\n", ofs);
+}
+
+1:30 da kaldım
+---------------------------------------
+---------------------------------------
+---------------------------------------
+---------------------------------------
+---------------------------------------
+---------------------------------------
+---------------------------------------
 ---------------------------------------
 ---------------------------------------
 ---------------------------------------
