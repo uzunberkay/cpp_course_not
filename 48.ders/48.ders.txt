@@ -159,14 +159,181 @@ int main()
     }
 
     cprint(ivec, "\n", ofs);
-}
+} 
 
-1:30 da kaldım
+
 ---------------------------------------
+	using namespace std;
+	list mylist{ 12,24,5,4,1,-5,-45 };
+
+	cout << boolalpha;
+
+	cout << is_sorted(mylist.begin(), mylist.end(), [](int x, int y)
+		{return x > y; });
+
+false 
 ---------------------------------------
+int main()
+{
+    using namespace std;
+
+    vector vec{ 12, 45, 76, 98, 124, 692, 89, 12 };
+
+    auto iter = is_sorted_until(vec.begin(), vec.end());
+
+    if (iter != vec.end()) {
+        cout << *iter << '\n';
+        std::cout << "sorted range distance : " << iter - vec.begin() << '\n';
+
+        copy(vec.begin(), iter, ostream_iterator<int>{ cout, " " });
+    }
+    else {
+        std::cout << "the range is already sorted\n";
+    }
+}
+89
+sorted range distance : 6
+12 45 76 98 124 692
 ---------------------------------------
+#include <iostream>
+#include <vector>
+#include <algorithm>
+using namespace std;
+
+int main()
+{
+    vector<int> ivec;
+
+    // ivec içine 0 ile 10000 arasında rastgele 1000 tane int değer atar.
+    rfill(ivec, 1000, Irand{ 0, 10000 });
+
+    int n;
+
+    cout << "ilk kac tanesi siralansin: ";
+    cin >> n;
+
+    // partial_sort:
+    // ivec içindeki en küçük n elemanı bulur,
+    // bu n elemanı sıralı şekilde vectorün başına yerleştirir.
+    //
+    // Parametreler:
+    // 1) ivec.begin()      -> sıralanacak aralığın başlangıcı
+    // 2) ivec.begin() + n  -> ilk n elemanın sıralı olacağı sınır
+    // 3) ivec.end()        -> aralığın sonu
+    partial_sort(ivec.begin(), ivec.begin() + n, ivec.end());
+
+    // Vectorü ekrana yazdırır.
+    cprint(ivec);
+}
 ---------------------------------------
+partition algorithms
+bölümleme
+
+kosulu sağlayanlar başta
+kosulu sağlamayanlar sonda
+
+
 ---------------------------------------
+
+```cpp
+#include <iostream>
+#include <vector>
+#include <algorithm>
+#include <iterator>
+using namespace std;
+
+int main()
+{
+    vector<int> ivec;
+
+    // ivec içine 0 ile 999 arasında rastgele 30 tane int değer atar.
+    rfill(ivec, 30, Irand{ 0, 999 });
+
+    // Partition işleminden önce vectorü yazdırır.
+    cprint(ivec);
+
+    // partition:
+    // Verilen koşulu sağlayan elemanları baş tarafa,
+    // sağlamayan elemanları arka tarafa taşır.
+    //
+    // Buradaki koşul:
+    // x % 2 == 0
+    //
+    // Yani çift sayılar başa,
+    // tek sayılar sona alınır.
+    auto iter = partition(ivec.begin(), ivec.end(),
+        [](int x)
+        {
+            return x % 2 == 0;
+        });
+
+    // Partition işleminden sonra vectorü yazdırır.
+    cprint(ivec);
+
+    // iter, partition noktasını gösterir.
+    // Yani çift sayıların bittiği,
+    // tek sayıların başladığı ilk konumu gösterir.
+    if (iter != ivec.end()) {
+        cout << "the value at partition point is : " << *iter << '\n';
+        cout << "idx for partition point : " << iter - ivec.begin() << '\n';
+    }
+
+    cout << "elements that satisfy the predicate\n";
+
+    // Koşulu sağlayan elemanları yazdırır.
+    // Bu örnekte bunlar çift sayılardır.
+    copy(ivec.begin(), iter, ostream_iterator<int>{ cout, " " });
+    std::cout << "\n";
+
+    cout << "elements that don't satisfy the predicate\n";
+
+    // Koşulu sağlamayan elemanları yazdırır.
+    // Bu örnekte bunlar tek sayılardır.
+    copy(iter, ivec.end(), ostream_iterator<int>{ cout, " " });
+    std::cout << "\n";
+}
+```
+
+Buradaki ana olay şu:
+
+```cpp
+auto iter = partition(ivec.begin(), ivec.end(),
+    [](int x)
+    {
+        return x % 2 == 0;
+    });
+```
+
+Bu kod `ivec` içindeki elemanları iki gruba böler:
+
+```cpp
+çift sayılar | tek sayılar
+```
+
+`partition` sıralama yapmaz. Yani çift sayıları kendi içinde küçükten büyüğe dizmez. Sadece koşulu sağlayanları başa, sağlamayanları sona toplar.
+
+`iter` ise bu iki grubun ayrıldığı noktadır:
+
+```cpp
+ivec.begin()  -> iter       : koşulu sağlayanlar
+iter          -> ivec.end() : koşulu sağlamayanlar
+```
+
+Bu örnekte:
+
+```cpp
+ivec.begin() - iter
+```
+
+arası çift sayılar,
+
+```cpp
+iter - ivec.end()
+```
+
+arası tek sayılar olur.
+
+
 ---------------------------------------
 ---------------------------------------
 ---------------------------------------
