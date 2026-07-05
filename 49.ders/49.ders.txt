@@ -1,0 +1,110 @@
+49
+-----------
+
+    vector vec{ 12, 45, 76, 98, 124, 692, 89, 12,13 };
+	auto iter = partition_point(vec.begin(), vec.end(), [](int x) {return x % 2 == 0; });
+	if (iter != vec.end())
+	{
+		cout << *iter << '\n';
+	}-*-*-*-*-*--
+-*-*-*-*-*-*-*-*-*-*-**-*-*-*-**-*-*-*-*-*-*-*-
+#include <iostream>
+#include <vector>
+#include <deque>
+#include <list>
+#include <algorithm>
+#include <iterator>
+using namespace std;
+
+int main()
+{
+    vector<int> ivec;
+
+    // ivec içine 0 ile 99 arasında rastgele 40 tane int değer atar.
+    rfill(ivec, 40, Irand{ 0, 99 });
+
+    // Orijinal vectorü ekrana yazdırır.
+    cprint(ivec);
+
+    // Koşulu sağlayan elemanların kopyalanacağı container.
+    deque<int> ideq(100);
+
+    // Koşulu sağlamayan elemanların kopyalanacağı container.
+    list<int> ilist(100);
+
+    // partition_copy:
+    // ivec içindeki elemanları iki ayrı hedef container'a kopyalar.
+    //
+    // Predicate true dönerse  -> ideq içine kopyalar.
+    // Predicate false dönerse -> ilist içine kopyalar.
+    //
+    // Buradaki koşul:
+    // x % 2 == 0
+    //
+    // Yani çift sayılar ideq içine,
+    // tek sayılar ilist içine kopyalanır.
+    auto p = partition_copy(
+        ivec.begin(), 
+        ivec.end(), 
+        ideq.begin(), 
+        ilist.begin(),
+        [](int x)
+        {
+            return x % 2 == 0;
+        }
+    );
+
+    std::cout << "kosulu saglayanlar\n";
+
+    // p.first:
+    // ideq içinde kopyalamanın bittiği yeri gösterir.
+    // ideq.begin() - p.first arası çift sayılardır.
+    copy(ideq.begin(), p.first, ostream_iterator<int>{ cout, " " });
+    std::cout << "\n";
+
+    std::cout << "kosulu saglamayanlar\n";
+
+    // p.second:
+    // ilist içinde kopyalamanın bittiği yeri gösterir.
+    // ilist.begin() - p.second arası tek sayılardır.
+    copy(ilist.begin(), p.second, ostream_iterator<int>{ cout, " " });
+    std::cout << "\n";
+}
+74 13 82 5 44 91 20 37 68 59 16 3 88 71 42 25 10 97 54 31 6 80 23 65 12 49 90 1 36 57 78 9 33 62 15 84 27 70 41 18
+
+kosulu saglayanlar
+74 82 44 20 68 16 88 42 10 54 6 80 12 90 36 78 62 84 70 18
+
+kosulu saglamayanlar
+13 5 91 37 59 3 71 25 97 31 23 65 49 1 57 9 33 15 27 41
+
+-*-*-*-*-*-*-*-*-*-*-**-*-*-*-**-*-*-*-*-*-*-*-
+structured binding
+
+
+40 dk da kaldım
+
+
+-*-*-*-*-*-*-*-*-*-*-**-*-*-*-**-*-*-*-*-*-*-*-
+
+-*-*-*-*-*-*-*-*-*-*-**-*-*-*-**-*-*-*-*-*-*-*-
+
+-*-*-*-*-*-*-*-*-*-*-**-*-*-*-**-*-*-*-*-*-*-*-
+
+-*-*-*-*-*-*-*-*-*-*-**-*-*-*-**-*-*-*-*-*-*-*-
+
+-*-*-*-*-*-*-*-*-*-*-**-*-*-*-**-*-*-*-*-*-*-*-
+
+
+-*-*-*-*-*-*-*-*-*-*-**-*-*-*-**-*-*-*-*-*-*-*-
+-*-*-*-*-*-*-*-*-*-*-**-*-*-*-**-*-*-*-*-*-*-*-
+
+-*-*-*-*-*-*-*-*-*-*-**-*-*-*-**-*-*-*-*-*-*-*-
+
+-*-*-*-*-*-*-*-*-*-*-**-*-*-*-**-*-*-*-*-*-*-*-
+
+-*-*-*-*-*-*-*-*-*-*-**-*-*-*-**-*-*-*-*-*-*-*-
+
+-*-*-*-*-*-*-*-*-*-*-**-*-*-*-**-*-*-*-*-*-*-*-
+
+-*-*-*-*-*-*-*-*-*-*-**-*-*-*-**-*-*-*-*-*-*-*-
