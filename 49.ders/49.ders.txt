@@ -82,21 +82,102 @@ kosulu saglamayanlar
 structured binding
 
 
-40 dk da kaldım
+
+
+
+-*-*-*-*-*-*-*-*-*-*-**-*-*-*-**-*-*-*-*-*-*-*-
+int main() {
+	
+
+	using namespace std;
+	int x{ 122 }, y{ 39 }, z{ 214 }, t{ 1991 }, k{ 152 };
+	cout <<max({ x, y, t, k }, [](int a, int b) {return a % 10 < b % 10;});
+ 
+
+
+	return 0;
+}
+39
+-*-*-*-*-*-*-*-*-*-*-**-*-*-*-**-*-*-*-*-*-*-*-
+max_element
+min_element
+minmax_element
+-*-*-*-*-*-*-*-*-*-*-**-*-*-*-**-*-*-*-*-*-*-*-
+#include <iostream>
+#include <vector>
+#include <algorithm>
+using namespace std;
+
+int main()
+{
+    using namespace std;
+
+    vector<Date> dvec;
+
+    // dvec içine rastgele 10 tane Date nesnesi atar.
+    rfill(dvec, 10, Date::random);
+
+    // Tarihleri alt alta yazdırır.
+    cprint(dvec, "\n");
+
+    // minmax_element:
+    // Verilen aralıktaki hem minimum hem maksimum elemanı bulur.
+    //
+    // Geriye pair döndürür:
+    // first  -> minimum elemanın iterator'ı
+    // second -> maksimum elemanın iterator'ı
+    auto [itermin, itermax] = minmax_element(dvec.begin(), dvec.end());
+
+    cout << "min = " << *itermin << '\n';
+    cout << "max = " << *itermax << '\n';
+}
+-*-*-*-*-*-*-*-*-*-*-**-*-*-*-**-*-*-*-*-*-*-*-
+nth_element
+n. eleman algoritması
+  
+-*-*-*-*-*-*-*-*-*-*-**-*-*-*-**-*-*-*-*-*-*-*-
+deque
+double ended queue 
+
+push front ===> pop_front
+push_back  ===> pop_back
+ 
 
 
 -*-*-*-*-*-*-*-*-*-*-**-*-*-*-**-*-*-*-*-*-*-*-
 
--*-*-*-*-*-*-*-*-*-*-**-*-*-*-**-*-*-*-*-*-*-*-
+#include <iostream>
+#include <deque>
+using namespace std;
 
--*-*-*-*-*-*-*-*-*-*-**-*-*-*-**-*-*-*-*-*-*-*-
+int main()
+{
+    using namespace std;
 
--*-*-*-*-*-*-*-*-*-*-**-*-*-*-**-*-*-*-*-*-*-*-
+    deque<int> d;
 
--*-*-*-*-*-*-*-*-*-*-**-*-*-*-**-*-*-*-*-*-*-*-
+    // 0 ile 99 arasında rastgele sayı üreten fonksiyon nesnesi
+    Irand myrand{ 0, 99 };
 
+    // 100 tane rastgele sayı üretilecek
+    for (int i = 0; i < 100; ++i) {
 
--*-*-*-*-*-*-*-*-*-*-**-*-*-*-**-*-*-*-*-*-*-*-
+        auto val = myrand();
+
+        // Sayı çift ise deque'in başına eklenir
+        if (val % 2 == 0)
+            d.push_front(val);
+
+        // Sayı tek ise deque'in sonuna eklenir
+        else
+            d.push_back(val);
+    }
+
+    // deque içeriğini yazdırır
+    cprint(d);
+}
+42 88 16 70 24 6 94 32 58 10 75 31 91 43 17 65 99 3 27 81
+
 -*-*-*-*-*-*-*-*-*-*-**-*-*-*-**-*-*-*-*-*-*-*-
 
 -*-*-*-*-*-*-*-*-*-*-**-*-*-*-**-*-*-*-*-*-*-*-
