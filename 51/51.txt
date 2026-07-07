@@ -1,0 +1,22 @@
+neden array kullanmalıyız ? 
+
+1) sınıf
+	interface
+		daha STL uyumlu
+2) exception handling 
+3) C apileri için uygun
+4) array decaay yok
+5) fonksiyonlara tek argumanla geçiş
+6) genmeric kodlarda boyutu 0 olan  yuani bos olan bir dizi
+7)  
+
+
+algorithms
+	heap algo
+		make_heap
+		push_heap
+		pop_heap
+		sort_heap
+		is_heap
+		is_heap_until
+40.dk da kaldım
