@@ -183,17 +183,170 @@ Cevo
 bulundu ve degistiriliyor...
 Ada Cevo Ege Fatih Ferda Ibrahim Melis Mert Serkan Seyma
 
-1:0:0 da kaldım
 
+
+
+--------------------------------------------------------;
+sorted ranges
+
+lower bound
+upper bound
+equal bound
+
+
+
+2 5 7 7 7 7 7 8 8 12 34 56
+
+lower bound for a key
+	o anahtarın sırayı bozmadan eklenebileceği ilk konum
+	anahtardan >= olan ilk ögenin konumu
+upper bound for a key 
+	o anahtarın sırayı bozmadan eklenebileceği ilk konum
+	anahtardan > olan ilk ögenin konumu
+equal range
+	[lower_bound,upper_bound]
+--------------------------------------------------------;
+
+    multiset myset{ 2,4,7,7,7,7,9,9,12,34,56 };
+
+
+    auto iter = myset.lower_bound(17);
+    cout << *iter;
+	34
+	-
+
+	multiset myset{ 2,4,7,7,7,7,9,9,12,34,56 };
+
+
+    auto iter = myset.upper_bound(17);
+    cout << *iter;
+
+	34
 
 --------------------------------------------------------;
 
+    multiset myset{ 2,4,7,7,7,7,9,9,12,34,56 };
+
+
+    auto iter_lower = myset.lower_bound(7);
+    auto iter_upper = myset.upper_bound(7);
+
+    cout << "iter lower : " << *iter_lower << '\n';
+    cout << "iter upper : " << *iter_upper << '\n';
+	 cout << "distance   : " << distance(iter_lower, iter_upper) << '\n';
+	 copy(iter_lower, iter_upper, ostream_iterator<int>{cout, " "});
+	iter lower : 7
+	iter upper : 9
+	distance   : 4
+	7 7 7 7
+
 --------------------------------------------------------;
+ auto equal_range = myset.equal_range(7);
+  cout << "distance   : " << distance(equal_range.first, equal_range.second) << '\n';
+  distance   : 4
+--------------------------------------------------------;
+int main()
+{
+    using namespace std;
+
+    vector<int> ivec;
+
+    // ivec içine 0 ile 9 arasında rastgele 20 tane int değer atar.
+    rfill(ivec, 20, Irand{ 0, 9 });
+
+    // Binary search algoritmaları sıralı aralık ister.
+    // O yüzden önce vector sıralanıyor.
+    sort(ivec.begin(), ivec.end());
+
+    // Sıralanmış vector ekrana yazdırılır.
+    cprint(ivec);
+
+    std::cout << "anahtari girin: ";
+
+    int key;
+    cin >> key;
+
+    // equal_range:
+    // Sıralı aralıkta key değerinin bulunduğu aralığı döndürür.
+    //
+    // Geriye pair döner:
+    // first  -> lower_bound iterator'ı
+    // second -> upper_bound iterator'ı
+    auto [iter_lower, iter_upper] = equal_range(ivec.begin(), ivec.end(), key);
+
+    cout << "index for lower_bound : " << iter_lower - ivec.begin() << '\n';
+    cout << "index for upper_bound : " << iter_upper - ivec.begin() << '\n';
+
+    // lower_bound ile upper_bound arasındaki mesafe,
+    // key değerinden kaç tane olduğunu verir.
+    cout << "distance = " << distance(iter_lower, iter_upper) << '\n';
+}
+
+
+0 0 1 2 2 2 3 4 4 4 5 5 6 6 6 7 7 7 7 7
+anahtari girin: 4
+index for lower_bound : 7
+index for upper_bound : 10
+distance = 3
+--------------------------------------------------------;
+
+popüler mülakat soruları
+
+ 
 
 --------------------------------------------------------;
 
---------------------------------------------------------;
+ using namespace std;
 
---------------------------------------------------------;
+    vector<string> svec;
 
+    for (int i = 0; i < 10; ++i) {
+
+        // Rastgele bir isim üretiliyor.
+        auto s = random_name();
+
+        // lower_bound kullanılsaydı:
+        // Aynı değerden varsa yeni elemanı eşitlerin başına eklerdi.
+        // svec.insert(lower_bound(svec.begin(), svec.end(), s), s);
+
+        // upper_bound:
+        // Yeni ismi sıralı düzeni bozmayacak şekilde ekler.
+        // Eğer aynı isimden varsa, eşit olanların sonrasına ekler.
+        svec.insert(upper_bound(svec.begin(), svec.end(), s), s);
+
+        // Her eklemeden sonra vector yazdırılır.
+        cprint(svec);
+
+        // Program her adımda bekler.
+        // Enter'a basınca sonraki isim eklenir.
+        (void)getchar();
+
+tonguc
+--------------------------------------------------------------------------------
+
+ferhunde tonguc
+--------------------------------------------------------------------------------
+
+ferhunde hakan tonguc
+--------------------------------------------------------------------------------
+
+ferhunde hakan irmak tonguc
+--------------------------------------------------------------------------------
+
+ferhunde hakan irmak muslum tonguc
+--------------------------------------------------------------------------------
+
+ferhunde hakan irmak mukerrem muslum tonguc
+--------------------------------------------------------------------------------
+
+birhan ferhunde hakan irmak mukerrem muslum tonguc
+--------------------------------------------------------------------------------
+
+birhan cahide ferhunde hakan irmak mukerrem muslum tonguc
+--------------------------------------------------------------------------------
+--------------------------------------------------------;
+1:30:00 da kaldım
+--------------------------------------------------------;
+--------------------------------------------------------;
+--------------------------------------------------------;
 --------------------------------------------------------;
