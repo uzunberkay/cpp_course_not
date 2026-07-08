@@ -290,7 +290,7 @@ index for upper_bound : 10
 distance = 3
 --------------------------------------------------------;
 
-popüler mülakat soruları
+
 
  
 
@@ -345,6 +345,8 @@ birhan ferhunde hakan irmak mukerrem muslum tonguc
 birhan cahide ferhunde hakan irmak mukerrem muslum tonguc
 --------------------------------------------------------------------------------
 --------------------------------------------------------;
+popüler mülakat soruları
+bir container'a nasıl ekleme yaparım
 1:30:00 da kaldım
 --------------------------------------------------------;
 --------------------------------------------------------;
