@@ -1,0 +1,199 @@
+52
+
+
+
+bool cmp(int x, int y)
+{
+	return std::abs(x) < std::abs(y);
+}
+
+
+int main() {
+	
+	using namespace std;
+	set<int, bool(*)(int, int)>;
+
+	set<int, decltype(&cmp)>;
+
+
+		using namespace std;
+	set<string,greater<string>> names;
+	rfill(names, 10, random_name);
+	cprint(names);
+
+Seyma Selim Sedat Oyku Melek Halil Gokhan Ezgi Damla Burak
+greater ile buyukten kucuge dolasıyor.
+
+
+	set<string> names;
+	rfill(names, 10, random_name);
+	cprint(names);
+
+
+	Ece Fatih Handan Iclal Murat Mustafa Nur Sema Su Yusuf
+	böyle de küçükten buyuge 
+
+--------------------------------------------------------;
+	set<string> names;
+	rfill(names, 10, random_name);
+	cprint(names);
+	string key;
+	cout << "aranacak isim: ";
+	cin >> key;
+
+	// arama find ile yapılıyor
+
+	if (auto iter = names.find(key); iter != names.end()) {
+		cout << " bulundu : " << *iter << " \n";
+	}
+	else
+	{
+		cout << "bulunamadi!\n";
+	}
+	Alp Gokhan Kaan Kadir Kivilcim Kubra Mavi Meryem Nisa Tolga
+aranacak isim: Kadir
+ bulundu : Kadir
+
+
+--------------------------------------------------------;
+
+	// arama count ile yapılıyor
+
+	if (names.count(key)) {
+		cout << " bulundu \n ";
+	}
+	else
+	{
+		cout << "bulunamadi!\n";
+	}
+
+	Bulent Deniz Elif Emir Oyku Ozge Tolga Tulay Tunc Volkan
+aranacak isim: Oyku
+ bulundu
+
+ Belma Canan Ceylan Ferda Jale Kartal Levent Osman Seda
+aranacak isim: Berkay
+bulunamadi!
+--------------------------------------------------------;
+
+	// arama .contains ile yapılıyor
+
+	if (names.contains(key)) {
+		cout << " bulundu \n ";
+	}
+	else
+	{
+		cout << "bulunamadi!\n";
+	}
+Ceren Damla Ela Elif Gokhan Kubra Naci Necati Rabia Tulay
+aranacak isim: Ceren
+ bulundu
+
+--------------------------------------------------------;
+	if (auto iter = names.find(key); iter != names.end()) {
+		cout << " bulundu : " << *iter << " \n";
+		names.erase(iter);
+		cprint(names);
+	}
+	else
+	{
+		cout << "bulunamadi!\n";
+	}
+	Alp Cansu Derya Handan Huseyin Kivilcim Selim Serkan Seyma
+aranacak isim: Huseyin
+ bulundu : Huseyin
+Alp Cansu Derya Handan Kivilcim Selim Serkan Seyma
+--------------------------------------------------------;
+		using namespace std;
+	multiset<string> names;
+	rfill(names, 100, random_name);
+	cprint(names);
+	string key;
+	cout << "aranacak isim: ";
+	cin >> key;
+
+	size_t n = names.erase(key);
+	if (n)
+	{
+		cout << n << " eleman silindi!\n";
+		cprint(names);
+	}
+	else
+	{
+		cout << "hicbir eleman silinmedi\n";
+	}
+Ada Ada Ahmet Ahmet Aleyna Aleyna Arda Asli Asli Baran Belma Belma Beren Bora Bulent Bulent Cagan Canan Cansu Cansu Cihan Cihan Cinar Derya Devran Devran Efe Ege Eren Esra Eylul Fatih Ferhat Feyza Feyza Furkan Gizem Gokce Gokhan Gorkem Gorkem Gorkem Gul Halil Hande Hasan Hazal Iclal Ipek Ismail Kadir Kadir Kagan Kivilcim Kubra Kuzey Kuzey Lale Leyla Lidya Mehmet Mustafa Naci Naci Necati Nisa Nur Nur Oguz Orhan Osman Oyku Oyku Oyku Ozan Perihan Rabia Riza Riza Ruya Selin Su Sukru Tolga Toprak Tuana Tugba Tugrul Tulay Ummu Vildan Vildan Vildan Yavuz Yigit Yildiz Yunus Yusuf Zafer Zeliha
+aranacak isim: Vildan
+3 eleman silindi!
+Ada Ada Ahmet Ahmet Aleyna Aleyna Arda Asli Asli Baran Belma Belma Beren Bora Bulent Bulent Cagan Canan Cansu Cansu Cihan Cihan Cinar Derya Devran Devran Efe Ege Eren Esra Eylul Fatih Ferhat Feyza Feyza Furkan Gizem Gokce Gokhan Gorkem Gorkem Gorkem Gul Halil Hande Hasan Hazal Iclal Ipek Ismail Kadir Kadir Kagan Kivilcim Kubra Kuzey Kuzey Lale Leyla Lidya Mehmet Mustafa Naci Naci Necati Nisa Nur Nur Oguz Orhan Osman Oyku Oyku Oyku Ozan Perihan Rabia Riza Riza Ruya Selin Su Sukru Tolga Toprak Tuana Tugba Tugrul Tulay Ummu Yavuz Yigit Yildiz Yunus Yusuf Zafer Zeliha
+
+--------------------------------------------------------;
+	
+	using namespace std;
+	multiset<string> names;
+	rfill(names, 10, random_name);
+	cprint(names);
+	string oldkey, newkey;
+	cout << "eski ve yeni anahtarlari giriniz: ";
+	cin >> oldkey >> newkey;
+	if (auto iter = names.find(oldkey); iter != names.end())
+	{
+		cout << "bulundu ve degistiriliyor...\n";
+		names.erase(iter);
+		names.insert(newkey);
+		cprint(names);
+
+	}
+	else
+	{
+		cout << "bulunamadi!";
+	}
+
+Hatice Hazal Kader Leyla Necati Osman Oyku Ramazan Tarik Zeliha
+eski ve yeni anahtarlari giriniz: Hazal Zonguldak
+bulundu ve degistiriliyor...
+Hatice Kader Leyla Necati Osman Oyku Ramazan Tarik Zeliha Zonguldak
+
+--------------------------------------------------------;
+
+	using namespace std;
+	multiset<string> names;
+	rfill(names, 10, random_name);
+	cprint(names);
+	string oldkey, newkey;
+	cout << "eski ve yeni anahtarlari giriniz: ";
+	cin >> oldkey >> newkey;
+	if (auto iter = names.find(oldkey); iter != names.end())
+	{
+		auto handle = names.extract(iter);
+		handle.value() = newkey;
+		names.insert(move(handle));
+		cout << "bulundu ve degistiriliyor...\n";
+		cprint(names);
+
+	}
+	else
+	{
+		cout << "bulunamadi!";
+	}
+
+Ada Ege Fatih Ferda Ibrahim Irmak Melis Mert Serkan Seyma
+eski ve yeni anahtarlari giriniz: Irmak
+Cevo
+bulundu ve degistiriliyor...
+Ada Cevo Ege Fatih Ferda Ibrahim Melis Mert Serkan Seyma
+
+1:0:0 da kaldım
+
+
+--------------------------------------------------------;
+
+--------------------------------------------------------;
+
+--------------------------------------------------------;
+
+--------------------------------------------------------;
+
+--------------------------------------------------------;
+
+--------------------------------------------------------;
