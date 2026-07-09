@@ -1,1 +1,47 @@
-31.dkda kaldım
+
+insert_ort_assign
+C++17
+
+
+    vector x{ 1,23,4,5,6,7,8 };
+
+    map<int, string> mymap{
+         {12, "muharrem"},
+         {14, "selim"},
+         {23, "ayla"},
+         {34, "kadir"},
+         {98, "burcin"},
+    };
+
+    cout << "eski ve yeni anahtarlari girin: ";
+
+    int key;
+    string value;
+
+    std::cout << "anahtar ve deger girin:";
+    cin >> key >> value;
+
+    auto [iter, inserted] = mymap.insert_or_assign(key, value);
+
+    if (inserted) {
+        std::cout << "ekleme yapildi " << *iter << '\n';
+    }
+    else {
+        cout << " var olan anahtarin degeri degistirildi " << *iter << '\n';
+    }
+
+    cprint(mymap, "\n");
+
+    
+Unordered associative containers (hash table )
+
+unorderet_set
+unorderet_multiset
+unorderet_map
+unorderet_multimap
+
+
+O(log n )  O(1)
+
+
+45.dkda kaldım
