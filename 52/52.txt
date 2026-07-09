@@ -347,8 +347,69 @@ birhan cahide ferhunde hakan irmak mukerrem muslum tonguc
 --------------------------------------------------------;
 popüler mülakat soruları
 bir container'a nasıl ekleme yaparım
-1:30:00 da kaldım
+
+c.push_back()
+c.emplace_back()
+c.push_front()
+c.insert()
+c.emplace()
+ 
+
 --------------------------------------------------------;
+
+Mapte key yerine pair tutuluyor.
+	using namespace std;
+	map<int, string> mymap;
+	Irand rand{ 0,999 };
+	for (int i = 0; i < 10; ++i)
+	{
+		mymap.insert(make_pair(rand(), random_name()));
+
+
+	}
+	for (const auto& p : mymap)
+	{
+		cout << p.first << "  " << p.second << '\n';
+	}
+		
+
+75  Oyku
+138  Kemal
+224  Esra
+243  Turan
+378  Selim
+383  Bulut
+408  Naz
+717  Bulut
+866  Sinan
+871  Perihan
 --------------------------------------------------------;
+	using namespace std;
+	map<int, string> mymap;
+	Irand rand{ 0,999 };
+	for (int i = 0; i < 10; ++i)
+	{
+		mymap.insert(make_pair(rand(), random_name()));
+
+
+	}
+	for (const auto& p : mymap)
+	{
+		cout << p.first << "  " << p.second << '\n';
+	}
+	cout << "anahtari girin : ";
+	int key;
+	string value;
+
+	cin >> key >> value;
+
+	if (auto iter = mymap.find(key); iter != mymap.end())
+	{
+		cout << "bulundu !";
+
+		iter->second = value;
+		cprint(mymap);
+	}
+		2:12 de kaldım
 --------------------------------------------------------;
 --------------------------------------------------------;
