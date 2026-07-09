@@ -18,7 +18,12 @@ public:
     int operator()() { return dist(engine()); }
 };
 
-
+// cprint'ten ONCE koy
+template <typename T, typename U>
+std::ostream& operator<<(std::ostream& os, const std::pair<T, U>& p)
+{
+    return os << p.first << ": " << p.second;
+}
 template<typename Collection>
 void cprint(const Collection& c, const char* psep = " ", std::ostream& os = std::cout)
 {
@@ -101,3 +106,5 @@ void rfill(Collection& c, std::size_t count, Generator gen)
             c.insert(gen());      // set, unordered_set...
     }
 }
+
+

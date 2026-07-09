@@ -410,6 +410,146 @@ Mapte key yerine pair tutuluyor.
 		iter->second = value;
 		cprint(mymap);
 	}
-		2:12 de kaldım
+	
 --------------------------------------------------------;
+
+
+int main() {
+	
+	using namespace std;
+	map<int, string> mymap;
+	Irand rand{ 0,999 };
+	
+	mymap.insert(pair<int, string>{12, string{ "ali" }});
+	mymap.insert(pair{ 23,"ali"s });
+	mymap.insert(make_pair(65, "canan"s));
+	mymap.emplace(98, "suleyman");
+	mymap.insert(pair{ 12,"mert"s });
+	mymap.insert(pair{ 23,"suheyla"s });
+
+	for (const auto& [id, name] : mymap)
+	{
+		cout << id << " " << name << '\n';
+	}
+		
+	return 0;
+}
+12 ali
+23 ali
+65 canan
+98 suleyman
+
+--------------------------------------------------------;
+
+	
+	using namespace std;
+
+	vector<int> ivec;
+	rfill(ivec, 40, Irand{ 0,99 });
+	cprint(ivec);
+	set<int> myset(ivec.begin(), ivec.end());
+	cprint(myset);
+	return 0;
+
+33 78 31 21 37 18 94 72 36 24 52 61 60 53 82 7 78 89 65 53 70 94 13 73 45 85 94 36 66 37 90 4 74 84 57 92 27 75 16 90
+4 7 13 16 18 21 24 27 31 33 36 37 45 52 53 57 60 61 65 66 70 72 73 74 75 78 82 84 85 89 90 92 94
+
+--------------------------------------------------------;
+    using namespace std;
+
+    map<int, string> mymap{
+        {12, "muharrem"},
+        {14, "selim"},
+        {23, "ayla"},
+        {34, "kadir"},
+        {98, "burcin"},
+    };
+
+    cout << "eski ve yeni anahtarlari girin: ";
+
+    int oldkey, newkey;
+    cin >> oldkey >> newkey;
+
+    if (auto iter = mymap.find(oldkey); iter != mymap.end()) {
+        std::cout << "bulundu\n";
+
+        auto value = iter->second;
+
+        mymap.erase(iter);
+
+        mymap.emplace(newkey, value);
+        cprint(mymap, "\n");
+    }
+
+
+eski ve yeni anahtarlari girin: 14 88
+bulundu
+12: muharrem
+23: ayla
+34: kadir
+88: selim
+98: burcin
+veya
+
+
+    if (auto iter = mymap.find(oldkey); iter != mymap.end()) {
+        std::cout << "bulundu\n";
+
+        auto handle = mymap.extract(iter);
+        handle.key() = newkey;
+        mymap.insert(move(handle));
+        cprint(mymap, "\n");
+    }
+    
+
+eski ve yeni anahtarlari girin: 14 9991
+bulundu
+12: muharrem
+23: ayla
+34: kadir
+98: burcin
+9991: selim
+
+--------------------------------------------------------;
+
+   map<int, string> mymap{
+        {12, "muharrem"},
+        {14, "selim"},
+        {23, "ayla"},
+        {34, "kadir"},
+        {98, "burcin"},
+    };
+
+    cout << "eski ve yeni anahtarlari girin: ";
+
+    int key ;
+    string value;
+    cin >> key >> value;
+
+    mymap[key] = value;
+    cprint(mymap, "\n");
+
+eski ve yeni anahtarlari girin: 12 bacolii
+12: bacolii
+14: selim
+23: ayla
+34: kadir
+98: burcin
+
+eski ve yeni anahtarlari girin: 88 naber
+12: muharrem
+14: selim
+23: ayla
+34: kadir
+88: naber
+98: burcin
+
+--------------------------------------------------------;
+
+--------------------------------------------------------;
+
+--------------------------------------------------------;
+
+--------------------------------------------------------;
+
 --------------------------------------------------------;
