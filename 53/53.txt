@@ -44,4 +44,154 @@ unorderet_multimap
 O(log n )  O(1)
 
 
-45.dkda kaldım
+hashing
+    to convert a key to an index
+hasher
+
+#include<functional>
+
+
+    using namespace std;
+
+	hash<int> myhash;
+	cout << myhash(1);
+    12478008331234465636
+
+
+
+
+
+
+    unordered_set
+
+
+    unordered_set<int> myset;
+
+
+
+    
+    ___________________________________________________
+    
+int main()
+{
+    using namespace std;
+
+	unordered_set<int> myset;
+
+	for (int i = 0; i < 10; ++i)
+	{
+		myset.insert(Irand{ 0,999 }());
+	}
+
+	cout << "myset.size() = " << myset.size() << '\n';
+
+	for (const auto val : myset)
+		cout << val << '\n';
+
+  
+}
+myset.size() = 9
+268
+854
+319
+985
+562
+682
+448
+322
+513
+    ___________________________________________________
+    	unordered_set<int> myset;
+
+	for (int i = 0; i < 10; ++i)
+	{
+		myset.insert(Irand{ 0,999 }());
+	}
+
+	cout << "myset.size() = " << myset.size() << '\n';
+
+	for (const auto val : myset)
+		cout << val << '\n';
+	int key;
+	std::cout << "aranacak degeri girini:";
+	cin >> key;
+	if (auto iter = myset.find(key); iter != myset.end())
+	{
+		cout << "bulundu  " << *iter << '\n';
+	}
+	else
+	{
+		cout << "bulunamadi!!\n";
+	}
+
+    myset.size() = 48
+775
+568
+911
+640
+74
+750
+885
+666
+740
+230
+102
+497
+170
+361
+737
+336
+727
+155
+378
+883
+561
+288
+502
+555
+723
+462
+213
+866
+14
+360
+720
+481
+843
+368
+519
+137
+252
+331
+537
+630
+82
+345
+394
+731
+699
+324
+196
+823
+aranacak degeri girini:331
+bulundu  331
+
+    
+    ___________________________________________________
+    1:30 da kaldım
+    ___________________________________________________
+    
+    ___________________________________________________
+    
+    ___________________________________________________
+    
+    ___________________________________________________
+    
+    ___________________________________________________
+    
+    ___________________________________________________
+    
+    ___________________________________________________
+    
+    ___________________________________________________
+     f
