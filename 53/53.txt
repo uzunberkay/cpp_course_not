@@ -198,18 +198,106 @@ myset.size() = 50
 myset.bucket_count() = 64
 myset.load_factor() = 0.78125
     ___________________________________________________
-    2:0:0 da kaldım
+
+    container adaptors
+    std::stack    last in first out
+    std::queue      first in first out
+    std::priority_queue
+
+
+
+    ___________________________________________________
+   
+
+   int main()
+{
+	using namespace std;
+
+    stack<int> s;
+
+
+	for (int i = 0; i < 10; i++)
+	{
+		int val = Irand{ 0,999 }();
+		cout << val << " is pushed\n";
+		s.push(val);
+	}
+
+	cout << "size = " << s.size() << '\n';
+
+	while (!s.empty())
+	{
+		cout << s.top();
+		(void)getchar();
+		s.pop();
+	}
+
+
+
+
+}
+
+44 is pushed
+907 is pushed
+637 is pushed
+790 is pushed
+177 is pushed
+275 is pushed
+96 is pushed
+97 is pushed
+337 is pushed
+782 is pushed
+size = 10
+782
+337
+97
+96
+275
+177
+790
+637
+907
+44
+
+    ___________________________________________________
+ Ulku is pushed
+Fatma is pushed
+Elif is pushed
+Unal is pushed
+Lidya is pushed
+Melike is pushed
+Turan is pushed
+Gorkem is pushed
+Sema is pushed
+Kartal is pushed
+size = 10
+Kartal
+Sema
+Gorkem
+Turan
+Melike
+Lidya
+Unal
+Elif
+Fatma
+Ulku    
+
+
     ___________________________________________________
     
-    ___________________________________________________
-     
-    ___________________________________________________
-    
+
+
     ___________________________________________________
     
+
+
+
     ___________________________________________________
     
+
     ___________________________________________________
     
+
+
     ___________________________________________________
-     f
+   
