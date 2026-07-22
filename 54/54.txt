@@ -73,9 +73,40 @@ std::invoke     //function
 
 
 ---------------------------------------------------------------
-1:30:0 da kaldım
----------------------------------------------------------------
+std::bind
+std::mem_fn
+std::not_fn
 
+ 
+---------------------------------------------------------------
+#include <algorithm>
+#include <iostream>
+#include <vector>
+
+int main()
+{
+    using namespace std;
+
+    vector vec{2, 45, 196, 78, 13, 98, 41, 456, 77, 12, 987, 333, 176};
+    int ival = 181;
+
+    auto x = count_if(vec.begin(), vec.end(),
+                      [ival](int value) {
+                          return value > ival;
+                      });
+
+    auto y = count_if(vec.begin(), vec.end(),
+                      [ival](int value) {
+                          return value < ival;
+                      });
+
+    cout << "181'den buyuk eleman sayisi = " << x << '\n';
+    cout << "181'den kucuk eleman sayisi = " << y << '\n';
+}
+
+
+181'den buyuk eleman sayisi = 4
+181'den kucuk eleman sayisi = 9
 ---------------------------------------------------------------
 
 ---------------------------------------------------------------
