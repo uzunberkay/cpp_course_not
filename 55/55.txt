@@ -1,0 +1,97 @@
+
+int foo(int, int);
+
+
+int main()
+{
+	using namespace std::placeholders;
+
+	auto f = std::bind(foo, _1, _2);
+
+	f(1, 3);
+}
+
+
+
+
+--------------------------------------------------
+struct Myclass {
+	void foo(int x, int y)
+	{
+		std::cout <<  "Myclass::foo(int x , int y) x =  " << x << " y =  " << y << '\n';
+
+	}
+};
+
+
+
+
+int main()
+{
+	using namespace std;
+
+	auto f = mem_fn(&Myclass::foo);
+
+	Myclass m;
+
+	f(m, 10, 20);
+
+	
+}
+
+
+--------------------------------------------------
+class Counter
+{
+public:
+    Counter() = default;
+    Counter(int x) : mc(x) {}
+
+    void increment()
+    {
+        ++mc;
+    }
+
+    void print() const
+    {
+        std::cout << "[" << mc << "]\n";
+    }
+
+private:
+    int mc{};
+};
+
+int main()
+{
+    using namespace std;
+
+    vector<Counter> vec{ Counter{10}, Counter{20}, Counter{}, Counter{} };
+
+    for_each(vec.begin(), vec.end(), [](Counter& c) { c.increment(); });
+    for_each(vec.begin(), vec.end(), mem_fn(&Counter::increment));
+    for_each(vec.begin(), vec.end(), mem_fn(&Counter::print));
+}
+
+
+[12]
+[22]
+[2]
+[2]
+--------------------------------------------------
+void Myclass::foo()
+{
+    int a = 5;
+
+    auto f1 = [this]() { mx };
+    auto f2 = [=]() { mx };  //deprecated since C++20
+    auto f2 = [=]() { mx };  //deprecated since C++20
+    auto f4 = [=, this]() { mx };  //since C++20
+
+}
+1:00:00 da kaldım
+--------------------------------------------------
+--------------------------------------------------
+--------------------------------------------------
+--------------------------------------------------
+--------------------------------------------------
+--------------------------------------------------
