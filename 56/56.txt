@@ -97,17 +97,84 @@ bulundu idx = 3
 	}
 	bulundu idx = 7
 ------------------------------------------------------
-56.3 30.dk da kaldım
-------------------------------------------------------
 
 ------------------------------------------------------
+    vector<string> svec;
+    rfill(svec, 20, random_name);
+    sort(svec.begin(), svec.end());
+    cprint(svec);
 
+
+    string name;
+    cout << "aranacak ismi girin : ";
+    cin >> name;
+
+    if (binary_search(svec.begin(), svec.end(), name))
+    {
+        cout << "evet var!\n";
+    }
+    else
+    {
+        cout << "hayir yok!\n";
+    }
+------------------------------------------------------
+Ada Ayse Baran Beyza Busra Dilara Dogan Efe Fatma Mavi Mert Pinar Ramazan Sevval Seyma Tulay Vedat Vedat Vuslat Yusuf
+aranacak ismi girin : Baran
+evet var!
 ------------------------------------------------------
 
-------------------------------------------------------
+    vector<int> ivec;
+
+    rfill(ivec, 20, Irand{ 100,999 });
+    sort(ivec.begin(), ivec.end());
+    cprint(ivec);
+
+    int x, y, z, t;
+
+    cout << "sirali olarak 4 deger girinn : ";
+    cin >> x >> y >> z >> t;
+    auto list = { x,y,z,t };
+
+    if (includes(ivec.begin(), ivec.end(), list.begin(), list.end()))
+        cout << "evet hepsi var !\n";
+    else
+    {
+        cout << "hayir hepsi yok\n";
+    }
+
+101 116 230 259 261 265 283 399 444 505 522 558 688 711 718 774 789 815 907 959
+sirali olarak 4 deger girinn : 1
+2
+2
+34
+hayir hepsi yok
+
+112 150 166 190 232 278 330 351 411 431 456 463 466 505 507 575 724 736 839 958
+sirali olarak 4 deger girinn : 112 278 351 411
+evet hepsi var !
+
 
 ------------------------------------------------------
+bitset 
+#include<bitset>
 
+template <size_t N>
+class Bitset{
+
+};
+
+Bitset<16> 
+------------------------------------------------------
+
+    bitset<16> bs;
+
+    cout << bs << '\n';
+
+
+    0000000000000000
+
+
+    0000000000001101  = 13; 
 
 ------------------------------------------------------
 
