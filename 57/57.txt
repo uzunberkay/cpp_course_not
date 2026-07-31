@@ -67,7 +67,48 @@ iki tam sayi girin: 23
 0000000000101100
 0000000000000100
 ---------------------------------------------------------------------------------------------|
-43. dk da kaldım
+ dinamik ömürlü nesneler  ve akıllı pointer sınıfları
+
+ automatic
+ static 
+ thread_local (şimdilik konumzu değil )
+ synamic
+
+
+ t1 ctor
+
+
+ t2 dtor
+
+ storage 
+	programın çalışma zamanında
+		koşan bir kodla elde ediliyor
+
+mecxbursak 
+	kullanıyorıuz.
+
+
+new expressions
+
+	allocate storage
+		construct the obhect at the storage
+
+
+class vs struct
+
+aggregate type
+
+
+new Myclass
+new Myclass[24]
+new(nothrow)
+new(ptr)
+new(ptr,x,y)
+
+	  
+
+	  1:0:0
+
 
 ---------------------------------------------------------------------------------------------|
 
