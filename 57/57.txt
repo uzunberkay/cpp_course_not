@@ -126,13 +126,76 @@ operator new[]
 
 	delete p; bu hatalı
 ---------------------------------------------------------------------------------------------|
-1::30 da kaldım
+void* operator new (size_t sz)
+{
+    for (;;)
+    {
+        void* p = allocate_storage(sz);
+        if succeded
+            return p;
+
+        if (handler == nullptr)
+        {
+            throw std::bad_alloc
+        }
+    }
+}
 
 ---------------------------------------------------------------------------------------------|
+bizim olusturdugumuz new_handler neler yapabilir ? 
+
+1) handleri null pointer yap
+	bad_alloc throw edilsin.
+
+2) daha önce allocate edilen rezerv bir bellek alanını deallocate et böyle allocation başarılı olsun
+
+3) bad_alloc ya da kalıtımla bad_alloc sınıfın türetilmiş bir sıbnıf türünden exception gönder
+
+4) kendin terminate fonksiyonunuu çağır
+
+5) set_new handle'a çağrı yaparak başka bir handler'i kayda al 
 
 
 ---------------------------------------------------------------------------------------------|
+class Nec {
+public:
+    Nec()
+    {
+        std::cout << "Nec default ctor called this = " << this << '\n';
+    }
+    ~Nec()
+    {
+        std::cout << "nec destructor this = " << this << '\n';
+    }
+    unsigned char buf[1024];
+};
 
+
+void* operator new(size_t sz)
+{
+    std::cout << "operator new called sz =  " << sz << '\n';
+    if (sz == 1)
+        sz = 1;
+    void* ptr = std::malloc(sz);
+    if (!ptr)
+        throw std::bad_alloc{};
+    cout << "address of allocated block by :  " << ptr << '\n';
+
+    return ptr;
+}
+
+void operator delete(void* vp)
+{
+    std::cout << "operator delete called vp " << vp << '\n';
+    std::free(vp);
+}
+
+
+operator new called sz =  1024
+address of allocated block by :  0000018A25895E20
+Nec default ctor called this = 0000018A25895E20
+nec destructor this = 0000018A25895E20
+operator delete called vp 0000018A25895E20     
 
 ---------------------------------------------------------------------------------------------|
 
