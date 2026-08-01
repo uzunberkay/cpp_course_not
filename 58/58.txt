@@ -1,0 +1,74 @@
+
+
+
+
+custom allocation functions
+
+
+
+
+Dikkat !
+
+bir sınıfa özgü "custom allocation functions" yazılabilir
+Bunlar static anahtar sözcügü kullanılmasa dahi
+sınıfın static üye fonksiyonudur.
+
+
+--------------------------------------------------|
+class Myclass
+{
+public:
+    void* operator new(std::size_t sz)
+    {
+        std::cout << "Myclass::operator new called sz =  " << sz << '\n';
+
+        return nullptr;
+    }
+    void operator delete(void*)
+    {
+        cout << "Myclass::operator delete called!\n";
+    }
+};
+
+int main()
+{
+    auto p = new Myclass;
+
+
+    delete p;
+    
+}
+
+Myclass::operator new called sz =  1
+Myclass::operator delete called!
+
+--------------------------------------------------|
+SMART POINTERS
+
+Myclass* p;
+
+
+raw pointers problems
+
+Myclass* p ;
+
+p hangi değerde ? 
+nullptr
+wild pointer
+
+
+
+p bir nesneyi gösteriyor
+
+dangling pointers
+double deletion
+no deletion
+
+
+dk 30
+
+
+
+--------------------------------------------------|
+--------------------------------------------------|
+--------------------------------------------------|
