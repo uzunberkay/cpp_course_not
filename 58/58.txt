@@ -65,10 +65,116 @@ double deletion
 no deletion
 
 
-dk 30
 
 
+generic 
+
+class template
+
+<memory>
+    unique_ptr
+        exclusive ownership
+    shared_ptr
+        weak_ptr
+
+unique_ptr nimetleri
+
+unique_ptr <T> uptr;
+
+henüz kendisine bir kaynak bağlanmamıştır (boştur)
+hali hazırda bir nesnenin sahibidir. o nesnetye  erişim sağlar (doludur)
+bir nesnenin sahibi iken bilerek isteyerek sahibi oldugu nesneyi sonlandırır.
+doluyken boşa çıkabilir.
+    mülkiyet başka nesneye taşınır
+ uptr nesne kaynağı nasıl sonlandıracağını bilir. 
+
+ ilave maliyeti var mı ? 
+   yapılan işlem sayısı 
+   kullanulan bellek alanı
+
+
+unique_ptr is a thin wrapper over
+
+
+template<typename T ,typename D = std::default_delete<T>>  
+class unique_ptr{
+
+
+};
+ unique_ptr<string> uptr;
+ unique_ptr<Myclass> uptr;
+--------------------------------------------------|
+
+   
+    unique_ptr<Myclass> uptr;
+    // bir uptr nesnesinin bos mu dolu mu oldugu sınamak
+
+    if(uptr == nullptr) n
+}
+if(uptr.get())
+--------------------------------------------------|
+bir uptr bir kaynağon (dinamik ömürlü nesne)
+sahipliğini nasıl edinir ? 
+
+move only-type 
+
+
+ unique_ptr<Myclass> uptr(new Myclass);
+     {
+        unique_ptr<Myclass> uptr(new Myclass);
+    }
+    
+
+    cout << "main is still running\n";
+
+ ctor
+dtor
+main is still running
 
 --------------------------------------------------|
+    unique_ptr<Myclass> up1(new Myclass);
+    cout << "up1 : " << (up1 ? "dolu" : "bos") << '\n';
+    unique_ptr<Myclass> up2 = move(up1);
+
+    cout << "up1 : " << (up1 ? "dolu" : "bos") << '\n';
+    cout << "main is still running\n";
+ctor
+up1 : dolu
+up1 : bos
+main is still running
+dtor
 --------------------------------------------------|
+uptr.reset(new )
 --------------------------------------------------|
+    unique_ptr<Myclass> up1(new Myclass);
+    cout << "up1 : " << (up1 ? "dolu" : "bos") << '\n';
+    up1.reset();
+    cout << "up1 : " << (up1 ? "dolu" : "bos") << '\n';
+    cout << "main is still running\n";
+
+    ctor
+up1 : dolu
+dtor
+up1 : bos
+main is still running
+--------------------------------------------------|
+
+aslında her bir unique_ptr nesnesi
+Bir T* elemana sahip oldugu gibi
+bir Deleter nesnenin de sahibidir.
+
+--------------------------------------------------|
+
+uptr.reset()
+uptr.reset(nullptr)
+uptr.reset(new Myclass)
+
+Dikkat ! 
+
+get fonksiyonu  çağırırken çok dikkatli olun.
+
+
+2:10 da kaldım
+
+--------------------------------------------------|
+--------------------------------------------------|m  
