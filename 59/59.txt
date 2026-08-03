@@ -86,16 +86,34 @@ p5
 
 reference counting
 reference count ==> use_count
-1:0:0 da kaldım
-_________________________________________________________________
-
 
 _________________________________________________________________
 
+control block
+
+	refrence_count
+
+shared_ptr<string> sptr(new string);
 _________________________________________________________________
+T* mp 
+ControlBlock* p 
+_________________________________________________________________
+control block
+
+strong reference count 
+weak reference count
+Deleter
+Allocator
 
 _________________________________________________________________
+Dikkat!
+Aksi yönde karar almanızı gerektirecek bir durum söz konusu değil ise
+shared_ptr nesnesinin make_shared kullanarak olusturun. 
 
+custom deleter gerekiyor ise 
+make_shared kullanamam.
+
+1:35 de kaldım
 _________________________________________________________________
 
 _________________________________________________________________
