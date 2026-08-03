@@ -1,0 +1,115 @@
+ 
+template<typename T , typename D = std::default_delete<T>>
+class unique_ptr :private D {
+public:
+	constexpr  unique_ptr()noexcept = default;
+	explicit unique_ptr(T* p , D d)noexcept : D(std::move(d)),mp(p){}
+	unique_ptr(const unique_ptr&) = delete;
+	unique_ptr& operator=(const unique_ptr&) = delete;
+
+	//move members
+	unique_ptr(unique_ptr&& other)noexcept :D(std::move(other.get_deleter())) mp(other.release())
+	{
+
+	}
+	unique_ptr& operator=(unique_ptr&& other)
+	{
+		if (this != &other)
+		{
+			reset(other.release());
+			get_deleter() = std::move(other.get_deleter());
+		}
+		return *this;
+	}
+	~unique_ptr()
+	{
+		if (mp)
+		{
+			get_deleter()(mp);
+		}
+	}
+	T& operator*()const noexcept
+	{
+		return *mp;
+	}
+	T* operator->()const noexcept
+	{
+		return mp;
+	}
+	D& get_deleter() noexcept
+	{
+		return static_cast<D&>(*this);
+	}
+	T* release() noexcept
+	{
+		T* ret = mp;
+		mp = nullptr;
+		return ret;
+	}
+	void reset(T* p = nullptr)noexcept
+	{
+		if (mp)
+		{
+			get_deleter()(mp);
+		}
+		mp = p;
+
+	}
+	// ADL fall_back idiom
+	void swap(unique_ptr& other)
+	{
+		std::swap(mp, other.mp);
+		std::swap(get_deleter(), other.get_deleter());
+	}
+	private:
+		T* mp{ nullptr };
+
+};
+
+
+
+
+
+
+
+
+
+_________________________________________________________________
+shared_ptr
+
+object
+p1
+p2
+p3
+p4
+p5  
+
+reference counting
+reference count ==> use_count
+1:0:0 da kaldım
+_________________________________________________________________
+
+
+_________________________________________________________________
+
+_________________________________________________________________
+
+_________________________________________________________________
+
+_________________________________________________________________
+
+_________________________________________________________________
+
+_________________________________________________________________
+
+_________________________________________________________________
+
+_________________________________________________________________
+
+
+
+_________________________________________________________________
+_________________________________________________________________
+_________________________________________________________________
+_________________________________________________________________
+_________________________________________________________________
