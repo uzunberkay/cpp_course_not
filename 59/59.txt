@@ -113,10 +113,51 @@ shared_ptr nesnesinin make_shared kullanarak olusturun.
 custom deleter gerekiyor ise 
 make_shared kullanamam.
 
-1:35 de kaldım
-_________________________________________________________________
 
 _________________________________________________________________
+	list<shared_ptr<string>> mylist;
+
+	for (int i = 0; i < 10; ++i)
+	{
+		mylist.emplace_back(new string(random_name()));
+	}
+
+
+	for (auto& sp : mylist)
+	{
+		cout << *sp << ' ';
+	}
+	Yunus Bahar Arda Kader Lidya Eren Jale Rabia Ugur Selin
+_________________________________________________________________
+	list<shared_ptr<string>> mylist;
+
+	for (int i = 0; i < 10; ++i)
+	{
+		mylist.emplace_back(new string(random_name()));
+	}
+
+
+	for (auto& sp : mylist)
+	{
+		cout << *sp << ' ';
+	}
+	cout << "\n";
+	vector<shared_ptr<string>> myvec(mylist.begin(), mylist.end());
+	for (auto& sp : mylist)
+	{
+		cout << *sp << ' ';
+	}
+
+
+	cout << "\n";
+	for (auto& sp : mylist)
+	{
+		cout << sp.use_count();
+	}
+	cout << "\n";
+Oguz Reyhan Ozan Kaan Bora Cansu Halil Ulku Iclal Nehir
+Oguz Reyhan Ozan Kaan Bora Cansu Halil Ulku Iclal Nehir
+2222222222
 
 _________________________________________________________________
 
