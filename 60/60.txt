@@ -1,0 +1,49 @@
+  weak_ptr
+   smart pointer sınıfı değil
+
+strong 
+weak
+öyle durumlar var ki
+
+hayatı kontrol edilen nesneye bir gözlemci
+	nesne hayatta mı nesne hayatta değil mi 
+
+cycling reference
+
+	
+	auto sptr  = make_shared<Date>(3, 5, 2019);
+	cout << "use count =  " << sptr.use_count() << '\n';
+	weak_ptr<Date> wp = sptr;
+	cout << "use count =  " << sptr.use_count() << '\n';
+	use count =  1
+use count =  1
+-------------------------------------------------------------------------
+	auto sptr  = make_shared<Date>(3, 5, 2019);
+	cout << "use count =  " << sptr.use_count() << '\n';
+	weak_ptr<Date> wp = sptr;
+	cout << "use count =  " << sptr.use_count() << '\n';
+	wp.lock();
+	shared_ptr <Date> spx = wp.lock();
+	if (spx)
+	{
+		cout << "nesne halen hayatta!\n";
+		cout << *spx << '\n';
+	}
+	else
+	{
+		cout << "nesne artık hayatta degil!\n";
+	}
+use count =  1
+use count =  1
+nesne halen hayatta!
+03.05.2019
+
+-------------------------------------------------------------------------
+dk 45 de kaldım
+-------------------------------------------------------------------------
+
+-------------------------------------------------------------------------
+
+-------------------------------------------------------------------------
+
+-------------------------------------------------------------------------
