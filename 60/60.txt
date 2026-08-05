@@ -32,18 +32,121 @@ use count =  1
 	else
 	{
 		cout << "nesne artık hayatta degil!\n";
-	}
+	}blu
 use count =  1
 use count =  1
 nesne halen hayatta!
 03.05.2019
 
 -------------------------------------------------------------------------
-dk 45 de kaldım
--------------------------------------------------------------------------
+
+standart kütüphanenin
+
+CRTP idiyomundan faydalanan
+CRTP base olarak
+	standart kütüphanenin
+
+	std::enable_shared_from_this
+	 
+
 
 -------------------------------------------------------------------------
 
--------------------------------------------------------------------------
+class NameList {
+public:
+    using container = std::vector<std::string>;
 
+    NameList()
+        : sptr_(std::make_shared<container>())
+    {
+    }
+
+    NameList(std::initializer_list<std::string> list)
+        : sptr_(std::make_shared<container>(list))
+    {
+    }
+
+    void print() const
+    {
+        for (const auto& s : *sptr_)
+            std::cout << s << ' ';
+
+        std::cout << '\n';
+    }
+
+    void add(std::string newname)
+    {
+        sptr_->push_back(std::move(newname));
+    }
+
+    void sort()
+    {
+        std::sort(sptr_->begin(), sptr_->end());
+    }
+
+private:
+    std::shared_ptr<container> sptr_;
+};
+
+int main()
+{
+    NameList females{ "ayse", "fatma", "nil", "gizem" };
+
+    auto f1 = females;
+    auto f2 = females;
+    auto f3 = females;
+    f1.print();
+    f2.print();
+
+    NameList males{ "berkay","kasim","erol" };
+    males.print();
+}
+
+ayse fatma nil gizem
+ayse fatma nil gizem
+berkay kasim erol
+
+-------------------------------------------------------------------------
+ayse fatma nil gizem
+ayse fatma nil gizem
+ayse fatma nil gizem
+ayse fatma gizem leyla nergis nil suheyla
+hasan ali murat furkan
+hasan ali murat furkan
+hasan ali murat furkan
+
+int main()
+{
+    NameList females{ "ayse", "fatma", "nil", "gizem" };
+
+    auto f1 = females;
+    auto f2 = females;
+    auto f3 = females;
+
+    f1.print();
+    f2.print();
+    f3.print();
+
+    females.add("suheyla");
+    f1.add("nergis");
+    f2.add("leyla");
+    f2.sort();
+
+    f3.print();
+
+    NameList males{ "hasan", "ali", "murat", "furkan" };
+
+    auto m1 = males;
+    auto m2 = males;
+    auto m3 = males;
+    auto m4 = males;
+
+    m1.print();
+    males.print();
+    m4.print();
+
+    m4.add("nurullah");
+}
+-------------------------------------------------------------------------
+1:40 da kaldım.
 -------------------------------------------------------------------------
