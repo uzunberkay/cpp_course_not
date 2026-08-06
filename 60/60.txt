@@ -156,6 +156,33 @@ control block ne zaman yok edilir.
 iostream kütüphanesi
 
 
-2:15:0 de kaldım
+input-output kütüphhanesi
 
+-------------------------------------------------------------------------
+standart input stream   
+standart otput stream   
+standart error   stream   
+-------------------------------------------------------------------------
+formatted input ouput operations
+stream condition state
+bellek üstünde okuma yazma işlemleri
+dosya işlemeri
+ formatsız giriş çıkış işlemleri
+
+-------------------------------------------------------------------------
+Formatlı giriş çıkış işlemleri
+formatting
+tam sayılar için format tercihleri
+- hangi sayı sistemi
+- ön ek kullanılsın mı ?  0x1ac4  1ac4 mü ? 
+- hex harf karakterleri büyük mü küçük harf mi olsun
++ 98 mi 98 mi ? 
+
+  
+-------------------------------------------------------------------------
+-------------------------------------------------------------------------
+-------------------------------------------------------------------------
+-------------------------------------------------------------------------
+-------------------------------------------------------------------------
+-------------------------------------------------------------------------
 -------------------------------------------------------------------------
