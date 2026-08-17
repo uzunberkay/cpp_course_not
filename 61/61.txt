@@ -1,0 +1,104 @@
+61
+
+Mint
+sayi sistemi ne olacak
+saqyı sistemi ön eki
+harf karekterleri büyü mü kucuk mu
+
+sayı pozitif değerde ise + karakter gösterilecek mi
+
+fixed
+	87234.421412
+	1.2e5
+	1.8723e-5
+	sayının buyuklugune göre fixed/scientific seçimi
+	hex mi decimal mi
+	precision
+
+yazma alanı genişliği
+output width
+7621
+876
+12
+82143
+1
+ 
+her stream nesnesinin bir format-state i var
+get set
+
+ setf
+ unsetf
+ ostream manipulator
+
+ fmtflags
+ ios_base::boolalpha
+ ios_base::showbase
+ ios_base::uppercase
+ ios_base::oct
+  
+
+on-off flag
+
+				set				unset
+boolalpha		true-false		0-1
+showpos			+5				5
+showbase		0x62			62
+uppercase		0x1AC4			0x1ac4
+showpoint		9.				9
+
+**********************************************************
+int main()
+{
+    
+    using namespace std;
+
+    cout << (10 < 5) << '\n';
+    cout.flags(cout.flags() | ios_base::boolalpha);
+    cout << (10 < 5) << '\n';
+}
+
+0
+false
+veya
+    using namespace std;
+
+    cout << (10 < 5) << '\n';
+    cout.setf(ios_base::boolalpha);
+    cout << (10 < 5) << '\n';
+0
+false
+
+
+**********************************************************
+int main()
+{
+    
+    using namespace std;
+    cout << 57804 << '\n';
+    cout.setf(ios_base::hex, ios_base::basefield);
+    cout << 57804 << '\n';
+}
+
+57804
+e1cc
+
+**********************************************************
+ ios_base::fixed
+ ios_base::scientific
+
+ ikisi de unset ise     general
+ sadece fixed ise       fixed
+ sadece scientificise   scientific
+
+1:01:00 da kaldım.
+
+
+**********************************************************
+
+**********************************************************
+
+**********************************************************
+
+**********************************************************
+
+**********************************************************
