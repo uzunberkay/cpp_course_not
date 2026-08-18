@@ -90,15 +90,71 @@ e1cc
  sadece fixed ise       fixed
  sadece scientificise   scientific
 
-1:01:00 da kaldım.
+**********************************************************
+yazma alanı genişliği nasıl get ve set edilir
+
+
 
 
 **********************************************************
 
-**********************************************************
+
+
+void foo(std::ostream& os)
+{
+    /*
+    * os'in format statini degistermeden once sakla
+    * os'i kullan
+    * os'i eski fromat statetisene getir.
+    * 
+    */
+    auto flags = os.flags();
+    auto width = os.width();
+    auto c = os.fill();
+    auto precision = os.precision();
+
+    os << ios::left << ios::uppercase << ios::showbase;
+    os.width(20);
+    os.fill('c');
+
+
+    // use od here
+
+    os.flags(flags);
+    os.width(width);
+    os.fill(c);
+    os.precision(precision);
+
+}
+riskli ve kötü dedi xd
+
 
 **********************************************************
 
+class fmtguard {
+
+public:
+    fmtguard(std::ostream* p) :m_p(p), m_flags(p->flags()), m_cfill(p->fill()), m_precision(p->precision()),
+        m_widht(p->width())
+    {
+        
+    }
+    ~fmtguard()
+    {
+        m_p->flags(m_flags);
+        m_p->widht(m_widht);
+        m_p->fill(m_cfill);
+        m_p->precision(m_precision);
+    }
+
+
+private:
+    std::streamsize m_widht;
+    char m_cfill;
+    int m_precision;
+    std::ios::fmtflags m_flags;
+    std::ostream* m_p;
+};
 **********************************************************
 
 **********************************************************
