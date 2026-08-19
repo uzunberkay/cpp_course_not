@@ -1,0 +1,110 @@
+*****************************************************
+
+
+ios_base::goodbit
+ios_base::failbit
+ios_base::eofbit
+ios_base::bad bit
+
+*****************************************************
+int main()
+{
+    
+    using namespace std;
+   
+    cout << bitset<16>(cin.rdstate()) << '\n';
+
+}
+
+
+
+0000000000000000
+
+*****************************************************
+
+void display_state(std::ios& s)
+{
+    const auto state = s.rdstate();
+
+    if (state == 0) {
+        std::cout << "stream is ok!\n";
+        return;
+    }
+
+    if (state & std::ios::failbit) {
+        std::cout << "failbit is set!\n";
+    }
+
+    if (state & std::ios::eofbit) {
+        std::cout << "eofbit is set!\n";
+    }
+
+    if (state & std::ios::badbit) {
+        std::cout << "badbit is set!\n";
+    }
+}
+
+int main()
+{
+    
+    using namespace std;
+   
+    cout << "enter an integer :";
+    int x{ 124 };
+
+    cin >> x;
+
+    display_state(cin);
+
+}
+enter an integer :bbbb
+failbit is set!
+    if (!cin)
+    {
+        cout << "there is an error in cin state\n";
+        
+    }
+    else
+    {
+        cout << "there is no error in cin state\n";
+    }
+
+enter an integer :aa
+there is an error in cin state
+*****************************************************
+30.dk da kaldım
+
+*****************************************************
+
+
+*****************************************************
+
+
+*****************************************************
+
+
+*****************************************************
+
+
+*****************************************************
+
+
+*****************************************************
+
+
+*****************************************************
+
+
+*****************************************************
+
+
+*****************************************************
+
+
+*****************************************************
+
+
+*****************************************************
+
+
+*****************************************************
