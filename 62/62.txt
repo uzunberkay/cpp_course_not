@@ -72,7 +72,7 @@ failbit is set!
 enter an integer :aa
 there is an error in cin state
 *****************************************************
-30.dk da kaldım
+1:0:0.dk da kaldım
 
 *****************************************************
 
