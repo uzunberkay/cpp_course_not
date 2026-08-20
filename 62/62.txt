@@ -72,24 +72,81 @@ failbit is set!
 enter an integer :aa
 there is an error in cin state
 *****************************************************
-1:0:0.dk da kaldım
+istream manipulaters
+cout << hex
+cin >> hex
 
+*****************************************************
+int main()
+{
+    
+    using namespace std;
+   
+    
+    int x, y, z;
+    cout << "uc sayi giriniz : ";
+    cin >> hex >> x >> oct >> y>> dec >> z;
+    cout << "X = " << x << '\n';
+    cout << "y = " << y << '\n';
+    cout << "z = " << z << '\n';
+}
+uc sayi giriniz : 126 126 126
+X = 294
+y = 86
+z = 126
+*****************************************************
+bir giriş islemi herhangi bir nedenden basarisiz oldugunda
+bir exception throw etmiyor.
+
+*****************************************************
+osstringstream
+
+int main()
+{
+    
+    using namespace std;
+   
+    
+    int x = 345;
+    string str = "alican";
+    double dval = 45.98;
+    ostringstream os;
+    os << x << " " << str << "  "<< dval;
+auto s = os.str();
+cout << " [ " << s << " ]\n";
+}
+ [ 345 alican  45.98 ]
 *****************************************************
 
 
+int main()
+{
+    
+    using namespace std;
+   
+    int day = 5, mon = 8, year = 1984;
+    ostringstream oss;
+    oss << setfill('0');
+    oss << setw(2) << day << '-' << setw(2) << mon << '-' << year;
+    cout << "[" << oss.str() << "]\n";
+}
+
+[05-08-1984]
 *****************************************************
 
+int main()
+{
+    
+    using namespace std;
+   
+    int x = 123;
+    double d = 9.12;
+    cout << format("{:<12},{:^24}\n", x, d) << '\n';
+}
+123         ,          9.12
 
 *****************************************************
-
-
-*****************************************************
-
-
-*****************************************************
-
-
-*****************************************************
+in memory input/output operation
 
 
 *****************************************************
