@@ -1,0 +1,42 @@
+flush
+to flush stream
+
+cout.flush();
+ofs.flush(); 
+
+tie 
+bağlamak
+bir giriş akımı bir çıkış akımına bağlanırsa
+o giriş akımında bir okuma işlemi yapıldığında
+önce onun bağlandığı çıkış akımı buffer'ıo flush edilir
+
+int main()
+{
+    
+    using namespace std;
+    int x;
+    cout << "bir sayi girin : ";
+ 
+
+}
+
+
+
+
+
+
+
+-------------------------------------
+    using namespace std;
+    int x;
+
+    ostream* op = cin.tie();
+    cout << "op = " << op << '\n';
+    cout << &cout << '\n';
+op = 00007FF9BD47B040
+00007FF9BD47B040
+
+-------------------------------------
+45. dkda kaldım
+-------------------------------------
+-------------------------------------
