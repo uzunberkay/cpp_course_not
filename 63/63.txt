@@ -37,6 +37,112 @@ op = 00007FF9BD47B040
 00007FF9BD47B040
 
 -------------------------------------
-45. dkda kaldım
+file operations
+istream     ==>     isstringstream
+ostream     ==>     osstringstream
+iostream    ==>     stringstream
+
 -------------------------------------
+
+istream     ==> ifstream    
+ostream     ==> ofstream
+iostream    ==> fstream
+-------------------------------------
+dosya işlemileri, derken ne kast edilişr
+dosyadan okuma yapmak
+dosyaya yazmak
+file pointer (dosya konum göstericisi) 
+
+-------------------------------------
+ftell
+fseek
+fsetpos
+fgetpos
+rewind
+
+
+
+
+-------------------------------------
+file pointer
+    sequential access
+    random access
+
+dosya açış modları
+    read
+    write
+    append (sona ekleme)
+
+text
+binary
+   FILE* fopen(const char* name , const char* openmode)
+   "r"
+   "w"
+   "w+"
+   "a+"
+   "ab+
+-------------------------------------
+ #include<fstream>
+ 
+int main()
+{
+    
+    using namespace std;
+    ifstream ifs("main.cpp", ios::binary | ios_base::ate);
+
+
+} 
+
+-------------------------------------
+
+    ofstream("ahmet.txt");
+    ofstream{"ahmet.txt", ios_base::out | ios_base::trunc};
+    aynılar
+-------------------------------------
+
+    using namespace std;
+    ofstream file("furkan.txt");
+
+    file << "bugun gunlerden cuma\n";
+
+-------------------------------------
+  bir file stream nesnes i şu ili stateten birinde olçabilir
+  a) bir dosya ile ilişkilendirilmiştir
+  b) bir dosyanın sahibideğil
+    default ctor edilmiş ve open fonk. çağrılmamış
+    close  
+-------------------------------------
+    using namespace std;
+    ifstream ifs;
+    if (ifs.is_open())
+    {
+        cout << "evet dosya sahibi\n";
+        
+    }
+    else
+    {
+        cout << "hayir dosya sahibi degil\n";
+    }
+    hayir dosya sahibi degil
+
+ 
+
+-------------------------------------
+
+-------------------------------------
+
+-------------------------------------
+
+-------------------------------------
+
+-------------------------------------
+
+-------------------------------------
+
+-------------------------------------
+
+-------------------------------------
+
+-------------------------------------
+
 -------------------------------------
