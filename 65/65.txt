@@ -86,9 +86,29 @@ int main()
 }
 853776
 --------------------------------------------------------
-1:45:00 da kaldım.
+type deduction
+auto
+decltype
+decltyope(auto)
 
 --------------------------------------------------------
+class Myclass{};
+
+
+int main()
+{
+    
+    Myclass m;
+
+    decltype(auto) y = m;  myclcass
+    decltype(auto) y = (m);  myclcass&
+    decltype(auto) y = move(m);  myclcass&&
+    
+
+
+    
+}
+
 
 
 --------------------------------------------------------
