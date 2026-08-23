@@ -73,18 +73,58 @@ duration    class template
     duration<int,milli>
 
 ********************************************************************
-1:0:0 da kaldım
+int main()
+{
+    
+    using namespace std;
+    using namespace std::chrono;
+
+    ;// su kadar tane saniyenin bu kesirden
+    using halfseconds = duration<int, ratio<1, 2>>;
+    using dseconds = duration<double>;
+
+    halfseconds x(7624);
+    x.count();
+
+
+    
+}
 ********************************************************************
-
+// duration türleri arasındaki dönüştürmek
+coarse fine
 ********************************************************************
-
+timepoint
+    bir clock'undan epoch değerinden geçen süre
 ********************************************************************
+{
+    using namespace std;
 
+    using clock = std::chrono::system_clock;
+
+    clock::time_point epoch{};
+
+    std::time_t tt = clock::to_time_t(epoch);
+
+    std::tm tm = *std::gmtime(&tt);
+
+    cout << tm.tm_year + 1900;
+
+    // std::tm tm = *std::localtime(&tt); // Yerel saat istersen
+
+    // std::cout << std::put_time(&tm, "%Y-%m-%d %H:%M:%S UTC\n");
+}
 ********************************************************************
-
+timepoint + 
 ********************************************************************
+int main()
 
+{
+    using namespace std;
+    using namespace std::chrono;
 
+    cout <<system_clock::now();
+}
+2026-08-23 11:10:46.8829499
 ********************************************************************
 
 ********************************************************************
