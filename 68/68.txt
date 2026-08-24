@@ -1,0 +1,61 @@
+
+
+
+
+
+
+**********************************************
+void foo(int n , char c)
+{
+    while (n--)
+        std::cout.put(c);
+}
+int main()
+{
+    vector<thread> tvec(26);
+    for (auto& t : tvec)
+    {
+        t = thread{ foo,1000,'c'};
+    }
+    for (auto& t : tvec)
+    {
+        t.join();
+    }
+}
+**********************************************
+void foo(int n , char c)
+{
+    while (n--)
+        std::cout.put(c);
+}
+int main()
+{
+    vector<thread> tvec(26);
+    char c = 'A';
+    for (auto& t : tvec)
+    {
+        t = thread{ foo,10,c++};
+    }
+    for (auto& t : tvec)
+    {
+        t.join();
+    }
+}
+IIIFAAAAJJKLPPPQQAQOQTTTTVVWWNNNNNNNNNNJJJJJKKUUUUUFFFFFFFFFRGGGGGGGGGGKKKKKKKYYYYZZZZZZZZZZE
+EEEEEEEEEBBBBBBBBBBIIIIIIIDDDXXYXXXXXHHSSQQQCCCCCVVWWWWWWWWOOOOOOOOOUUUUUYYYYYSSSSSSSSDDRRRRR
+RRRRCCCCCXXXMMMMMMMMMMJJJLLLLLLLLLPPPPPPPDDHHHHHHHHVVVVVVDDDAAAAAQQQTTTTTT
+**********************************************
+45:00 da kaldım
+**********************************************
+
+**********************************************
+
+**********************************************
+
+**********************************************
+
+**********************************************
+
+**********************************************
+
+**********************************************
