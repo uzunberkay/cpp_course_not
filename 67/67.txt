@@ -124,10 +124,31 @@ joinable evet bir thread!
 merhaba dunya !
 hayir bir threadi temsil etmior
 ************************************************************
-2:30:0 da kaldım
-************************************************************
 
 ************************************************************
+#include<syncstream>
+
+void foo(char c)
+{
+    for (int i = 0; i < 100'000; ++i)
+    {
+        std::osyncstream{ std::cout } << c;
+   }
+}
+int main()
+{
+
+
+    thread t{ foo,'C'};
+    thread t{ foo,'D'};
+    thread t{ foo,'A'};
+  CDCADCADCAACDACCCDDDDDDCAACDACCADDDDACCADDDDDCAACCADCAACDAADDAADCADCADDACDACDACDACDACDACDAC
+  DACDACDACDACDACDACDDCAACDDCADDACDACDAADCADCADDACDACDACDACDACDAADCADCADCCDDCCDAADCADCADCADCADC
+  CCADCADDACDACDACDACDACCADCADCADCADD
+  ACDACDACDACDACDAAACCADCADCADCADCAACDACDDCCCADCADCADCCCADCAAAAADCAAADCADDACACCCCCC
+************************************************************
+join veya detach çağrılmazsa thrad nesnesini dtore çağrıldıgında
+terminate çağrılacak.
 
 ************************************************************
 
