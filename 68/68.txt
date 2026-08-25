@@ -45,10 +45,174 @@ IIIFAAAAJJKLPPPQQAQOQTTTTVVWWNNNNNNNNNNJJJJJKKUUUUUFFFFFFFFFRGGGGGGGGGGKKKKKKKYY
 EEEEEEEEEBBBBBBBBBBIIIIIIIDDDXXYXXXXXHHSSQQQCCCCCVVWWWWWWWWOOOOOOOOOUUUUUYYYYYSSSSSSSSDDRRRRR
 RRRRCCCCCXXXMMMMMMMMMMJJJLLLLLLLLLPPPPPPPDDHHHHHHHHVVVVVVDDDAAAAAQQQTTTTTT
 **********************************************
-45:00 da kaldım
-**********************************************
+
+multiple inheritance
 
 **********************************************
+int main()
+{
+    using namespace std::chrono;
+    std::cout << "necati\n";
+
+    std::this_thread::sleep_for(2000ms);
+    std::cout << "ergin\n";
+}
+necati
+ergin
+
+**********************************************
+void task(int count, int sec)
+{
+    auto next_time = std::chrono::system_clock::now();
+
+    while (count--) {
+        next_time += std::chrono::seconds(sec);
+
+        std::cout << "Executing task at: "
+            << std::chrono::system_clock::to_time_t(next_time)
+            << std::endl;
+
+        std::this_thread::sleep_until(next_time);
+    }
+}
+
+int main()
+{
+    std::thread scheduler(task, 10, 1);
+
+    scheduler.join();
+
+    return 0;
+}
+
+Executing task at: 1787653330
+Executing task at: 1787653331
+Executing task at: 1787653332
+Executing task at: 1787653333
+Executing task at: 1787653334
+Executing task at: 1787653335
+Executing task at: 1787653336
+Executing task at: 1787653337
+Executing task at: 1787653338
+Executing task at: 1787653339
+
+
+**********************************************
+threadler ve exception handling
+
+void foo(int x)
+{
+    std::cout << "foo called x = " << x << '\n';
+    if (x % 2 == 0)
+        throw std::runtime_error("error from foo()\n");
+}
+
+int main()
+{
+    try
+    {
+        std::thread t(foo, 12);
+        t.join();
+    }
+    catch (const std::exception& ex)
+    {
+        std::cout << "exception caught: " << ex.what() << '\n';
+    }
+    
+        
+    return 0;
+}
+
+abort.
+
+
+
+
+
+**********************************************
+std::exception_ptr eptr = nullptr;
+void foo(int x)
+{
+    std::cout << "foo called x = " << x << '\n';
+    try
+    {
+        if (x % 2 == 0)
+            throw std::runtime_error("error from foo()\n");
+    }
+    catch (...)
+    {
+        eptr = std::current_exception();
+    }
+   
+}
+
+int main()
+{
+    std::thread t(foo, 12);
+    t.join();
+    try
+    {
+        if (eptr)
+            rethrow_exception(eptr);
+       
+    }
+    catch (const std::exception& ex)
+    {
+        std::cout << "exception caught: " << ex.what() << '\n';
+    }
+    
+        
+    return 0;
+}
+foo called x = 12
+exception caught: error from foo()
+
+
+foo called x = 11
+
+**********************************************
+exception emit ederse terminate çağrılır
+
+
+
+**********************************************
+    
+    thread tx(foo);
+    thread ty(bar);
+
+
+    tx = move(ty); // terminate called
+dolu thread nesnesine başka bir thread taşınırsa
+std::terminate çağrılır:
+**********************************************
+
+thread_local storage class
+
+thread_local int x = 0;
+
+void ffoo()
+{
+    std::osyncstream{ std::cout } << "x = " << x << '\n';
+    ++x;
+}
+
+
+int main()
+{
+    thread tx1(ffoo);
+    thread tx2(ffoo);
+    thread tx3(ffoo);
+    tx1.join();
+    tx2.join();
+    tx3.join();
+    std::cout << "x = " << x << '\n';
+    return 0;
+}
+
+x = 0
+x = 0
+x = 0
+x = 0
 
 **********************************************
 
