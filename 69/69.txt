@@ -78,13 +78,121 @@ void func()
 yaparsak
 cnt = 4000000
 *****************************************
-1:30:00 da kaldım
-*****************************************
+live lock
+
+// MUTEX CLASSES
+
+1 - std::mutex
+2 - std::timed_mutex
+3 - std::recursive_mutex
+4 - std::recursive_timed_mutex
+5 - std::shared_mutex
+6 - std::shared_timed_mutex
 
 *****************************************
+class Myclass {
+public:
+    void foo()
+    {
+        mtx.lock();
+        //
+        mtx.unlock();
+    }
 
+    void cf() const
+    {
+        mtx.lock();
+        //
+        mtx.unlock();
+    }
+
+    void bar()
+    {
+        mtx.lock();
+        //
+        mtx.unlock();
+    }
+
+private:
+    mutable std::mutex mtx;
+    //
+};
 *****************************************
+class DatabaseAccess {
+public:
+    void create_table()
+    {
+        db_mutex.lock();
+        //...
 
+        db_mutex.unlock();
+    }
+
+    void insert_data()
+    {
+        db_mutex.lock();
+        //...
+
+        db_mutex.unlock();
+    }
+
+    void create_table_and_insert_data()
+    {
+        db_mutex.lock();
+        //...
+        create_table();
+
+        db_mutex.unlock();
+        //...
+    }
+
+private:
+    std::mutex db_mutex;
+    //...
+};
+
+int main()
+{
+    DatabaseAccess dx;
+
+    dx.create_table_and_insert_data(); // deadlock
+}
+*****************************************
+#include <mutex>
+#include <iostream>
+
+class Nec {
+public:
+    void func()
+    {
+        std::lock_guard guard{ mtx };
+        std::cout << std::this_thread::get_id() << " func cagrildi\n";
+        foo();
+        std::cout << std::this_thread::get_id() << " func sona eriyor\n";
+    }
+
+    void foo()
+    {
+        std::lock_guard guard{ mtx };
+        std::cout << std::this_thread::get_id() << " foo cagrildi\n";
+    }
+
+private:
+    mutable std::mutex mtx;
+};
+
+void gf()
+{
+    Nec nec;
+
+    nec.func();
+}
+
+int main()
+{
+    std::thread t1{ gf };
+    std::thread t2{ gf };
+}
 
 *****************************************
 
