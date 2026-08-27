@@ -1,4 +1,4 @@
-int main()
+ int main()
 {
     using namespace std;
     using namespace chrono;
@@ -130,7 +130,21 @@ After moving task2 to task3:
 task2 is empty
 task3 is valid
 -----------------------------------------------------------
-1:55:00 da kaldım
+
+spurious wake-up
+lost wake-up
+lost wake-up : notification geldikten sonra thread'in uyuması ve
+notification
+spurious wakeup: yanlkıs uyanma aslında sinyal gelmnedi!
+
+
+wait
+    kilit alındı
+    uyumaya geçildi
+
+    uyandıgımda kilit bizde
+if(m_vec.empty())
+    cv.wait();
 -----------------------------------------------------------
 
 -----------------------------------------------------------
