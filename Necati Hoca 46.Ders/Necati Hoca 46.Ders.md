@@ -1,0 +1,530 @@
+# Necati Hoca 46.Ders
+
+```cpp
+	using namespace std;
+
+	vector<int> ivec{ 3,6,7,9 };
+
+	auto iter = ivec.rbegin();
+
+
+template <typename Iter>
+void print(Iter beg, Iter end)
+{
+	while (beg != end)
+	{
+		std::cout << *beg++ << '\n';
+	}
+}
+
+
+int main() {
+
+	using namespace std;
+
+	vector<int> svec{ 1,3,5,7,9,11 };
+	vector<int> dvec;
+
+	copy(svec.begin(), svec.end(), back_inserter(dvec));
+
+	print(dvec.begin(), dvec.end());
+	return 0;
+}
+```
+
+1
+3
+5
+7
+9
+11
+---
+
+CTAD
+```cpp
+class template argument deduction
+
+template <typename T>
+class Myclass {
+public:
+	Myclass(T);
+};
+
+int main() {
+
+	Myclass x(10);
+
+	return 0;
+}
+```
+
+otomatik çıkarıyor.
+x in <int> açılımı oldugunu.
+back_inserter
+---
+
+```cpp
+C++ 23 ile
+
+#include<print>
+int main() {
+
+	using namespace std;
+
+	vector<int> x{ 1,2,3,4,5,6,7,89 };
+	println("{}", x);
+
+	return 0;
+}
+```
+
+[1, 2, 3, 4, 5, 6, 7, 89]
+---
+
+STL Algo
+reverse
+sort
+copy
+copy_if
+count
+count_if
+transform
+find
+search
+---
+
+```cpp
+	using namespace std;
+
+	vector<int> x{ 1,2,3,4,5,6,7,89 };
+
+
+	all_of(x.begin(), x.end(), [](int y) {return y % 2 == 0;});
+
+```
+
+---
+
+---
+
+STL container (kap)
+container::size_t
+.size() öge sayısını döndürüyor
+.empty()  bool dönğyor is empty
+.clear()
+sequence containers
+	vector
+	deque
+	list
+```cpp
+	forward_list
+```
+
+	string
+	array
+associative container
+set
+multiset
+map
+multimap
+unorassociative container
+unordered_set
+unordered_multiset
+unordered_map
+unordered_multimap
+---
+
+move semantics
+ekleme işlemi yapan
+insert
+	push_back
+	push_front
+move overload edilmiş.
+---
+
+---
+
+---
+
+---
+
+---
+
+---
+
+---
+
+---
+
+---
+
+---
+
+---
+
+---
+
+---
+
+---
+
+---
+
+---
+
+---
+
+---
+
+---
+
+```cpp
+C++ STL NOTLARI
+```
+
+1. REVERSE ITERATOR - rbegin()
+```cpp
+vector<int> ivec{ 3, 6, 7, 9 };
+
+auto iter = ivec.rbegin();
+
+cout << *iter << '\n';   // 9
+```
+
+rbegin() sondaki elemanı gösterir.
+begin() ilk elemanı gösterir.
+```cpp
+ivec.begin()  -> 3
+ivec.rbegin() -> 9
+```
+
+Tersten dolaşmak:
+```cpp
+for (auto iter = ivec.rbegin(); iter != ivec.rend(); ++iter)
+{
+cout << *iter << '\n';
+}
+```
+
+Çıktı:
+9
+7
+6
+3
+2. GENERIC PRINT FONKSIYONU
+```cpp
+template <typename Iter>
+void print(Iter beg, Iter end)
+{
+while (beg != end)
+{
+std::cout << *beg++ << '\n';
+}
+}
+```
+
+Bu fonksiyon iterator aralığını yazdırır.
+```cpp
+print(v.begin(), v.end());
+```
+
+vector, list, deque, array, string gibi iterator destekleyen yapılarda çalışır.
+```cpp
+*beg++ ifadesi:
+```
+
+önce *beg yazdırılır, sonra beg bir sonraki elemana ilerler.
+3. COPY VE BACK_INSERTER
+```cpp
+vector<int> svec{ 1, 3, 5, 7, 9, 11 };
+vector<int> dvec;
+
+copy(svec.begin(), svec.end(), back_inserter(dvec));
+```
+
+copy kaynak aralıktaki elemanları hedefe kopyalar.
+back_inserter(dvec), dvec.push_back(...) çağırır.
+Boş vector için doğru kullanım:
+```cpp
+copy(svec.begin(), svec.end(), back_inserter(dvec));
+```
+
+Yanlış kullanım:
+```cpp
+copy(svec.begin(), svec.end(), dvec.begin());
+```
+
+Çünkü dvec boşsa içine yazılacak hazır eleman yoktur.
+4. CTAD
+```cpp
+CTAD = Class Template Argument Deduction
+```
+
+Template sınıflarda türü compiler otomatik çıkarabilir.
+```cpp
+template <typename T>
+class Myclass {
+public:
+Myclass(T);
+};
+
+int main()
+{
+Myclass x(10);
+}
+```
+
+Compiler 10 değerinden T'nin int olduğunu anlar.
+```cpp
+Myclass x(10);
+```
+
+şuna denktir:
+```cpp
+Myclass<int> x(10);
+```
+
+Başka örnek:
+```cpp
+std::vector v{ 1, 2, 3 };
+```
+
+compiler bunu şöyle anlar:
+```cpp
+std::vector<int> v{ 1, 2, 3 };
+
+5. C++23 PRINTLN
+
+#include <print>
+#include <vector>
+
+int main()
+{
+using namespace std;
+```
+
+```
+vector<int> x{ 1, 2, 3, 4, 5, 6, 7, 89 };
+
+println("{}", x);
+```
+
+```cpp
+}
+```
+
+Çıktı:
+[1, 2, 3, 4, 5, 6, 7, 89]
+```cpp
+println C++23 ile gelen modern yazdırma fonksiyonudur.
+
+println("x = {}", x);
+```
+
+Not:
+Her compiler <print> desteğini tam vermeyebilir.
+6. STL ALGORITMALARI
+STL algoritmaları genelde iterator aralığı ile çalışır.
+Genel yapı:
+```cpp
+algorithm(container.begin(), container.end(), ...);
+```
+
+reverse:
+Elemanları ters çevirir.
+```cpp
+reverse(x.begin(), x.end());
+```
+
+sort:
+Elemanları küçükten büyüğe sıralar.
+```cpp
+sort(x.begin(), x.end());
+```
+
+Büyükten küçüğe:
+```cpp
+sort(x.begin(), x.end(), [](int a, int b) {
+return a > b;
+});
+```
+
+copy:
+Elemanları başka yere kopyalar.
+```cpp
+copy(src.begin(), src.end(), back_inserter(dest));
+```
+
+copy_if:
+Şartı sağlayan elemanları kopyalar.
+copy_if(x.begin(), x.end(), back_inserter(result),
+```cpp
+[](int n) { return n % 2 == 0; });
+```
+
+count:
+Belirli değerin kaç kere geçtiğini sayar.
+```cpp
+auto n = count(x.begin(), x.end(), 2);
+```
+
+count_if:
+Şartı sağlayan elemanları sayar.
+```cpp
+auto n = count_if(x.begin(), x.end(),
+[](int n) { return n % 2 == 0; });
+```
+
+transform:
+Her elemanı dönüştürüp hedefe yazar.
+transform(x.begin(), x.end(), back_inserter(result),
+```cpp
+[](int n) { return n * n; });
+```
+
+find:
+Belirli değeri arar.
+```cpp
+auto iter = find(x.begin(), x.end(), 5);
+
+if (iter != x.end())
+{
+cout << "Bulundu";
+}
+```
+
+search:
+Bir aralık içinde başka bir aralığı arar.
+```cpp
+search(x.begin(), x.end(), pattern.begin(), pattern.end());
+```
+
+all_of:
+Bütün elemanlar şartı sağlıyorsa true döner.
+```cpp
+bool result = all_of(x.begin(), x.end(),
+[](int y) { return y % 2 == 0; });
+```
+
+any_of:
+En az bir eleman şartı sağlıyorsa true döner.
+none_of:
+Hiçbir eleman şartı sağlamıyorsa true döner.
+7. STL CONTAINER
+Container, veri tutan yapılardır.
+Ortak fonksiyonlar:
+.size()
+.empty()
+.clear()
+size:
+Eleman sayısını döndürür.
+```cpp
+x.size();
+```
+
+empty:
+Container boşsa true döndürür.
+```cpp
+x.empty();
+```
+
+clear:
+Bütün elemanları siler.
+```cpp
+x.clear();
+```
+
+Doğru tür ismi:
+container::size_type
+Yanlış:
+container::size_t
+8. SEQUENCE CONTAINERS
+Elemanları sırayla tutan container'lardır.
+vector
+deque
+list
+```cpp
+forward_list
+```
+
+string
+array
+Kısa özet:
+vector:
+Dinamik dizi. Sona ekleme hızlıdır. Index ile erişim hızlıdır.
+deque:
+Çift uçlu yapı. Başa ve sona ekleme hızlıdır.
+list:
+Çift yönlü bağlı liste.
+```cpp
+forward_list:
+```
+
+Tek yönlü bağlı liste.
+string:
+Karakter dizisi.
+array:
+Sabit boyutlu dizi.
+9. ASSOCIATIVE CONTAINERS
+Sıralı ve key mantığıyla çalışan container'lardır.
+set
+multiset
+map
+multimap
+set:
+Benzersiz değer tutar.
+multiset:
+Tekrar eden değerlere izin verir.
+map:
+Key-value tutar. Key benzersizdir.
+multimap:
+Aynı key birden fazla kez bulunabilir.
+10. UNORDERED ASSOCIATIVE CONTAINERS
+Hash tabanlı container'lardır.
+Sıralama garantisi yoktur.
+unordered_set
+unordered_multiset
+unordered_map
+unordered_multimap
+unordered_set:
+Benzersiz değer tutar, sıralı değildir.
+unordered_multiset:
+Tekrar eden değerlere izin verir, sıralı değildir.
+unordered_map:
+Key-value tutar, sıralı değildir.
+unordered_multimap:
+Aynı key birden fazla olabilir, sıralı değildir.
+11. MOVE SEMANTICS
+Move semantics, kopyalamak yerine nesnenin kaynağını taşımaktır.
+Özellikle string, vector gibi büyük nesnelerde performans kazandırır.
+Copy örneği:
+```cpp
+std::string s1 = "Berkay";
+std::string s2 = s1;
+```
+
+Move örneği:
+```cpp
+std::string s1 = "Berkay";
+std::string s2 = std::move(s1);
+```
+
+Move sonrası s1 hâlâ geçerli nesnedir ama eski değerine güvenilmez.
+Ekleme fonksiyonlarında move overload bulunabilir:
+push_back
+push_front
+insert
+Örnek:
+```cpp
+vector<string> names;
+string name = "Berkay";
+
+names.push_back(std::move(name));
+```
+
+Burada name kopyalanmaz, taşınır.
+push_back için basit overload mantığı:
+```cpp
+void push_back(const T& value); // copy
+void push_back(T&& value);      // move
+```
