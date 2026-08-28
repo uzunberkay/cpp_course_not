@@ -1,0 +1,331 @@
+# Necati Hoca 35.Ders
+
+```cpp
+class Member {
+public:
+	Member()
+	{
+		std::cout << "member constructor\n"
+			;
+	}
+```
+
+	~Member()
+```cpp
+	{
+		std::cout << "member destructor\n";
+	}
+};
+
+class Nec {
+public:
+	Nec()
+	{
+		std::cout << "nec constructor\n";
+	}
+```
+
+	~Nec()
+```cpp
+	{
+		std::cout << "nec destructor\n";
+	}
+};
+
+class Owner {
+public:
+	Owner()
+	{
+		std::cout << "owner constructor\n";
+
+		throw std::exception("owner constructor exception");
+	}
+```
+
+	~Owner()
+```cpp
+	{
+		std::cout << "owner destructor\n";
+	}
+private:
+	Nec mnec;
+	Member mx;
+};
+
+int main()
+{
+```
+
+	try
+```cpp
+	{
+		Owner x;
+	}
+	catch (const std::exception& ex)
+	{
+		std::cout << "exception catched  " << ex.what() << '\n';
+	}
+
+	return 0;
+}
+```
+
+nec constructor
+member constructor
+owner constructor
+member destructor
+nec destructor
+exception catched  owner constructor exception
+```cpp
+throw std::exception("owner constructor exception"); nec ' e taşıyalım ...
+```
+
+exception catched  owner constructor exception
+hiçbir şey hayata gelmiyor çünküü owner olusurken ilk nex olusuyor.
+exception catched  owner constructor exception
+```cpp
+class Member {
+public:
+	Member(int x)
+	{
+		std::cout << "Member constructor\n";
+		throw std::exception("owner constructor exception");
+
+	}
+```
+
+	~Member()
+```cpp
+	{
+		std::cout << "Member destructor\n";
+	}
+};
+
+class Myclass {
+public:
+```
+
+	Myclass(int x)try:mx(x)
+```cpp
+	{
+
+	}
+	catch (const std::exception& ex)
+	{
+		std::cout << "exception caught : " << ex.what() << '\n';
+
+
+	}
+```
+
+private :
+```cpp
+	Member mx;
+};
+
+class Nec {
+public:
+	Nec()
+	{
+		std::cout << "nec constructor\n";
+		throw std::exception("owner constructor exception");
+
+	}
+```
+
+	~Nec()
+```cpp
+	{
+		std::cout << "nec destructor\n";
+	}
+};
+
+
+
+int main()
+{
+```
+
+	try
+```cpp
+	{
+		Nec* p = new Nec;
+		delete p;
+	}
+	catch (const std::exception& ex)
+	{
+		std::cout << "exception catched  " << ex.what() << '\n';
+	}
+
+	return 0;
+}
+```
+
+nec constructor
+exception catched  owner constructor exception
+```cpp
+void foo()
+{
+```
+
+	try
+```cpp
+	{
+		// all code of funcition foo
+	}
+	catch (const std::exception& ex)
+	{
+		std::cout << "exception  caught : " << ex.what() << '\n';
+	}
+}
+
+void foo()
+```
+
+try
+```cpp
+{
+		// all code of funcition foo
+}
+catch (const std::exception& ex)
+{
+	std::cout << "exception  caught : " << ex.what() << '\n';
+}
+```
+
+fiilen bir farkı yokmus.
+Dikakt!
+bir fonkisyopmnun exception ile ilgili verdiği garantiş seviyeleri söz konusu
+no guareantee
+	resource leak
+	program state'i geçersiz duruma düşerse
+basic guarantee
+	fonksiyon diopyr i
+	 benden exception göndermem yolıuyla çıkılırsa
+	 ve bu exception yakalanırsa
+	 kaynak sızıntısı olmayacak.
+strong guarantee
+	basic'in hepsinbi verihyopr
+	commit or rollback guarantee
+	ya ben işimi tamamlarım ya da
+	başlamadan önce ki state'i korurum
+no-throw guarantee
+fonksiyon exception göndermeyeceğini garanti eder.
+noexcept specifier
+```cpp
+noexcept operator
+
+void foo() noexcept
+{
+	// bu fonksiyon exception göndermeyeceğini garanti eder.
+}
+
+
+noexcept operatoru
+// noexcept(expr)
+```
+
+expr ifadesinin yürütülmesi durumudna exception throw etme ihtimali var mı
+```cpp
+evetr var ==> false
+hayır yok ==> true
+```
+
+excep. göndermeme garantisi veren
+bir noexcpt fonksiyon runtime'da exception gönderirse
+ne olur ?
+program terminate olur.
+```cpp
+void foo()noexcept
+{
+	// all code of funcition foo
+}
+
+void foo()noexcept
+{
+	std::cout << "foo called\n";
+	throw std::runtime_error("exception from foo");
+}
+
+int main()
+{
+
+
+	try {
+		foo();
+
+	}
+	catch (const std::exception& ex)
+	{
+		std::cout << "exception caught in main : " << ex.what() << '\n';
+	}
+	return 0;
+}
+```
+
+termiante çağırılıyo.
+```cpp
+void foo()noexcept
+{
+```
+
+	try
+```cpp
+	{
+		std::cout << "foo called\n";
+		throw std::runtime_error("exception from foo");
+	}
+	catch (const std::exception& ex)
+	{
+		std::cout << "exception caught in foo : " << ex.what() << '\n';
+	}
+```
+
+	foo called
+exception caught in foo : exception from foo
+kendi içinde yakalayabilir. no except olsa bile.
+special member func of classes
+destructor kesinlikle noexcept olmalı
+Bir special member fun için
+a) default bildirimi yapılmış ise ya da
+b ) sınıfın member func implicity declaret
+buradaki krual şu
+```cpp
+ // bir excepitopon yakalıyorsunuz
+```
+
+ fakat yakaladıgınız exceeptinou farklı bir bağlamda handle etmek istiyoruz.
+```cpp
+void handle_exception(std::exception_ptr eptr)
+{
+	if (eptr)
+	{
+		std::cout << "eptr dolu\n";
+	}
+	else
+	{
+		std::cout << "hayir eptr bos\n";
+	}
+}
+
+int main()
+{
+
+	using namespace std;
+	exception_ptr eptr;
+	try {
+		string str{ "necati" };
+		auto c = str.at(569);
+
+	}
+	catch (const std::exception& ex)
+	{
+		std::cout << "exception caught in main : " << ex.what() << '\n';
+		eptr = current_exception();
+	}
+	handle_exception(eptr);
+
+
+```
+
+---
