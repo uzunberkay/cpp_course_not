@@ -1,4 +1,122 @@
-# 41. ders
+# Necati Hoca 41.Ders
+
+
+```cpp
+template <typename ...TS>
+void func(TS ...args)
+{
+
+	std::cout << __FUNCSIG__ << '\n'
+		;
+
+
+
+}
+
+
+
+int main() {
+
+	func(2, 6L, 4.3);
+
+
+	return 0;
+}
+
+
+void __cdecl func<int,long,double>(int,long,double)
+
+
+```
+
+---
+
+```cpp
+ template <typename ...TS>
+void func(TS ...args)
+{
+
+	std::cout << __FUNCSIG__ << '\n'
+		;
+}
+
+
+
+template <typename ...Ts>
+void foo(Ts ...args)
+{
+	func(&args...);
+}
+
+
+
+
+
+int main() {
+
+	foo(2, 6L, 4.3);
+
+
+	return 0;
+}
+
+void __cdecl func<int*,long*,double*>(int *,long *,double *)
+
+
+
+```
+
+---
+
+```cpp
+template <typename Ts>
+void foo(Ts&& ...args)
+{
+
+}
+```
+
+bu fonksiyonu artık her şeyle çağırabilirim
+```cpp
+int main() {
+
+	int x{};
+	double d;
+	foo(1, x, &d);
+
+	return 0;
+}
+```
+
+mesela
+---
+
+```cpp
+template <typename ...TS>
+class Myclass {
+public:
+```
+
+	Myclass<Ts...args>
+```cpp
+};
+
+template<typename ...TS>
+void foo(TS ...args)
+{
+	Myclass<TS>m{ args... };
+}
+
+
+
+int main() {
+
+	return 0;
+}
+```
+
+---
+
 
 ## Variadic Templateler
 
