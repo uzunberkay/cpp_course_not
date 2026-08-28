@@ -1,5 +1,184 @@
 # Necati Hoca 40.Ders
 
+
+---
+
+```cpp
+template<typename T>
+constexpr std::size_t SZ = sizeof(T)
+
+template<>
+constexpr  std::size_t SZ<void> = 0;
+
+
+
+
+
+```
+
+---
+
+```cpp
+class Myclass {};
+
+void foo(Myclass&)
+{
+	std::cout << "Myclass&\n";
+}
+
+
+void foo(const Myclass&)
+{
+	std::cout << "const Myclass&\n";
+}
+
+
+void foo(Myclass&&)
+{
+	std::cout << "Myclass&&\n";
+}
+
+
+void foo(const Myclass&&)
+{
+	std::cout << "const Myclass&&\n";
+}
+
+
+int main()
+{
+	Myclass m;
+	const Myclass cm;
+
+
+	foo(m);
+	foo(cm);
+
+
+	foo(std::move(m));
+	foo(std::move(cm));
+
+
+
+
+
+}
+```
+
+Myclass&
+```cpp
+const Myclass&
+```
+
+Myclass&&
+```cpp
+const Myclass&&
+
+
+
+void call_foo(Myclass& mr)
+{
+	foo(mr);
+}
+
+
+void call_foo(Myclass&& mr)
+{
+	foo(std::move(mr));
+}
+
+void call_foo(const Myclass& mr)
+{
+	foo(mr);
+}
+void call_foo(const Myclass&& mr)
+{
+	foo(std::move(mr));
+}
+```
+
+1:04 de kaldım
+---
+
+```cpp
+template <typename T>
+void call_foo(T&& x)
+{
+	foo(std::forward<T>(t));
+}
+```
+
+perfect forwarding
+---
+
+```cpp
+std::move ile
+std::forwad arasındaki fark
+
+static_cast<T&&>(arg) -> move
+
+
+forward
+if(arg is an L value )
+```
+
+	arg
+```cpp
+else
+static_cast<T&&>(arg)
+```
+
+ 1:35
+---
+
+---
+
+---
+
+---
+
+---
+
+---
+
+---
+
+---
+
+---
+
+-
+---
+
+---
+
+---
+
+---
+
+---
+
+---
+
+---
+
+---
+
+---
+
+---
+
+---
+
+---
+
+---
+
+---
+
+---
+
+
 ```cpp
 template<typename T>
 void foo(T)
