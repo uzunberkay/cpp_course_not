@@ -1,0 +1,125 @@
+# Lambda ifadeleri
+
+---
+
+[-][-][-][-][-][-][-]
+```cpp
+[]()constexpr{}
+[]()mutable{}
+[]()noexcept{}
+[]()->int{}
+```
+
+predicate
+binary predicate
+unary predicate
+---
+
+```cpp
+template < typename T>
+void print(T begin, T end)
+{
+	while (begin != end)
+		std::cout << *begin++ << '\n';
+}
+
+
+
+int main() {
+
+	int arr[] = { 1,2,3,42,3,1,5,6,7,8,899,0 };
+
+	std::vector<std::string> svec = {"Berkay","seda","Naber","Aslan"};
+
+	print(arr, arr+11);
+
+	std::sort(svec.begin(), svec.end());
+
+	print(svec.begin(), svec.end());
+
+
+
+
+	return 0;
+}
+
+```
+
+---
+
+```cpp
+[](int x, int y) {return x * x + y * y};
+```
+
+lambda func.
+```cpp
+auto f  = [](int x, int y) {return x * x + y * y};
+
+int f (int , int );
+
+auto f = [](int x, int y) {return x * x + y * y;}(10, 20);
+
+Dikkat! C++20 öncesinde
+```
+
+lambda ifadeleri karşılıgı
+ olusturdugu sınıfların default ctor
+ ve copy assign delete edilmişltir.
+---
+
+nested function
+---
+
+Lambda senaryoları
+STL algoritmalarına argüman olarak göndermek
+---
+
+```cpp
+	int x = 10, y = 20;
+	auto f = [x, y](int a) {return a * (x + y);};
+```
+
+	[=] koyarsam hepğsini kullanabiliyom
+```cpp
+	auto retval = f(5);
+
+
+	std::cout << "retval = " << retval << '\n';
+```
+
+	150
+---
+
+mutable
+trailing return type
+```cpp
+constexpr
+```
+
+noexcept
+---
+
+```cpp
+auto f = [](auto x) {std::cout << x << '\n';};
+```
+
+istediğim argumanı geçebilirim
+---
+
+---
+
+---
+
+---
+
+---
+
+---
+
+---
+
+---
+
+---
+
+---
