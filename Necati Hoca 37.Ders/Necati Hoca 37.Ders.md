@@ -1,0 +1,121 @@
+# SFINAE
+
+fonksiyon şablonundan
+	aday olacdak
+```cpp
+		template id
+
+
+		int foo<int>(5); // template id
+
+
+		Myclass::value_type foo<Myclass>(Myclass::value_type{}); // template id
+```
+
+	foo
+	tamsayı türleri için bir template
+	gerçek sayı türleri için başak bir template kullanılsın.
+bu template sadece template argümanının pointer türü olması durumudna geçerli olsun.
+```cpp
+// F is deduced as void(*)(
+template <typename F>
+void foo(F f) {
+	f();
+}
+void bar()
+{
+	std::cout << "bar called!\n";
+}
+
+
+int main()
+{
+	foo(bar);
+
+
+}
+```
+
+bar called!
+```cpp
+template <typename F>
+void foo(F f) {
+	f();
+}
+
+class Functor
+{
+public:
+	void operator()() const
+	{
+		std::cout << "Functor called!\n";
+	}
+};
+
+void bar()
+{
+	std::cout << "bar called!\n";
+}
+
+foo(Functor{});
+```
+
+Functor called!  F is deduced as Functor
+```cpp
+/*
+* Derleyicinin olusturacağı bir fonksiyonun geçerli olması için
+* T parametresine karşılık gelen türün aşağüıdaki işlemleri desteklemesi gerekir
+* Nesneleri != operatoru ile karşılaştırabilmeli
+* *(dereference) operandı olabilmelidir
+* ++ operatorunun operandı olabilmeli.
+```
+
+---
+
+```cpp
+*/
+template <typename T>
+void print(T beg, T end)
+{
+	while (beg != end)
+	{
+		std::cout << *beg << ' ';
+		++beg;
+	}
+	std::cout << '\n';
+}
+```
+
+range ne demek ?
+iki konumla ifade edilen nesneler aralığı
+ilk konumdaki nesne dahil, ikinci konumdaki nesne hariç
+callable
+function pointers
+function objects
+```cpp
+f()
+```
+
+range
+[konum1, konum2]
+---
+
+```cpp
+template<typename T>
+class Counter {
+public:
+	Counter();
+	Counter(T);
+	Counter& operator++();
+	Counter operator++(int);
+	Counter& operator--();
+	Counter operator--(int);
+	Counter& operator+=(T);
+	Counter& operator-=(T);
+	T get()const;
+	friend std::ostream& operator<<(std::ostream& os, const Counter& c);
+
+};
+```
+
+ders bitti.
