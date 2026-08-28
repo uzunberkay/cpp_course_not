@@ -1,0 +1,297 @@
+# 34.ders
+
+try
+throw
+catch
+```cpp
+tr{
+}
+catch(int x){
+
+
+}
+```
+
+uncaught exception  - yakalanmamış
+```cpp
+std::terminate
+	std::abort
+```
+
+neden yakalıyoruz ?
+yakalayınca ne yapacağız ?
+```cpp
+void f4()
+{
+	std::cout << "f4() called!\n";
+	throw 42;
+	std::cout << "f4!() ends\n";
+}
+
+
+
+void f3()
+{
+	std::cout << "f3() called!\n";
+	f4();
+	std::cout << "f3!() ends\n";
+}
+
+void f2()
+{
+	std::cout << "f2() called!\n";
+	f3();
+	std::cout << "f2!() ends\n";
+}
+
+void f1()
+{
+	std::cout << "f1() called!\n";
+	f2();
+	std::cout << "f1!() ends\n";
+}
+
+void myabort()
+{
+	std::cout << "myabort function called!\n";
+	std::exit(EXIT_FAILURE);
+}
+
+int main(){
+	std::set_terminate(myabort);
+	std::cout << "main started running...\n";
+	f1();
+	std::cout << "main ends ..\n";
+
+	return 0;
+}
+```
+
+set_terminate ile davranışı özelleştiriyorum.
+```cpp
+int main(){
+
+	std::cout << "main started running...\n";
+```
+
+	try
+```cpp
+	{
+		f1();
+	}
+	catch (int x )
+	{
+		std::cout << "exception caught  x = " << x << '\n';
+	}
+
+	std::cout << "main ends ..\n";
+
+	return 0;
+}
+```
+
+main started running...
+f1() called!
+f2() called!
+f3() called!
+f4() called!
+```cpp
+exception caught  x = 42
+```
+
+main ends ..
+Dikkat hemen her zaman catch parametreleri
+bir sınıf türünden referans olur .
+```cpp
+catch (std::expection& ex)
+{
+	ex.what();
+}
+```
+
+exception nesnesinin türü ne anlama geliyor ?
+```cpp
+throw  FileReadError{};
+
+throw DivideByZeroError{};
+
+throw BadDate{};
+```
+
+yukarıya gönderilen hata nesnesini türü
+zaten hatanın niteliğinde ilişkin bir bilgidir.
+invalid_argument
+logic
+out_of_rane
+runtime_error
+bad_alloc
+bad_cast
+bad_typeid
+```cpp
+void foo(const std::string& s)
+{
+	if (s.empty())
+		throw std::invalid_argument{ "bad argument in foo\n" };
+	auto c1 = s.front();
+	auto c2 = s.back();
+}
+
+
+
+int main(){
+
+
+	try {
+		foo("");
+	}
+	catch (const std::exception& ex)
+	{
+		std::cout << "exception caught : " << ex.what() << "\n";
+	}
+
+	return 0;
+}
+```
+
+exception caught : bad argument in foo
+exceptionu yaklayan kod ne yapabilir ?
+resumptive
+terminative
+a) tamamen handle eder.
+b) (kısmi müdahale) translate
+c) rethrow
+d) gerekli önlemleri alıp programı sonlandırış.
+```cpp
+std::exception
+├─ std::bad_alloc
+│  └─ std::bad_array_new_length
+├─ std::bad_cast
+├─ std::bad_typeid
+├─ std::bad_exception
+├─ std::bad_function_call
+├─ std::bad_weak_ptr
+├─ std::bad_optional_access
+├─ std::bad_variant_access
+├─ std::logic_error
+│  ├─ std::domain_error
+│  ├─ std::invalid_argument
+│  ├─ std::length_error
+│  └─ std::out_of_range
+└─ std::runtime_error
+   ├─ std::range_error
+   ├─ std::overflow_error
+   ├─ std::underflow_error
+   ├─ std::system_error
+```
+
+   │  └─ (implementation/extension) filesystem_error
+```cpp
+   ├─ std::future_error
+   ├─ std::regex_error
+   └─ std::ios_base::failure
+```
+
+stack unwinding
+```cpp
+f1=>f2=>f3=>f9=f10
+
+class Nec {
+
+public:
+	Nec(int id) :m_id(id) {
+		std::cout << "for " << id << " resource allocated!\n";
+	}
+```
+
+	~Nec()
+```cpp
+	{
+		std::cout << "resource for id : " << m_id << " freed\n";
+	}
+private:
+	int m_id;
+};
+
+
+void f3()
+{
+	Nec n3(3);
+	throw std::runtime_error("error in f3()");
+}
+
+void f2()
+{
+```
+
+	Nec n2(2)
+```cpp
+		;
+	f3();
+}
+
+
+void f1()
+{
+	Nec n1(1);
+	f2();
+}
+
+
+int main(){
+```
+
+	try
+```cpp
+	{
+		f1();
+	}
+	catch (const std::exception& ex)
+	{
+		std::cout << "program flow is in catch block now\n";
+		(void)getchar();
+		std::cout << "exception caught:  " << ex.what() << '\n';
+	}
+
+
+	return 0;
+}
+
+
+
+
+
+
+for 1 resource allocated!
+for 2 resource allocated!
+for 3 resource allocated!
+```
+
+resource for id : 3 freed
+resource for id : 2 freed
+resource for id : 1 freed
+program flow is in catch block now
+exception caught:  error in f3()
+Kaynak sızıntısı olmadı.
+unique_ptr
+shared_ptr
+1) exception yakalanmaz se (uncaught exception)
+2) new ifadelerini çıplak kullanmak çok riskli.
+```cpp
+throw std::runtime_error{"error"};
+```
+
+ctor ve exceptionlar
+ctor işini yapamaycağını anlarsa
+```cpp
+class Server
+{
+public:
+	Server()
+	{
+		// step1();
+		// step2();
+		//
+		// step3();
+	}
+};
+```
