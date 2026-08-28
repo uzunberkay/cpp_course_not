@@ -1,13 +1,11 @@
-
 # 15. DERS
 
-## Move members
+---
 
-- move ctor  
-- move assignment  
-
+Move members
+- move ctor
+- move assignment
 Bu fonklar copy ctor ve copy assignmentin bir overloadi.
-
 ```cpp
 class Myclass{
 
@@ -19,28 +17,22 @@ public:
     Myclass& operator=(Myclass&& other);      // move assignment
 
 }
-````
+```
 
 ---
 
-## Dikkat
-
+Dikkat
 std::move fonksiyonu misnomer yanlış isimlendirilmiş.
-
 aldığı argümanı
-
 L value de olsa R value da olsa
-
 R value ya dönüştürüyor.
-
-```
 move(expr)   X value
+```cpp
 static_cast<T&&>(expr)
 ```
 
 move doesn't move...
-
-```
+```cpp
 Myclass x;
 
 x -> l value
@@ -80,23 +72,18 @@ int main()
     foo(std::move(m));
 
 }
-```
 
-```
 foo(const Myclass&)
 foo(const Myclass&&)
 ```
 
 Çıktı bu şekilde.
-
-```
+```cpp
 foo(static_cast<Myclass&&>(m)); foo(const Myclass&&)
 ```
 
-bu şekilde de yazabilirim.
-
----
-
+bu şekilde de yazabilirim .
+==
 ```cpp
 class Myclass {
 
@@ -139,13 +126,11 @@ int main()
 }
 ```
 
-```
+---
+
 copy assignment
 move assignment
-```
-
 çıktısını verir.
-
 ---
 
 ```cpp
@@ -159,16 +144,16 @@ public:
 };
 
 int main()
-{	
+{
 	Myclass m1;
 	Myclass m2 = std::move(m1);
+
+
 }
 ```
 
 burada const' a r ve l value de bağlanabildiği için problem olmuyor.
-
 movedan copye düimek fallback deniyor
-
 ---
 
 ```cpp
@@ -198,10 +183,21 @@ public:
         return *this;
     }
 
-    String (String&& other) : mp(other.mp),mlen(other.mlen) { 
+    String (String&& other) : mp(other.mp),mlen(other.mlen) {
         std::cout << "Move ctor \n";
         other.mp = nullptr;
-        other.mlen = 0;
+        other.mlen = 0;   // yani kaynak çaldığım için.
+        /*
+        * Yani önce other'i thise kopyaladım sonra
+        * otheri nullptr ve 0 a çektim ki...
+        * Destructor edeceği zaman proplem çıkmasın.
+```
+
+---
+
+```cpp
+        */
+
     }
     String& operator=(String&& other)
     {
@@ -209,6 +205,16 @@ public:
         if (this == &other)
             return *this;
 
+        /*
+        *   Kaynak çalıyoruz yine.
+        * Burada neden mp free ettik ?
+        * Move ctor da neden etmedik ?
+        * Çünkü move ctor da hayata yeni geliyor ve bi alan alınmamış
+        * Burada ise hayata geldikten sonra move copy yapıyorıuz.
+        * Yani dinamik olarak alınan bir bellek alanı var.
+        * Bunu free ederek mp ye other.mp atıyoruz.
+        * Yani mp addresi artık other.mp addresini tutuyor.
+        */
         std::free(mp);
         mp = other.mp;
         mlen = other.mlen;
@@ -218,7 +224,10 @@ public:
 
         return *this;
     }
+```
+
     ~String()
+```cpp
     {
         if (mp)
         {
@@ -239,12 +248,12 @@ public:
         {
             std::cout << "()\n";
         }
-            
+
         else
         {
             std::cout << mp << "\n";
         }
-        
+
     }
     std::size_t length() const
     {
@@ -255,11 +264,8 @@ private:
     char* mp;
 
 };
-```
 
----
 
-```cpp
 int main()
 {
     String s1{ "Necati ergin c++ anlatiyor.\n" };
@@ -269,85 +275,66 @@ int main()
     std::cout<<s2.length()<<'\n';
     std::cout<<s1.length()<<'\n';
     s1.print();
+
+
 }
 ```
 
 ---
 
-```
-temporary  object   PR value
-String();
-String{};
-```
-
 ```cpp
-String str;
-str = String{ "Bugun hava guzel" };
+    // temporary  object   PR value
+    //String();
+    //  String{};
+
+
+     String str;
+    str = String{ "Bugun hava guzel" };  Mesela burada move assignment çalışıyor.
 ```
 
-Mesela burada move assignment çalışıyor.
+    çünkü PR value.
+```cpp
+    m1=m2  copy assignment
+    m1 = Myclass{"Alicam"}  move assignment
+    Myclass foo();
+    Myclass& bar();
+    Myclass&& baz();
 
-çünkü PR value.
-
-```
-m1=m2  copy assignment
-m1 = Myclass{"Alicam"}  move assignment
-```
-
-```
-Myclass foo();
-Myclass& bar();
-Myclass&& baz();
+    m1 = foo();         move assignment
+    m2 = bar();         copy assignment
+    m3 = baz();         move assignment
 ```
 
-```
-m1 = foo();         move assignment
-m2 = bar();         copy assignment
-m3 = baz();         move assignment
-```
-
-```
+Myclass foo()
+```cpp
 std::move(myobject)
 Myclass{}
 foo()
 ```
 
-Move assignment yapmak için seçenekler.
-
----
-
-```
+Move assignmöent yapmak için seçenekler.
 L value
-R value (Pr value X value)
-```
-
+R value    (Pr value X value)
 ```cpp
-String s1{ "Furkan kizilkoca" };
-String s2;
+    String s1{ "Furkan kizilkoca" };
+    String s2;
 
-String s3 = std::move(s1);
-s2 = std::move(s1);
-```
+    String s3 = std::move(s1);
+    s2 = std::move(s1);
 
-```
-moved-from state
+    /*
+    * moved-from state deniyor.
+    */
 ```
 
 ---
 
-standart kütüphane
-
-kendi türleri için
-
-taşınmış durumdaki nesneler için
-
-```
-valid state
-```
-
----
-
+    standart kütüphane
+        kendi türleri için
+            taşınmış durumdaki nesneler için
 ```cpp
+            // valid state
+
 void Swap(std::string& s1, std::string& s2)
 {
     std::string temp = s1;
@@ -357,14 +344,9 @@ void Swap(std::string& s1, std::string& s2)
 ```
 
 Yukarıdaki swap maliyet açısından korkunç olurdu.
-
 Çünkü her yer için tekrar tekrar bellekten yer alloced et
 kopyala vs .
-
----
-
 Bu swqpta ise direkt kaynak çaldıgı için çok daha hızlı olacak.
-
 ```cpp
 void Swap(std::string& s1, std::string& s2)
 {
@@ -377,19 +359,24 @@ void Swap(std::string& s1, std::string& s2)
 ---
 
 Moved-from-state
-
 geçerli fakat değeri ne belli değil.
-
+    (ideali değerin belli olmnası / default ctor edilmiş)
+    kendisine atamaa yapılabilir
+    kendisine ya da kendisinden taşıma yapılabilir.
+```cpp
+/*
+* En sık karşımıza çıakcak idiyomatik yapılardan biri
+* bir foınksiyonun kendisine gönderilen argümanın
+* R value olması durumunda onun kaynağını çalması
+* ancak L value olması durumunda onun kaynağını çalması
 ```
-(ideali değerin belli olmnası / default ctor edilmiş)
-```
-
-kendisine atamaa yapılabilir
-kendisine ya da kendisinden taşıma yapılabilir.
 
 ---
 
 ```cpp
+*/
+
+
 class Myclass {
 public:
     Myclass() = default;
@@ -413,37 +400,34 @@ public:
 
 void foo(const Myclass& r)
 {
-    Myclass m = r;
+    Myclass m = r;  //
 }
 void foo(Myclass&& r)
 {
-    Myclass m = std::move(r);
+    Myclass m = std::move(r);  //
 }
+
+
+    Myclass m;
+    foo(m);
+    foo(Myclass{});
 ```
 
-```cpp
-Myclass m;
-foo(m);
-foo(Myclass{});
-```
-
-```
-Copy ctor
+    Copy ctor
 Move ctor
-```
-
 ---
 
-```
-default ctor    dtor    copy ctor   copy ass.   move ctor   move ass.
-no spm          e       e           e           e           e         e
-Nec(int)        h       e           e           e           e         e
-Nec()           user d. e           e           e           e         e
-~Nec()          e       user dec.   e(!)        e(!)        not d.    not d.
-Nec(const Nec&) not d.  e           user d.     e(!)        not d.    not d.
-operator=(...)  e       e           e(!)        user dec.   not d.    not d.
-Nec(&&)         not d.  e           deleted     deleted     user d.   not d.
-operator=(&&)   e       e           deleted     deleted     not d.    user dec.
+                    default ctor    dtor    copy ctor   copy ass.   move ctor   move ass.
+no spm                  e             e          e         e            e           e
+Nec(int)                h             e          e         e            e           e
+Nec()                   user d.       e          e         e            e           e
+~Nec()                  e             user dec. e(!)       e(!)         not d.      not d.
+Nec(const Nec&)         not d.        e         user d.     e(!)        not d.      not d.
+```cpp
+operator=(const Nec&)   e             e         e(!)        user dec.   not d.      not d.
 ```
 
----
+Nec(&&)                 not d.        e         deleted.    deleted     user d.     not d.
+```cpp
+operator=(Nec&&)        e             e         deleted     deleted     not d.      user dec.
+```
