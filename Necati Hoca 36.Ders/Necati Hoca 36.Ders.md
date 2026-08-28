@@ -1,0 +1,215 @@
+# 36. ders	|
+
+---
+
+Generic programlama ve template'ler.
+Derleyice kod yazdıran koda 'template' diyoruz.
+Function template
+```cpp
+class template
+variable template c++14
+alias template  c++11
+
+concepts c++20
+
+template (derleyiciyte kod yazdıran kod)
+```
+
+meta kod
+```cpp
+// template parameter
+```
+
+type parameter
+non-type parameter
+```cpp
+template parameter
+
+
+template<typename T>
+struct Data {
+	T value;
+
+};
+
+// specialization ==> açılım
+```
+
+Data<20>
+```cpp
+template<typename T , std::size_t SIZE>
+class Array {
+
+};
+
+// specialization ==> açılım
+int main()
+{
+	Array<int, 10> a;
+	return 0;
+}
+
+```
+
+---
+
+```cpp
+template<typename T , std::size_t SIZE>
+class Array {
+	T arr[SIZE];
+};
+
+// specialization ==> açılım
+int main()
+{
+	Array<int, 10> a;
+	return 0;
+}
+```
+
+---
+
+```cpp
+template argument deduction
+	c++17 std. ' a kadar yalnızca fonksiyon şablonları için geçerliydi.
+	CTAD  (class template argument deduction) c++17 ile class template'leri için de geçerli oldu.
+
+
+	explicit template arguments
+```
+
+	default template argument
+	implicit instantiation %95
+```cpp
+	explicit instantiation %5
+
+explicit specialization  / full specialization
+```
+
+partial specialization
+```cpp
+template <typename T>
+class Myclass {
+public:
+	Myclass()
+	{
+		std::cout << "Myclass<T> T = " << typeid(T).name() << '\n';
+	}
+};
+
+
+int main()
+{
+	Myclass<int> m1;
+	Myclass<double> m2;
+}
+
+
+Myclass<T> T = int
+Myclass<T> T = double
+```
+
+Function templates
+```cpp
+template <typename T>
+```
+
+T square( T x)
+```cpp
+{
+	return x * x;
+}
+
+square<int>(5);
+```
+
+fonksiyon değil. bir fonksiyon şablonu. derleyici bu şablonu kullanarak kod yazdırır.
+fonksiyon şablonları iiçin derleyici
+t.a.d
+sürecini yürütür.
+fonksiyon çağrısında kullanılan
+argümanl(lar) dan hareket
+```cpp
+ template argument deduction
+```
+
+ i ) başarılı olabilir
+ ii) başarısız olabilir
+		derleyicimni elinjde çıakrım yapabilmesi için yeterli bilgi yoktur.
+```cpp
+template argument deduction
+```
+
+ ===> substitude
+ bi fonksiyon şablonu ile
+ aynı isimli bir fonksiypn var
+ birden fazla aynı isğmli fonksiyon şablonu var
+ argument deduction
+	substition
+```cpp
+		template id
+```
+
+			function overload resolution
+				instantiation
+-
+```cpp
+template argument deduction nasıl yapılıyor ??
+```
+
+Dikkat!
+```cpp
+template argument deduction ile
+auto type deduction neredeyse aynı.
+
+
+
+/*
+* artık
+* a) const'luk düşmeyecek
+* b ) array decay olmayacak
+* c) function decay olmayacak.
+*/
+template <typename T>
+void foo(T&)
+{
+	TypeTeller<T> x;
+}
+
+int main()
+{
+	const int x = 456;
+	foo(x);
+
+}
+
+
+
+
+/*
+* 1) bu fonksiyon her türlü argümanı kabul eder.
+*/
+template <typename T>
+void foo(T&&)  forwarding reference
+{
+	TypeTeller<T> x;
+}
+
+
+template <typename T>
+void foo(T);
+
+
+int main()
+{
+	auto x = { 1,2,3,4 };
+	foo({ 1,2,3,4 });
+
+}
+
+
+auto type deduciton ile template argument deduciton arasındaki tek fark budur.
+
+
+// reference collapsing kuralının ilginç bir görünümü
+```
