@@ -1,4 +1,4 @@
-# C++ NOT
+# 12. Ders — C++ Notları
 
 ## Constructor (Kurucu fonksiyon) (ctor)
 - free function olamaaz
